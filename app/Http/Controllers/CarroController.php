@@ -1,0 +1,234 @@
+<?php
+
+namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Http\Request;
+use App\Ventas;
+use App\Compras;
+use App\Mail\PedidoRealizado;
+use App\Usuario;
+
+class CarroController extends Controller
+{
+
+    
+   
+                   
+   public function add(Request $request)
+   {
+        if (\Session::has('usuario-tipo')) {
+            $tipo = \Session::get('usuario-tipo');
+
+            if (trim($tipo) == 'CTB') {
+                $precioAc = 'precio2';
+            }elseif (trim($tipo) == 'CTC') {
+                $precioAc = 'precio3';
+            }elseif (trim($tipo) == 'CTD') {
+                $precioAc = 'precio4';
+            }elseif (trim($tipo) == 'CTE') {
+                $precioAc = 'precio5';
+            } elseif(trim($tipo) == 'CTA') {
+                $precioAc='precio';
+            }
+        }else{
+            $precioAc='precio';
+        }
+
+       $producto = DB::table('producto')->where('idproducto','=',"$request->code")->first();
+       $precio = $producto->$precioAc;
+       $nombre = $producto->descripcion;
+       $gr_iva = $producto->Graba_Iva;
+
+       $item = ['item' => $request->code,
+        'cantidad' => $request->cantidad,
+        'precio' => $precio,
+        'nombre' => $nombre,
+        'gr_iva' => $gr_iva,];
+
+        if(\Session::has('carro')){
+
+            $products = session()->pull('carro', []);
+            
+            foreach ($products as $clave => $valor){
+                if(array_search($request->code, $valor)){
+                    unset($products[$clave]);
+                }
+            }
+            session()->put('carro', $products);
+            \Session::push('carro',$item);  
+
+        }else{
+            
+            \Session::put('carro',[]);
+            \Session::push('carro',$item);
+        }
+
+        return response()->json('agregado');
+   }
+
+    //Vaciar Carro
+   public function empty_car()
+   {
+      
+        \Session::forget('carro');
+        session()->pull('carro', []);
+        return response()->json('limpiado');
+   }
+
+   //Borrar Item del carro
+   public function delete_item(Request $request)
+   {
+        $products = session()->pull('carro', []);
+        $code = $request->code;
+
+        foreach ($products as $clave => $valor){
+            if(array_search($code, $valor)){
+                unset($products[$clave]);
+            }
+        }
+        session()->put('carro', $products);
+        return response()->json($products);
+   }
+
+   //cambiar catidad de un item
+   public function change_cant(Request $request)
+   {
+        $products = session()->pull('carro', []);
+        $code = $request->code;
+        $cantida = $request->cantidad;
+        
+        if($cantida < 1){
+            $cantida = 1;
+        }
+
+        foreach ($products as $clave => $valor){
+            if(array_search($code, $valor)){
+                $products[$clave]['cantidad'] = $cantida;
+            }
+        }
+
+        session()->put('carro', $products);
+        return response()->json($products);
+   }
+
+   public function checkout()
+   {
+        $categorias = DB::table('categoria')->where('estado','=','A')->get();
+        $familias = DB::table('familia')->get();
+
+        $textos = DB::table('texto')->get();
+
+        $imagenes = DB::table('seccion_imagen')
+        ->join('imagen','id_imagen','=','idimagen')->get();
+        
+        $imgweb = array();
+
+        foreach($imagenes as $item){
+            $imgweb[$item->nombre_seccion] = $item->nombre;
+        }
+        
+        
+        if (\Session::get('usuario-nombre') == null) {
+            return view('login',['cates'=>$categorias,'familias'=>$familias,'texto'=>$textos,'imagen'=>$imgweb]);
+        } else {
+            $id = \Session::get('usuario-id');
+            $Usuario2 = DB::table('usuario')->where('idusuario','=',"$id")->first();
+            return view('checkout',['cates'=>$categorias,'familias'=>$familias,'user'=>$Usuario2,'texto'=>$textos,'imagen'=>$imgweb]);
+        }
+   }
+
+   public function pedido()
+   {
+        $ivaconsulta = DB::table('parametros')->where('idparametro','=',1)->first();
+        $ivaVal = $ivaconsulta->iva;
+        if (!is_null(\Session::get('carro'))) {
+            $subtotal = 0.0;
+            $total = 0.0;
+            $iva = 0.0;
+            foreach(\Session::get('carro') as $itemC){
+                $itemSub = round(floatval($itemC['precio'])*floatval($itemC['cantidad']),2); 
+                $subtotal += $itemSub;
+                if($itemC['gr_iva'] == 'S'){
+                    $iva += round((floatval($itemC['precio'])*floatval($itemC['cantidad']))*$ivaVal,2);
+                }
+            }
+            $total = $iva+$subtotal;
+
+            if ($total >=$ivaconsulta->min_pedido) {
+                $id = \Session::get('usuario-id');
+                $Usuario2 = DB::table('usuario')->where('idusuario','=',"$id")->first();
+                try {
+                    $hoy = date("d/m/Y");
+                    $iva_g = 'N';
+                    $venta = new Ventas();
+                    
+                    if ($iva > 0.0) {
+                       $iva_g = 'S';
+                    } 
+                    $venta->iddetalle_ventas = 0; 
+                    $venta->subtotal= $subtotal;
+                    $venta->iva = $iva;
+                    $venta->costo_envio = 0;
+                    $venta->envio_gratuito = 0; 
+                    $venta->total = $total;
+                    $venta->fecha = $hoy;
+                    $venta->estado = 'A';
+                    $venta->Graba_Iva = $iva_g;
+                    $venta->token = md5(uniqid(rand(), true));
+                    $venta->idusuario = \Session::get('usuario-id');
+                    $venta->ruc = $Usuario2->numero_identificacion;
+                    
+    
+                    $venta->save();
+    
+                    foreach (\Session::get('carro') as $key => $value) {
+                        
+                        $compra = new Compras();
+                        $compra->cantidad = $value['cantidad'];
+                        $compra->precio = round(floatval($value['precio']),2);
+                        $compra->subtotal = round(floatval($value['cantidad']),2)*round(floatval($value['precio']),2);
+                        
+                        if ($value['gr_iva']== 'S') {
+                            $compra->iva = ($compra->subtotal)*$ivaVal;
+                        } else {
+                            $compra->iva = 0;
+                        }
+                        $compra->costo_envio = 0;
+                        $compra->envio_gratuito = 0;
+                        $compra->iddetalle_venta = 0;
+                        $compra->idproducto = $value['item'];
+                        $compra->valor_neto = round(($compra->subtotal + $compra->iva),2);
+                        $compra->graba_iva = $value['gr_iva'];
+                        $compra->idusua = \Session::get('usuario-id');
+                        $compra->estado = 'PAG';
+                        $compra->idventa = $venta->idventas;
+                        $compra->save();
+                    }
+
+                    try {
+
+                        $array = \Session::get('carro');
+                        \Mail::to($Usuario2->correo)->send(new PedidoRealizado($venta,$array));
+                        \Session::forget('carro');
+                        return response()->json('pedido_guardado');
+
+                    
+                    } catch (\Throwable $e) {
+                        echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+                    }
+
+                } catch (\Throwable $th) {
+                    echo 'Excepción capturada: ',  $th->getMessage(), "\n";
+                }
+
+            } else {
+                return response()->json('menor_30');
+            }
+            
+        } else {
+            return response()->json('carro_vacio');
+        }
+       
+   }
+}
