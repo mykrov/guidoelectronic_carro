@@ -121,9 +121,7 @@
                                             @endif
                                             
                                             <div class="add-to-link"> 
-                                                <a href="#">
-                                                    <div><i class="fa fa-heart"></i><span>Añadir a Deseos</span></div>
-                                                </a>
+                                               
                                                 <a data-toggle="modal" data-code="{{trim($itemNuevo->idproducto)}}" class="vista-modal" data-target="#productModal" href="#">
                                                     <div><i class="fa fa-eye"></i><span>Vista Rápida</span></div>
                                                 </a>

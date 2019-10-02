@@ -185,4 +185,24 @@ class IndexController extends Controller
                              
         return view('guiacompra',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos]);
     }
+
+    public function tarifas(Request $request){
+
+        $categorias = DB::table('categoria')->where('estado','=','A')->get();
+        $familias = DB::table('familia')->get();
+        $textos = DB::table('texto')->get();
+        $imagenes = DB::table('seccion_imagen')
+        ->join('imagen','id_imagen','=','idimagen')->get();
+
+        $tarifas = DB::table('tarifas_envio')->get();
+        
+        $imgweb = array();
+
+        foreach($imagenes as $item){
+            $imgweb[$item->nombre_seccion] = $item->nombre;
+        }
+
+        return view('tarifas',['tarifas'=>$tarifas,'cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos]);
+
+    }
 }

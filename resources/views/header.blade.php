@@ -194,7 +194,7 @@
                                     <li ><a href="{{route('index')}}">Inicio</a>
                                     </li>
                                     <li><a href="{{route('nosotros')}}">Quienes Somos</a></li>
-                                <li><a href="{{route('cuenta')}}">Mi Cuenta</a></li>
+                                    <li><a href="{{route('cuenta')}}">Mi Cuenta</a></li>
                                     <li class="angle-down"><a href="#">Categorias</a>
                                         <ul class="sub-menu">
                                                 @foreach ($cates as $cate)
@@ -204,7 +204,8 @@
                                     </li>
                                     {{-- <li><a href="wishlist.html">Mis Deseos</a></li> --}}
                                     <li><a href="{{route('guiacompra')}}">Como Comprar</a></li>
-                                <li><a href="{{route('contacto')}}">Contacto</a></li>
+                                    <li><a href="{{route('tarifas')}}">Tarifas</a></li>
+                                    <li><a href="{{route('contacto')}}">Contacto</a></li>
                                 </ul>
                             </nav>
                         </div>        
@@ -235,6 +236,7 @@
                                 </li>
                                 {{-- <li><a href="wishlist.html">Mis Deseos</a></li> --}}
                                 <li><a href="{{route('guiacompra')}}">Como Comprar</a></li>
+                                <li><a href="{{route('tarifas')}}">Tarifas</a></li>
                                 <li><a href="{{route('contacto')}}">Contacto</a></li>
                             </ul>
                         </nav>
