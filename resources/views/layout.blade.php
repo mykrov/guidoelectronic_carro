@@ -149,7 +149,13 @@
                                                 </div>
                                                 <div class="pro-price">
                                                     <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">${{$itemNuevo->$precioAc}}</span>
+                                                    <span class="normal-price">
+                                                        @if ($itemNuevo->Graba_Iva == "S")
+                                                        ${{($itemNuevo->$precioAc*$parametros->iva)+$itemNuevo->$precioAc}}
+                                                        @else
+                                                        ${{$itemNuevo->$precioAc}}
+                                                        @endif
+                                                    </span>
                                                     <span class="old-price"><del>${{$itemNuevo->$precioAc}}</del></span>
                                                 </div>
                                             </div>

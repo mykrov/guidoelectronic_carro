@@ -15,6 +15,7 @@ class IndexController extends Controller
         
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
+        $parametros = DB::table('parametros')->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -68,7 +69,8 @@ class IndexController extends Controller
         'papeNew'=>$papeNew,
         'utilNew'=>$utilNew,
         'imagen'=>$imgweb,
-        'texto'=>$textos
+        'texto'=>$textos,
+        'parametros'=>$parametros
         ]);
     }
 

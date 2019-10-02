@@ -14,6 +14,7 @@ class SearchController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
+        $parametros = DB::table('parametros')->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -45,7 +46,14 @@ class SearchController extends Controller
             'category'=>$category,
         ));
 
-        return view('busqueda',['cates'=> $categorias,'familias'=>$familias,'productosLike'=>$productosLike,'buscado'=>$text,'imagen'=>$imgweb,'texto'=>$textos]);
+        return view('busqueda',['cates'=> $categorias,
+        'familias'=>$familias,
+        'productosLike'=>$productosLike,
+        'buscado'=>$text,
+        'imagen'=>$imgweb,
+        'texto'=>$textos,
+        'parametros' => $parametros
+        ]);
     }
 
     public function categoria($code)
@@ -53,6 +61,7 @@ class SearchController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
+        $parametros = DB::table('parametros')->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -70,7 +79,14 @@ class SearchController extends Controller
 
         $codigo_buscado = DB::table('categoria')->where('idcategoria','=',"$code")->first();
         
-        return view('busqueda',['cates'=>$categorias,'familias'=>$familias,'productosLike'=>$result,'buscado'=>$codigo_buscado->nombre,'imagen'=> $imgweb,'texto'=>$textos]);
+        return view('busqueda',['cates'=>$categorias,
+        'familias'=>$familias,
+        'productosLike'=>$result,
+        'buscado'=>$codigo_buscado->nombre,
+        'imagen'=> $imgweb,
+        'texto'=>$textos,
+        'parametros' => $parametros
+        ]);
 
     }
 
@@ -79,7 +95,7 @@ class SearchController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
-
+        $parametros = DB::table('parametros')->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -97,7 +113,14 @@ class SearchController extends Controller
 
         $codigo_buscado = DB::table('familia')->where('idfamilia','=',"$code")->first();
         
-        return view('busqueda',['cates'=>$categorias,'familias'=>$familias,'productosLike'=>$result,'buscado'=>$codigo_buscado->nombre_familia,'imagen'=>$imgweb,'texto'=>$textos]);
+        return view('busqueda',['cates'=>$categorias,
+        'familias'=>$familias,
+        'productosLike'=>$result,
+        'buscado'=>$codigo_buscado->nombre_familia,
+        'imagen'=>$imgweb,
+        'texto'=>$textos,
+        'parametros' => $parametros
+        ]);
 
     }
 
@@ -107,6 +130,7 @@ class SearchController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
+        $parametros = DB::table('parametros')->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -123,7 +147,14 @@ class SearchController extends Controller
 
         $codigo_buscado = DB::table('familia')->where('idfamilia','=',"$code")->first();
         
-        return view('busqueda',['cates'=>$categorias,'familias'=>$familias,'productosLike'=>$result,'buscado'=>$codigo_buscado->nombre_familia,'imagen'=>$imgweb,'texto'=>$textos]);
+        return view('busqueda',['cates'=>$categorias,
+        'familias'=>$familias,
+        'productosLike'=>$result,
+        'buscado'=>$codigo_buscado->nombre_familia,
+        'imagen'=>$imgweb,
+        'texto'=>$textos,
+        'parametros' => $parametros
+        ]);
 
     }
 
@@ -159,6 +190,7 @@ class SearchController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
+        $parametros = DB::table('parametros')->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -175,6 +207,13 @@ class SearchController extends Controller
         ->get();
 
         $producto = DB::table('producto')->where('idproducto','=',"$code")->first();
-        return view('singleproduct',['tenoNew'=>$tecnoNew,'cates'=>$categorias,'familias'=>$familias,'producto'=>$producto,'imagen'=>$imgweb,'texto'=>$textos]);
+        return view('singleproduct',['tenoNew'=>$tecnoNew,
+        'cates'=>$categorias,
+        'familias'=>$familias,
+        'producto'=>$producto,
+        'imagen'=>$imgweb,
+        'texto'=>$textos,
+        'parametros' => $parametros
+        ]);
     }
 }
