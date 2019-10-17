@@ -186,8 +186,13 @@
                                             </div><br>
                                             <div class="pro-price single-p">
                                                 <span class="price-text">Precio:</span>
-                                                <span class="normal-price">${{round($producto->$precioAc,2)}}</span>
-                                                
+                                                <span class="normal-price">
+                                                    @if ($producto->Graba_Iva == 'S')
+                                                        ${{round(($producto->$precioAc*$parametros->iva)+$producto->$precioAc,2)}}
+                                                    @else
+                                                        ${{round($producto->$precioAc,2)}}
+                                                    @endif 
+                                                </span>
                                             </div>
                                         </div>
                                         <p>Disponibilidad: <span class="signle-stock">En stock</span></p>

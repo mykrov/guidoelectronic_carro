@@ -11,9 +11,6 @@ use App\Usuario;
 
 class CarroController extends Controller
 {
-
-    
-   
                    
    public function add(Request $request)
    {
@@ -138,8 +135,16 @@ class CarroController extends Controller
         }
    }
 
-   public function pedido()
+
+   //Proceso de Pago y Guardado del pedido.
+   public function pedido(Request $request)
    {
+       //Datos provenientes del servidor de Kushki cuando verifica la tarjeta.
+        $tokenKushki = $request->kushkiToken;
+        $clienteks = $request->client; //dato adicional agregado al form
+        $total_ks = $request->total; //dato adicional agregado al form
+
+        // return response()->json(['token'=>$tokenKushki,'cliente'=>$clienteks,'total'=>$total_ks]);
         $ivaconsulta = DB::table('parametros')->where('idparametro','=',1)->first();
         $ivaVal = $ivaconsulta->iva;
         if (!is_null(\Session::get('carro'))) {
@@ -158,6 +163,8 @@ class CarroController extends Controller
             if ($total >=$ivaconsulta->min_pedido) {
                 $id = \Session::get('usuario-id');
                 $Usuario2 = DB::table('usuario')->where('idusuario','=',"$id")->first();
+
+
                 try {
                     $hoy = date("d/m/Y");
                     $iva_g = 'N';
@@ -178,8 +185,7 @@ class CarroController extends Controller
                     $venta->token = md5(uniqid(rand(), true));
                     $venta->idusuario = \Session::get('usuario-id');
                     $venta->ruc = $Usuario2->numero_identificacion;
-                    
-    
+                        
                     $venta->save();
     
                     foreach (\Session::get('carro') as $key => $value) {

@@ -278,8 +278,14 @@
                                                                     </div>
                                                                     <div class="pro-price">
                                                                         <span class="price-text">Precio:</span>
-                                                                        <span class="normal-price">${{round($item->$precioAc,2)}}</span>
-                                                                        <span class="old-price"><del>${{round($item->$precioAc,2)}}</del></span>
+                                                                        <span class="normal-price">
+                                                                            @if ($item->Graba_Iva == 'S')
+                                                                            ${{round(($item->$precioAc*$parametros->iva)+$item->$precioAc,2)}}
+                                                                            @else
+                                                                            ${{round($item->$precioAc,2)}}
+                                                                            @endif 
+                                                                        </span>
+                                                                        <span class="old-price"><del>${{round($item->$precioAc*0.3+$item->$precioAc,2)}}</del></span>
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -47,6 +47,8 @@ class LoginController extends Controller
             \Session::put('usuario-id',$consulta[0]->idusuario);
             \Session::forget('usuario-tipo');
             \Session::put('usuario-tipo',$consulta[0]->idtipo);
+            \Session::forget('identificacion');
+            \Session::put('identificacion',$consulta[0]->numero_identificacion);
                       
             return response()->json([
                     'logueado'

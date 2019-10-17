@@ -44,11 +44,12 @@
         <!--Start-main-wrapper-->
         <div class="page-4">
             @section('header')
-                @include('header');
+                @include('header')
+                @include('ws')
             @show
             
             @section('slider')
-                @include('slider-index');
+                @include('slider-index')
             @show
 
             <!-- Start-slider-->

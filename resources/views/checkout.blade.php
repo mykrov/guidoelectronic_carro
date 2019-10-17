@@ -373,8 +373,39 @@
                                             </tfoot>
                                         </table>
                                     </div>
+                                    {{-- <form action="post">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">  
+                                                <label for="name">Nombre</label>
+                                                <input class="form-control" type="name" name="card" id="nombrecard" placeholder="Nombre">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <label for="card">Número de Tarjeta</label>
+                                                <input class="form-control" type="number" name="card" id="card-number" placeholder="Numero de Tarjeta">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="expire">Fecha Expiración</label>
+                                                <input class="form-control"type="text" placeholder="MM/AA">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="ccv">Codigo Seguridad</label>
+                                                <input class="form-control" type="number" placeholder="CCV">
+                                            </div>
+                                        </div>
+                                    </form> --}}
+
                                     <div class="payment-method">
-                                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        {{-- caja de pago --}}
+                                        <form id="test-form" action=""></form>
+                                        <form id="form-kushkipay" action="realizar-compra" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="client" value="{{Session::get('usuario-nombre')}}">
+                                            <input type="hidden" name="identify" value="{{Session::get('identificacion')}}">
+                                            <input type="hidden" name="total" value="{{$subtotal+$iva}}">
+                                        </form> 
+                                        {{-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                           <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingOne">
                                               <h4 class="panel-title">
@@ -417,10 +448,10 @@
                                               </div>
                                             </div>
                                           </div>
-                                        </div>								
-                                        <div class="order-button-payment">
-                                            <input id="realizar-pedido" type="submit" value="Realizar Pedido" />
-                                        </div>
+                                        </div>								 --}}
+                                        {{-- <div class="order-button-payment">
+                                            <input id="23" type="submit" value="Realizar Pedido" />
+                                        </div> --}}
                                     </div>
 									</form>
                                 </div>
@@ -433,11 +464,23 @@
             <!--Start-footer-wrap-->
             @include('footer')
             <!--End-footer-wrap-->
-             
         </div>
         <!--End-main-wrapper-->
         
         @include('js-end')
-       
+        <script src="https://cdn.kushkipagos.com/kushki-checkout.js"></script>
+        
+        <script type="text/javascript">
+            var kushki = new KushkiCheckout({
+                form: "form-kushkipay",
+                merchant_id: "20000000107774610000",
+                amount: "{{$subtotal+$iva}}",
+                currency: "USD",
+                payment_methods:["credit-card"], // Payments Methods enabled
+                is_subscription: false, // Optional
+                inTestEnvironment: true, 
+                regional:false // Optional
+            });
+        </script>
     </body>
 </html>     

@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="en">
     @include('head-meta')
+    @include('ws')
     <style>
         thead{
             font-size: 2rem;
