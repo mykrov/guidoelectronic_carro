@@ -33,6 +33,7 @@ Route::get('/checkout','CarroController@checkout')->name('checkout');
 Route::get('/carro','Checkout@carro')->name('carro');
 Route::post('/change-cant','CarroController@change_cant')->name('change-cant');
 Route::post('/realizar-compra','CarroController@pedido')->name('pedido');
+
 //Administracion
 Route::get('/admin1','Administracion@index')->name('admin');
 Route::post('/upload','Administracion@upload')->name('file-upload');

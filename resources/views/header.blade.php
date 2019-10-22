@@ -71,7 +71,7 @@
                                     $imgweb[$item->nombre_seccion] = $item->nombre;
                                 @endphp
                             @endforeach --}}
-                            <a href="{{route('index')}}"><img src="{{asset('assets/themebasic/images/logo/'.$imagen['logo1'])}}" alt="Mt-Shop"></a>
+                            <a href="{{route('index')}}"><img src="{{asset('assets/themebasic/images/logo/'.$imagen['logo1'])}}" alt="Mt-Shop" style="max-height:80px;"></a>
                            
                         </div>
                     </div>

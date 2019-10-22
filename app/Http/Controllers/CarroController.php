@@ -9,6 +9,15 @@ use App\Compras;
 use App\Mail\PedidoRealizado;
 use App\Usuario;
 
+use GuzzleHttp\Client;
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
+
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException; 
+use GuzzleHttp\Exception\BadResponseException;
+
+
 class CarroController extends Controller
 {
                    
@@ -139,18 +148,20 @@ class CarroController extends Controller
    //Proceso de Pago y Guardado del pedido.
    public function pedido(Request $request)
    {
-       //Datos provenientes del servidor de Kushki cuando verifica la tarjeta.
+        //Datos provenientes del servidor de Kushki cuando verifica la tarjeta.
         $tokenKushki = $request->kushkiToken;
         $clienteks = $request->client; //dato adicional agregado al form
         $total_ks = $request->total; //dato adicional agregado al form
-
-        // return response()->json(['token'=>$tokenKushki,'cliente'=>$clienteks,'total'=>$total_ks]);
+        //Clave Privada del Comercio
+        $privateID = '20000000104308550000';
+        
         $ivaconsulta = DB::table('parametros')->where('idparametro','=',1)->first();
         $ivaVal = $ivaconsulta->iva;
         if (!is_null(\Session::get('carro'))) {
             $subtotal = 0.0;
             $total = 0.0;
             $iva = 0.0;
+            $ice = 0.0;
             foreach(\Session::get('carro') as $itemC){
                 $itemSub = round(floatval($itemC['precio'])*floatval($itemC['cantidad']),2); 
                 $subtotal += $itemSub;
@@ -161,79 +172,123 @@ class CarroController extends Controller
             $total = $iva+$subtotal;
 
             if ($total >=$ivaconsulta->min_pedido) {
+
                 $id = \Session::get('usuario-id');
                 $Usuario2 = DB::table('usuario')->where('idusuario','=',"$id")->first();
+                //Cliente para peticion a la API Kushki
+                $guzzle = new \GuzzleHttp\Client();
+                $url2 = "https://api-uat.kushkipagos.com/card/v1/charges";
+               
+                $myBody = ['token'=>$tokenKushki,
+                'amount'=>['subtotalIva'=>0,
+                            'subtotalIva0'=>$total,
+                            'iva'=>0,
+                            'currency'=>'USD'],
+                'metadata'=>['clienteID'=>$id],
+                'fullResponse'=>true];
+               
+                $headers2 = [
+                    'private-merchant-id' => $privateID,
+                    'Content-type' => 'application/json'
+                ];
+                //armado de la peticion
+                $request = new \GuzzleHttp\Psr7\Request('POST', $url2, $headers2);
 
-
-                try {
-                    $hoy = date("d/m/Y");
-                    $iva_g = 'N';
-                    $venta = new Ventas();
-                    
-                    if ($iva > 0.0) {
-                       $iva_g = 'S';
-                    } 
-                    $venta->iddetalle_ventas = 0; 
-                    $venta->subtotal= $subtotal;
-                    $venta->iva = $iva;
-                    $venta->costo_envio = 0;
-                    $venta->envio_gratuito = 0; 
-                    $venta->total = $total;
-                    $venta->fecha = $hoy;
-                    $venta->estado = 'A';
-                    $venta->Graba_Iva = $iva_g;
-                    $venta->token = md5(uniqid(rand(), true));
-                    $venta->idusuario = \Session::get('usuario-id');
-                    $venta->ruc = $Usuario2->numero_identificacion;
-                        
-                    $venta->save();
-    
-                    foreach (\Session::get('carro') as $key => $value) {
-                        
-                        $compra = new Compras();
-                        $compra->cantidad = $value['cantidad'];
-                        $compra->precio = round(floatval($value['precio']),2);
-                        $compra->subtotal = round(floatval($value['cantidad']),2)*round(floatval($value['precio']),2);
-                        
-                        if ($value['gr_iva']== 'S') {
-                            $compra->iva = ($compra->subtotal)*$ivaVal;
-                        } else {
-                            $compra->iva = 0;
+                try{
+                    $response4 = $guzzle->send($request, ['body' => json_encode($myBody)]);
+                    if($response4->getStatusCode() == 201){
+                        try {
+                            $hoy = date("d/m/Y");
+                            $iva_g = 'N';
+                            $venta = new Ventas();
+                            
+                            if ($iva > 0.0) {
+                               $iva_g = 'S';
+                            } 
+                            $venta->iddetalle_ventas = 0; 
+                            $venta->subtotal= $subtotal;
+                            $venta->iva = $iva;
+                            $venta->costo_envio = 0;
+                            $venta->envio_gratuito = 0; 
+                            $venta->total = $total;
+                            $venta->fecha = $hoy;
+                            $venta->estado = 'A';
+                            $venta->Graba_Iva = $iva_g;
+                            $venta->token = md5(uniqid(rand(), true));
+                            $venta->idusuario = \Session::get('usuario-id');
+                            $venta->ruc = $Usuario2->numero_identificacion;
+                                
+                            $venta->save();
+            
+                            foreach (\Session::get('carro') as $key => $value) {
+                                
+                                $compra = new Compras();
+                                $compra->cantidad = $value['cantidad'];
+                                $compra->precio = round(floatval($value['precio']),2);
+                                $compra->subtotal = round(floatval($value['cantidad']),2)*round(floatval($value['precio']),2);
+                                
+                                if ($value['gr_iva']== 'S') {
+                                    $compra->iva = ($compra->subtotal)*$ivaVal;
+                                } else {
+                                    $compra->iva = 0;
+                                }
+                                $compra->costo_envio = 0;
+                                $compra->envio_gratuito = 0;
+                                $compra->iddetalle_venta = 0;
+                                $compra->idproducto = $value['item'];
+                                $compra->valor_neto = round(($compra->subtotal + $compra->iva),2);
+                                $compra->graba_iva = $value['gr_iva'];
+                                $compra->idusua = \Session::get('usuario-id');
+                                $compra->estado = 'PAG';
+                                $compra->idventa = $venta->idventas;
+                                $compra->save();
+                            }
+        
+                            try {
+        
+                                $array = \Session::get('carro');
+                                \Mail::to($Usuario2->correo)->send(new PedidoRealizado($venta,$array));
+                                \Session::forget('carro');
+                                return redirect()->back()->with('alert', 'Pedido Realizado!');
+        
+                            } catch (\Throwable $e) {
+                                echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+                            }
+        
+                        } catch (\Throwable $th) {
+                            echo 'Excepción capturada: ',  $th->getMessage(), "\n";
+                            //reversar cobro y pedido
                         }
-                        $compra->costo_envio = 0;
-                        $compra->envio_gratuito = 0;
-                        $compra->iddetalle_venta = 0;
-                        $compra->idproducto = $value['item'];
-                        $compra->valor_neto = round(($compra->subtotal + $compra->iva),2);
-                        $compra->graba_iva = $value['gr_iva'];
-                        $compra->idusua = \Session::get('usuario-id');
-                        $compra->estado = 'PAG';
-                        $compra->idventa = $venta->idventas;
-                        $compra->save();
-                    }
-
-                    try {
-
-                        $array = \Session::get('carro');
-                        \Mail::to($Usuario2->correo)->send(new PedidoRealizado($venta,$array));
-                        \Session::forget('carro');
-                        return response()->json('pedido_guardado');
-
-                    
-                    } catch (\Throwable $e) {
-                        echo 'Excepción capturada: ',  $e->getMessage(), "\n";
-                    }
-
-                } catch (\Throwable $th) {
-                    echo 'Excepción capturada: ',  $th->getMessage(), "\n";
+                   
+                    }  
+                }catch(\GuzzleHttp\Exception\ClientException $e){
+                    $response55 = $e->getResponse();
+                    $responseBodyAsString = $response55->getBody()->getContents();
+                    return redirect()->back()->with('alert', 'Problema al procesar el pago.');
                 }
+                
+                //return response()->json($response->getStatusCode());
 
+                //$answer = $response->getBody()->getContents();
+                
+                // if($response->getStatusCode() == '400 Bad Request'){
+                //     return response()->json('rechazada');
+                // }elseif($response->getStatusCode() == 201){
+                //     if($answer = $response->getBody()->getContents()){
+                //         $decode = json_decode($answer);
+                //         return response()->json(['ticket'=>$decode->ticketNumber,'estado'=>$decode->details->transactionStatus]);
+                //     }else{
+                //         return response()->json('badRequets');
+                //     }
+                // }
+                
             } else {
-                return response()->json('menor_30');
+                return redirect()->back()->with('alert', 'El pedido es menor de 30$!');
             }
             
         } else {
-            return response()->json('carro_vacio');
+            
+            return redirect()->back()->with('alert', 'El carro de compra parece no tener productos');
         }
        
    }

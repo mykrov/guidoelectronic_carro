@@ -921,6 +921,12 @@
         <!-- End quickview product -->
 
         @include('js-end')
+
+        @if (session('compraResult') != '')
+            <script>
+                swal("Pedido Registrado con Exito","{{ session('compraResult') }}", "success");
+            </script> 
+        @endif
         
 		<!-- all js here -->
 		
