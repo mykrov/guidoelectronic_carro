@@ -485,8 +485,9 @@
        <script>
             var msg = '{{Session::get('alert')}}';
             var exist = '{{Session::has('alert')}}';
+            var tipo = '{{Session::get('tipo')}}'
             if(exist){
-                swal("Resultado:",msg, "success");
+                swal("Resultado del Proceso:",msg, tipo);
             }
         </script>
     </body>

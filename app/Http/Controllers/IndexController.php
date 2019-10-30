@@ -106,8 +106,7 @@ class IndexController extends Controller
         foreach($imagenes as $item){
             $imgweb[$item->nombre_seccion] = $item->nombre;
         }
-                                
-
+             
         return view('contacto',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos]);
 
     }

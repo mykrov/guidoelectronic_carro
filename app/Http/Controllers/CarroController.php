@@ -8,6 +8,7 @@ use App\Ventas;
 use App\Compras;
 use App\Mail\PedidoRealizado;
 use App\Usuario;
+use App\PagosKushki;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
@@ -243,13 +244,23 @@ class CarroController extends Controller
                                 $compra->idventa = $venta->idventas;
                                 $compra->save();
                             }
+
+                            $pKushki = new PagosKushki();
+                            $pKushki->fecha = date("Y-m-d H:i:s");
+                            $pKushki->cc_token = $tokenKushki;
+                            $pKushki->usuario = \Session::get('usuario-id');
+                            $pKushki->monto = $venta->total;
+                            $pKushki->estado = 'Aprobado';
+                            $pKushki->id_enta = $venta->idventas;
+                            $pKushki->save();
+
         
                             try {
         
                                 $array = \Session::get('carro');
                                 \Mail::to($Usuario2->correo)->send(new PedidoRealizado($venta,$array));
                                 \Session::forget('carro');
-                                return redirect()->back()->with('alert', 'Pedido Realizado!');
+                                return redirect()->back()->with(['alert'=>'Pedido Realizado con exito!','tipo'=>'success']);
         
                             } catch (\Throwable $e) {
                                 echo 'Excepción capturada: ',  $e->getMessage(), "\n";
@@ -264,7 +275,7 @@ class CarroController extends Controller
                 }catch(\GuzzleHttp\Exception\ClientException $e){
                     $response55 = $e->getResponse();
                     $responseBodyAsString = $response55->getBody()->getContents();
-                    return redirect()->back()->with('alert', 'Problema al procesar el pago.');
+                    return redirect()->back()->with(['alert'=>'Problema al procesar el pago.','tipo'=>'error']);
                 }
                 
                 //return response()->json($response->getStatusCode());
@@ -283,12 +294,12 @@ class CarroController extends Controller
                 // }
                 
             } else {
-                return redirect()->back()->with('alert', 'El pedido es menor de 30$!');
+                return redirect()->back()->with(['alert'=>'El pedido es menor de 30$!','tipo'=>'error']);
             }
             
         } else {
             
-            return redirect()->back()->with('alert', 'El carro de compra parece no tener productos');
+            return redirect()->back()->with(['alert'=>'El carro de compra parece no tener productos','tipo'=>'error']);
         }
        
    }

@@ -7,6 +7,7 @@ use \Validator;
 use App\Imagen;
 use App\Texto;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Hash;
 
 class Administracion extends Controller
 {
@@ -133,18 +134,27 @@ class Administracion extends Controller
         
         $email = Input::get('u');
         $pass = Input::get('p');
-        $consulta = DB::table('users')->where([['email','=',"$email"],['password','=',"$pass"]])->get();
-        $contador = $consulta->count();
-
-        if ($contador == 1) {
-            \Session::forget('administrator');
-            \Session::put('administrator',$consulta[0]->email);
-            return response()->json('logueado');
-        } else {
-            
-            return response()->json('no-logueado');
-        }
         
+        //return Hash::make($pass);
+       
+        $user1 = \App\User::where('email', '=', 'salvatorex89@gmail.com')->first();
+
+        if ($user1 === null) {
+            return response()->json('no-existe');
+        }else{
+            //return response()->json($pass);
+            $hashEncontrado = $user1->password;
+            if (Hash::check($pass, $hashEncontrado)) {
+                \Session::forget('administrator');
+                \Session::put('administrator',$user1->email);
+                return response()->json('logueado');
+            } else {
+                return response()->json('no-logueado');
+            }
+        }
+
+       
+    
     }
 
     public function salir()
