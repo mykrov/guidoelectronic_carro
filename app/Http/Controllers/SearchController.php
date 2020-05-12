@@ -30,9 +30,9 @@ class SearchController extends Controller
 
         if($category == 'TODAS')
         {
-            $where =[['descripcion','like',"%$text%"],['precio','!=',0],['estado','=','A']];
+            $where =[['descripcion','like',"%$text%"],['precio2','!=',0],['estado','=','A']];
         }else{
-            $where =[['descripcion','like',"%$text%"],['idcategoria','=',"$category"],['precio','!=',0],['estado','=','A']];
+            $where =[['descripcion','like',"%$text%"],['idcategoria','=',"$category"],['precio2','!=',0],['estado','=','A']];
         }
 
         $productosLike = DB::table('producto')
@@ -73,7 +73,7 @@ class SearchController extends Controller
         
         $result = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['idcategoria','=',"$code"],['estado','=','A'],['precio','>',0]])
+        ->where([['idcategoria','=',"$code"],['estado','=','A'],['precio2','>',0]])
         ->paginate(15)
         ->setpath('');
 
@@ -107,7 +107,7 @@ class SearchController extends Controller
         
         $result = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['idfamilia','=',"$code"],['estado','=','A'],['precio','>',0]])
+        ->where([['idfamilia','=',"$code"],['estado','=','A'],['precio2','>',0]])
         ->paginate(15)
         ->setpath('');
 
@@ -176,7 +176,7 @@ class SearchController extends Controller
                     $precioAc='precio';
                 }
             }else{
-                $precioAc='precio';
+                $precioAc='precio2';
             }
         
 
@@ -202,7 +202,7 @@ class SearchController extends Controller
         
         $tecnoNew = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['precio','!=',0],['idcategoria','=','C0060']])
+        ->where([['precio2','!=',0],['idcategoria','=','C0060']])
         ->take(10)
         ->get();
 

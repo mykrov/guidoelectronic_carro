@@ -18,8 +18,10 @@
             $precioAc = 'precio';
         }
     } else {
-        $precioAc='precio';
+        $precioAc='precio2';
     }
+
+    $precioAc='precio2';
     @endphp 
     <body>
         
@@ -268,21 +270,19 @@
                                                                 <div class="product-content">
                                                                     <a href="#"><h4 class="pro-name">{{str_limit($item->descripcion, 20)}}</h4></a>
                                                                     <div class="pro-rating">
-                                                                        <ul>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li><i class="fa fa-star"></i></li>
-                                                                            <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                                        </ul>
+                                                                        @if ($item->Graba_Iva == 'S')
+                                                                            IVA Incluido
+                                                                        @else
+                                                                            Producto sin IVA
+                                                                        @endif 
                                                                     </div>
                                                                     <div class="pro-price">
                                                                         <span class="price-text">Precio:</span>
                                                                         <span class="normal-price">
                                                                             @if ($item->Graba_Iva == 'S')
-                                                                            ${{round(($item->$precioAc*$parametros->iva)+$item->$precioAc,2)}}
+                                                                                ${{round(($item->$precioAc*$parametros->iva)+$item->$precioAc,2)}}
                                                                             @else
-                                                                            ${{round($item->$precioAc,2)}}
+                                                                                ${{round($item->$precioAc,2)}}
                                                                             @endif 
                                                                         </span>
                                                                         <span class="old-price"><del>${{round($item->$precioAc*0.3+$item->$precioAc,2)}}</del></span>
@@ -319,17 +319,22 @@
                                                                     <div class="product-content shop">
                                                                         <a href="#"><h3 class="pro-name">{{$item2->descripcion}}</h3></a>
                                                                         <div class="pro-rating">
-                                                                            <ul>
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                                <li><i class="fa fa-star"></i></li>
-                                                                                <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                                                <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                                            </ul>
+                                                                            @if ($item2->Graba_Iva == 'S')
+                                                                                <p>IVA INCLUIDO</p>
+                                                                            @else
+                                                                                <p>Producto sin IVA</p>
+                                                                            @endif 
                                                                         </div>
                                                                         <div class="pro-price">
                                                                             <span class="price-text">Precio:</span>
-                                                                            <span class="normal-price">${{round($item2->$precioAc,2)}}</span>
+                                                                            <span class="normal-price">
+                                                                            @if ($item2->Graba_Iva == 'S')
+                                                                                ${{round(($item2->$precioAc*$parametros->iva)+$item2->$precioAc,2)}}
+                                                                            @else
+                                                                                ${{round($item2->$precioAc,2)}}
+                                                                            @endif 
+                                                                            {{-- ${{round($item2->$precioAc,2)}} --}}
+                                                                        </span>
                                                                         <span class="old-price"><del>${{round($item2->$precioAc,2)}}</del></span>
                                                                         </div>
                                                                     </div>

@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                             <div class="single-ban-top-content">
-                                <p>Checkout</p>
+                                <p>Revisión Final</p>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                             <div class="shop-head-menu">
                                 <ul>
                                 <li><i class="fa fa-home"></i><a class="shop-home" href="{{route('index')}}"><span>Inicio</span></a><span><i class="fa fa-angle-right"></i></span></li>
-                                    <li class="shop-pro">Checkout</li>
+                                    <li class="shop-pro">Revisión Final</li>
                                 </ul>
                             </div>
                         </div>
@@ -155,13 +155,6 @@
                                                 <label>País <span class="required">*</span></label>
                                                 <select>
                                                   <option value="ecuador">Ecuador</option>
-                                                  <option value="colombia">Colombia</option>
-                                                  <option value="peru">Perú</option>
-                                                  <option value="brasil">Brasil</option>
-                                                  <option value="venezuela">Venezuela</option>
-                                                  <option value="bolivia">Bolivia</option>
-                                                  <option value="europa">Europa</option>
-                                                  <option value="usa">USA</option>
                                                 </select> 										
                                             </div>
                                         </div>
@@ -313,7 +306,7 @@
                                                             {{$item['nombre']}} <strong class="product-quantity"> × {{$item['cantidad']}}</strong>
                                                         </td>
                                                         <td class="product-total">
-                                                        <span class="amount">${{round($item['precio'],2)}}</span>
+                                                        <span class="amount">${{round($item['precio'],2) * round($item['cantidad'],2) }}</span>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -325,6 +318,7 @@
                                                     $subtotal = 0.0;
                                                     $total2 = 0.0;
                                                     $iva = 0.0;
+
                                                     foreach(Session::get('carro') as $itemC){
                                                         $itemSub = round(floatval($itemC['precio'])*floatval($itemC['cantidad']),2); 
                                                         $subtotal += $itemSub;
@@ -373,50 +367,28 @@
                                             </tfoot>
                                         </table>
                                     </div>
-                                    {{-- <form action="post">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-12">  
-                                                <label for="name">Nombre</label>
-                                                <input class="form-control" type="name" name="card" id="nombrecard" placeholder="Nombre">
-                                            </div>
-                                            <div class="form-group col-md-12">
-                                                <label for="card">Número de Tarjeta</label>
-                                                <input class="form-control" type="number" name="card" id="card-number" placeholder="Numero de Tarjeta">
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="expire">Fecha Expiración</label>
-                                                <input class="form-control"type="text" placeholder="MM/AA">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="ccv">Codigo Seguridad</label>
-                                                <input class="form-control" type="number" placeholder="CCV">
-                                            </div>
-                                        </div>
-                                    </form> --}}
+                     
 
-                                    <div class="payment-method">
+                                   <div class="payment-method">
                                         {{-- caja de pago --}}
-                                        <form id="test-form" action=""></form>
-                                        <form id="form-kushkipay" action="realizar-compra" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="client" value="{{Session::get('usuario-nombre')}}">
-                                            <input type="hidden" name="identify" value="{{Session::get('identificacion')}}">
-                                            <input type="hidden" name="total" value="{{$subtotal+$iva}}">
-                                        </form> 
-                                        {{-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        {{-- <form id="test-form" action=""></form> --}}
+                                   
+                                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                           <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingOne">
                                               <h4 class="panel-title">
                                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                  Transferencia Bancaria Directa
+                                                  Transferencia Bancaria
                                                 </a>
                                               </h4>
                                             </div>
                                             <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                               <div class="panel-body">
-                                                <p>Haga su pago directamente en nuestra cuenta bancaria. Utilice su ID de pedido como referencia de pago. Su pedido se enviará cuando los fondos se hayan hecho efectivo en nuestra cuenta.</p>
+                                                <p>Haga su pago directamente en nuestra cuenta bancaria. Al realizarlo notificanos para validar la operación.</p>
+                                                <h4><b>Banco del Pacifico</b></h4>
+                                                <h4>Cta. Corriente:  7559817</h4>  
+                                                <h4>JAQUELINE BURGOS HUILCAPI</h4>
+                                                <h4>CI: 1202302285</h4>
                                               </div>
                                             </div>
                                           </div>
@@ -424,17 +396,17 @@
                                             <div class="panel-heading" role="tab" id="headingTwo">
                                               <h4 class="panel-title">
                                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                  Pago con Cheque
+                                                  Pago contra entrega (Sólo Guayaquil)
                                                 </a>
                                               </h4>
                                             </div>
                                             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                               <div class="panel-body">
-                                                 <p>Por favor, envie su cheque a nombre de "SurtiOffice SA". Su pedido se enviará cuando los fondos se hayan hecho efectivo en nuestra cuenta.</p>
+                                                 <p>Puede recibir sus productos en la comodidad de su casa y relaizar el pago al momento de la entrega.</p>
                                               </div>
                                             </div>
                                           </div>
-                                          <div class="panel panel-default">
+                                          {{--  <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingThree">
                                               <h4 class="panel-title">
                                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -442,17 +414,17 @@
                                                 </a>
                                               </h4>
                                             </div>
-                                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                           <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                               <div class="panel-body">
                                                 <p>Pague con PayPal; Puede pagar con su tarjeta de crédito si no tiene una cuenta de PayPal.</p>
                                               </div>
-                                            </div>
+                                            </div> 
                                           </div>
-                                        </div>								 --}}
-                                        {{-- <div class="order-button-payment">
-                                            <input id="23" type="submit" value="Realizar Pedido" />
-                                        </div> --}}
-                                    </div>
+                                        </div>	--}}							
+                                        <div class="order-button-payment">
+                                            <input id="realizar-pedido" type="submit" value="Realizar Pedido" />
+                                        </div> 
+                                    </div> 
 									</form>
                                 </div>
                             </div>
@@ -468,9 +440,9 @@
         <!--End-main-wrapper-->
         
         @include('js-end')
-        <script src="https://cdn.kushkipagos.com/kushki-checkout.js"></script>
+        {{-- <script src="https://cdn.kushkipagos.com/kushki-checkout.js"></script> --}}
         
-        <script type="text/javascript">
+        {{-- <script type="text/javascript">
             var kushki = new KushkiCheckout({
                 form: "form-kushkipay",
                 merchant_id: "20000000107774610000",
@@ -481,7 +453,7 @@
                 inTestEnvironment: true, 
                 regional:false // Optional
             });
-        </script>
+        </script> --}}
        <script>
             var msg = '{{Session::get('alert')}}';
             var exist = '{{Session::has('alert')}}';

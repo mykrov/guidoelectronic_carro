@@ -132,7 +132,7 @@
                                     <p><i class="fa fa-map-marker"></i> <strong class="stro">Dirección :</strong><br> <span class="add-tex">Km 11.5 Vía a Daule, Parque California 1, Bodega E-7, Guayaquil 090706, Ecuador.</span></p>
                                 </div>
                                 <div class="single-email">
-                                    <p><i class="fa fa-envelope-o"></i><strong class="emai-stro">Email :</strong><br> <span class="email-tex"> ventas@surtioffice.ec</span></p>
+                                    <p><i class="fa fa-envelope-o"></i><strong class="emai-stro">Email :</strong><br> <span class="email-tex"> ventas@guidoelectronic.com</span></p>
                                 </div>
                                 <div class="customar-supp">
                                     <p><i class="fa fa-phone"></i> <strong class="cus-stro">Atención al cliente :</strong><br> <span class="cus-tex"> +593 98 205 9105 <br>+593 42 103 880.</span></p>

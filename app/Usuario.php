@@ -28,6 +28,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $ruc
  * @property string $idtipo
  * @property string $ingreso
+ * @property string $canton
  */
 class Usuario extends Model
 {
@@ -49,6 +50,6 @@ class Usuario extends Model
     /**
      * @var array
      */
-    protected $fillable = ['activacion', 'nombre', 'apellido', 'correo', 'contrasenia', 'identificacion', 'numero_identificacion', 'direccion', 'referencia', 'pais', 'ciudad', 'codigo_postal', 'celular1', 'celular2', 'imagen', 'img_servicios', 'img_representante', 'img_cedula', 'empresa', 'ruc', 'idtipo', 'ingreso'];
+    protected $fillable = ['activacion', 'nombre', 'apellido', 'correo', 'contrasenia', 'identificacion', 'numero_identificacion', 'direccion', 'referencia', 'pais', 'ciudad', 'codigo_postal', 'celular1', 'celular2', 'imagen', 'img_servicios', 'img_representante', 'img_cedula', 'empresa', 'ruc', 'idtipo', 'ingreso','canton'];
 
 }

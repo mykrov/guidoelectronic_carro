@@ -10,10 +10,10 @@
                     <div class="features-tab">
                       <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Tecnologías</a></li>
-                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Descartables</a></li>
-                            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Papelería</a></li>
-                            <li role="presentation"><a href="#section" aria-controls="messages" role="tab" data-toggle="tab">Útiles Escolares</a></li>
+                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Cables</a></li>
+                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Accesorios de Carro</a></li>
+                            <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Baterias</a></li>
+                            <li role="presentation"><a href="#section" aria-controls="messages" role="tab" data-toggle="tab">Convertidor</a></li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
@@ -62,7 +62,14 @@
                                                     </div>
                                                     <div class="pro-price">
                                                         <span class="price-text">Precio:</span>
-                                                        <span class="normal-price">${{$dest1->$precioAc}}</span>
+                                                        <span class="normal-price">
+                                                        @if ($dest1->Graba_Iva == 'S')
+                                                        ${{round((round($dest1->$precioAc,2)*$parametros->iva) + round($dest1->$precioAc,2),2) . ' IVA incluido'}}
+                                                        
+                                                    @else
+                                                        ${{round($dest1->$precioAc,2)}}
+                                                    @endif
+                                                        </span>
                                                         <span class="old-price"><del>${{$dest1->$precioAc}}</del></span>
                                                     </div>
                                                 </div>
@@ -122,7 +129,14 @@
                                                          </div>
                                                          <div class="pro-price">
                                                              <span class="price-text">Precio:</span>
-                                                             <span class="normal-price">${{$dest1->$precioAc}}</span>
+                                                             <span class="normal-price">
+                                                                  @if ($dest1->Graba_Iva == 'S')
+                                                                    ${{round((round($dest1->$precioAc,2)*$parametros->iva) + round($dest1->$precioAc,2),2) . ' IVA incluido'}}
+                                                                        
+                                                                    @else
+                                                                        ${{round($dest1->$precioAc,2)}}
+                                                                    @endif
+                                                             </span>
                                                              <span class="old-price"><del>${{$dest1->$precioAc}}</del></span>
                                                          </div>
                                                      </div>
@@ -180,7 +194,14 @@
                                                          </div>
                                                          <div class="pro-price">
                                                              <span class="price-text">Precio:</span>
-                                                             <span class="normal-price">${{$dest1->$precioAc}}</span>
+                                                             <span class="normal-price">
+                                                                  @if ($dest1->Graba_Iva == 'S')
+                                                                    ${{round((round($dest1->$precioAc,2)*$parametros->iva) + round($dest1->$precioAc,2),2) . ' IVA incluido'}}
+                                                        
+                                                                    @else
+                                                                        ${{round($dest1->$precioAc,2)}}
+                                                                    @endif
+                                                             </span>
                                                              <span class="old-price"><del>${{$dest1->$precioAc}}</del></span>
                                                          </div>
                                                      </div>
@@ -238,7 +259,14 @@
                                                          </div>
                                                          <div class="pro-price">
                                                              <span class="price-text">Precio:</span>
-                                                             <span class="normal-price">${{$dest1->$precioAc}}</span>
+                                                             <span class="normal-price">
+                                                                  @if ($dest1->Graba_Iva == 'S')
+                                                        ${{round((round($dest1->$precioAc,2)*$parametros->iva) + round($dest1->$precioAc,2),2) . ' IVA incluido'}}
+                                                        
+                                                    @else
+                                                        ${{round($dest1->$precioAc,2)}}
+                                                    @endif
+                                                             </span>
                                                              <span class="old-price"><del>${{$dest1->$precioAc}}</del></span>
                                                          </div>
                                                      </div>

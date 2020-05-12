@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
                             <div class="single-ban-top-content">
-                                <p>Carrito de Compras</p>
+                                <p>Carro de Compras</p>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                             <div class="shop-head-menu">
                                 <ul>
                                     <li><i class="fa fa-home"></i><a class="shop-home" href="index.html"><span>Inicio</span></a><span><i class="fa fa-angle-right"></i></span></li>
-                                    <li class="shop-pro">Carrito de Compras</li>
+                                    <li class="shop-pro">Carro de Compras</li>
                                 </ul>
                             </div>
                         </div>
@@ -119,7 +119,7 @@
                                     <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12">
                                         <div class="cart_totals">
 											<form data-toggle="validator" role="form" id="car_checkout">
-                                            <h2>Total del Carrito</h2>
+                                            <h2>Total del Carro</h2>
                                             <table>
                                                 <tbody>
                                                     <tr class="cart-subtotal">
@@ -152,27 +152,23 @@
                                                         <th>Total</th>
                                                         <td>
                                                             <strong><span class="amount" id="amount">{{$subtotal+$iva}}</span></strong>
-                                                            
                                                         </td>
                                                     </tr>											
                                                 </tbody>
                                             </table>
                                             </form>
-                                            
                                             </div>
                                                 <div class="stay-touch-area touch-textarea continue-butt">
                                                 @if (($subtotal+$iva) >= $monto_min)
-                                                <a href="{{route('checkout')}}"  type="submit" class="hvr-underline-from-left">CheckOut</a>
-                                                
-                                                <a href="{{route('checkout')}}" ><input class="hvr-underline-from-left" id="submit-disable" type="submit" value="Proceder al Checkout"></a>
+                                                <button class="btn-lg btn-dark" style="border:solid 1px CCC;"><a href="{{route('checkout')}}"  type="submit" class="hvr-underline-from-left">Proceder a Comprar</a></button>
+                                                {{-- <a href="{{route('checkout')}}" ><input class="hvr-underline-from-left"  type="submit" value="Proceder al Checkout"></a> --}}
                                                 @else
-                                                <a href="{{route('checkout')}}"  type="submit" class="hvr-underline-from-left">CheckOut</a>
-                                                
-                                                <a href="{{route('checkout')}}" ><input class="hvr-underline-from-left" id="submit-disable" DISABLED type="submit" value="Proceder al Checkout"></a>
-                                                    
+                                                <button class="btn-lg btn-dark" style="border:solid 1px CCC;"><a href="{{route('checkout')}}"  type="submit" class="hvr-underline-from-left">Proceder a Comprar</a></button>
+                                                {{-- <button class="btn btn-secondary"><a href="{{route('checkout')}}"  type="submit" class="hvr-underline-from-left">CheckOut</a></button> --}}
+                                                {{-- <a href="{{route('checkout')}}"  type="submit" class="hvr-underline-from-left">CheckOut</a> --}}
+                                                {{-- <a href="{{route('checkout')}}" ><input class="hvr-underline-from-left"  type="submit" value="Proceder al Checkout"></a> --}}
+                                                {{-- <a href="{{route('checkout')}}" ><input class="hvr-underline-from-left" id="submit-disable" DISABLED type="submit" value="Proceder al Checkout"></a> --}}
                                                 @endif
-                                                
-                                                
                                             </div>
                                     </div>
                                 </div>

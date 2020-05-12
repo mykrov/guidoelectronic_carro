@@ -137,7 +137,7 @@ class Administracion extends Controller
         
         //return Hash::make($pass);
        
-        $user1 = \App\User::where('email', '=', 'salvatorex89@gmail.com')->first();
+        $user1 = \App\User::where('email', '=', $email)->first();
 
         if ($user1 === null) {
             return response()->json('no-existe');

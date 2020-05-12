@@ -12,7 +12,7 @@ class Checkout extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
-
+        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -24,13 +24,13 @@ class Checkout extends Controller
 
         $productosNuevos = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where('precio','!=',0)
+        ->where('precio2','!=',0)
         ->take(10)
         ->get();
         
         //\Session::flush();
 
-        return view('layout',['cates'=> $categorias,'familias'=>$familias,'proNuevos'=>$productosNuevos,'texto'=>$textos,'imagen'=>$imgweb]);
+        return view('layout',['cates'=> $categorias,'familias'=>$familias,'proNuevos'=>$productosNuevos,'texto'=>$textos,'imagen'=>$imgweb,'parametros'=>$parametro]);
     }
 
     public function carro()
@@ -50,12 +50,12 @@ class Checkout extends Controller
 
         $productosNuevos = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where('precio','!=',0)
+        ->where('precio2','!=',0)
         ->take(10)
         ->get();
         
         //\Session::flush();
 
-        return view('carro',['cates'=> $categorias,'familias'=>$familias,'proNuevos'=>$productosNuevos,'texto'=>$textos,'imagen'=>$imgweb,'monto_min'=>$parametro->min_pedido]);
+        return view('carro',['cates'=> $categorias,'familias'=>$familias,'proNuevos'=>$productosNuevos,'texto'=>$textos,'imagen'=>$imgweb,'monto_min'=>$parametro->min_pedido,'parametros'=>$parametro]);
     }
 }

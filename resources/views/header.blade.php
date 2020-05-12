@@ -1,6 +1,7 @@
 
 <!--Start-Header-area-->
 <header>
+    <script>var iva_global = {{ $parametros->iva }};</script>
     <div class="header-top-wrap home-4">
         <div class="container">
             <div class="row">
@@ -115,8 +116,9 @@
                             $precioAc = 'precio';
                         }
                     } else {
-                        $precioAc='precio';
+                        $precioAc='precio2';
                     }
+                    $precioAc='precio2';
                     @endphp  
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" id="carro-div">
                         <ul class="header-cart-wrap">
@@ -142,21 +144,32 @@
                                                     <a href="#" class="product-name">{{$proCarrito['nombre']}} </a>
                                                     <div class="cart-price">
                                                         <span class="quantity"><strong> {{$proCarrito['cantidad']}}</strong></span>
-                                                        <span class="p-price">x ${{round($proCarrito['precio'],2)}}</span>
+                                                        @if ($proCarrito['gr_iva'] == 'S')
+                                                            <span class="p-price">x ${{round(round($proCarrito['precio'],2)*$parametros->iva + round($proCarrito['precio'],2),2) }}</span>
+                                                        @else
+                                                            <span class="p-price">x ${{round($proCarrito['precio'],2)}}</span>
+                                                        @endif
+                                                        
                                                     </div>
                                                     <a class="edit-pro" title="edit"><i class="fa fa-pencil-square-o"></i></a>
                                                     <a class="remove-pro" data-code={{$proCarrito['item']}} title="remove"><i class="fa fa-times"></i></a>
                                                 </div>
                                             </div>
                                             @php
-                                                $subtotal += floatval($proCarrito['precio'])
+                                                if ($proCarrito['gr_iva'] == 'S') {
+                                                    $subtotal += floatval($proCarrito["precio"] * $parametros->iva + round($proCarrito['precio'],2));
+                                                } else {
+                                                    $subtotal += floatval($proCarrito["precio"]);
+                                                }
+                                                
+                                                
                                             @endphp
                                             
                                             @endforeach
                                         </div>
                                         <div class="cart-price-list">
                                             <p class="price-amount">
-                                                <span class="cart-subtotal">SUBTotal :</span><span>${{round($subtotal,2)}}</span>
+                                                <span class="cart-subtotal">Total :</span><span>${{round($subtotal,2)}}</span>
                                             </p>
                                             <div class="cart-checkout">
                                                 <a class="vaciar-carro" href="javascript:void(0)">Vaciar Carro</a>

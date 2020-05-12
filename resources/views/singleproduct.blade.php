@@ -18,8 +18,10 @@
             $precioAc = 'precio';
         }
     } else {
-        $precioAc='precio';
+        $precioAc='precio2';
     }
+
+    $precioAc='precio2';
 @endphp 
     <body>
         <!--[if lt IE 8]>
@@ -188,7 +190,8 @@
                                                 <span class="price-text">Precio:</span>
                                                 <span class="normal-price">
                                                     @if ($producto->Graba_Iva == 'S')
-                                                        ${{round(($producto->$precioAc*$parametros->iva)+$producto->$precioAc,2)}}
+                                                        ${{round((round($producto->$precioAc,2)*$parametros->iva) + round($producto->$precioAc,2),2) . ' IVA incluido'}}
+                                                        
                                                     @else
                                                         ${{round($producto->$precioAc,2)}}
                                                     @endif 

@@ -43,5 +43,7 @@ Route::post('/text-save','Administracion@savetext')->name('text-save');
 Route::post('/login-admin','Administracion@loginProccess')->name('loginAdmin');
 Route::any('/salir','Administracion@salir')->name('salir');
 
+Route::get('getCantones','Cantones@getCantones')->name('getcantones');
+
 
 

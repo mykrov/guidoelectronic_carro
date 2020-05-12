@@ -18,11 +18,10 @@
                         <!--footer-link-area-start-->
                         <div class="social-icon">
                             <h4>Síguenos</h4>
-                            <a class="faceb" href="#" title="Facebook"><i class="fa fa-facebook"></i></a>
-                             <a class="twitt" href="#" title="Twitter" ><i class="fa fa-twitter"></i></a>
-                            <a class="tumb" href="#" title="Tumblr"><i class="fa fa-tumblr"></i></a>
-                            <a class="google" href="#" title="Google-plus"><i class="fa fa-google-plus"></i></a>
-                            <a class="dribb" href="#" title="Dribbble"><i class="fa fa-dribbble"></i></a>
+                            <a class="faceb" target="_blank" href="https://www.facebook.com/Importadora-Guido-Electronic-106004577476173/" title="Facebook"><i class="fa fa-facebook"></i></a>
+                          
+                            <a class="insta" target="_blank" href="https://www.instagram.com/guidoelectronic/" title="Instagram"><i class="fa fa-instagram"></i></a>
+                            
                         </div>
                         <!--footer-link-area-end-->
                     </div>
@@ -32,23 +31,12 @@
                             <h3 class="wedget-title">Últimos Tags</h3>
                             <div class="footer-top-content">
                                 <ul>
-                                    <li><a href="#">archivos</a></li>
-                                    <li><a href="#">consumo</a></li>
-                                    <li><a href="#">descartables</a></li>
-                                    <li><a href="#">energía</a></li>
-                                    <li><a href="#">escritura</a></li>
-                                    <li><a href="#">insumos_de_limpieza</a></li>
-                                    <li><a href="#">papelería</a></li>
-                                    <li><a href="#">seguridad</a></li>
-                                    <li><a href="#">suministros_de_tecnología</a></li>
-                                    <li><a href="#">útiles_de_oficina</a></li>
-                                    <li><a href="#">útiles_escolares</a></li>
+                                    <li><a href="{{route('categoria-search','C0011')}}">Varios</a></li>
+                                    <li><a href="{{route('categoria-search','C0020')}}">Parlante</a></li>
+                                    <li><a href="{{route('categoria-search','C0023')}}">Electrónica</a></li>
+                                    <li><a href="{{route('categoria-search','C0025')}}">Seguridad</a></li>
                                 </ul>
-                                <div class="view-all-tag">
-                                    <ul>
-                                        <li><a href="#">Ver todos</a></li>
-                                    </ul>
-                                </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -96,7 +84,7 @@
                             <span> Copyright &copy; Birobid. {{ now()->year }}</span>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    {{-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="payment-area">
                             <ul>
                                 <li><a title="Paypal" href="#"><img src="{{asset('assets/themebasic/images/payment/1.png')}}" alt="Paypal"></a></li>
@@ -106,7 +94,7 @@
                                 <li><a title="Discover" href="#"><img src="{{asset('assets/themebasic/images/payment/5.png')}}" alt="Discover"></a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

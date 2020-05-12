@@ -19,8 +19,10 @@
                     $precioAc = 'precio';
                 }
             } else {
-                $precioAc='precio';
+                $precioAc='precio2';
             }
+
+             $precioAc='precio2';
         @endphp 
     @show
   
@@ -64,7 +66,7 @@
                         <div class="col-lg-3 col-md-3">
                             <div class="category-main-wrap home-4 hidden-sm hidden-xs">
                                 <div class="category-title"><h3>Categorias</h3></div>
-                                    <div class="cat-single-wrap">
+                                    <div class="cat-single-wrap" style="display:none;">
                                         <ul class="nav">
                                             @foreach ($cates as $lefcate)
                                                 <li>
@@ -152,9 +154,9 @@
                                                     <span class="price-text">Precio:</span>
                                                     <span class="normal-price">
                                                         @if ($itemNuevo->Graba_Iva == "S")
-                                                        ${{($itemNuevo->$precioAc*$parametros->iva)+$itemNuevo->$precioAc}}
+                                                            ${{round($itemNuevo->$precioAc*$parametros->iva+$itemNuevo->$precioAc,2)}}
                                                         @else
-                                                        ${{$itemNuevo->$precioAc}}
+                                                            ${{$itemNuevo->$precioAc}}
                                                         @endif
                                                     </span>
                                                     <span class="old-price"><del>${{$itemNuevo->$precioAc}}</del></span>
@@ -221,12 +223,12 @@
             <div class="banner-area padding-t home-4 banner-dis">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="single-banner banner-r-b">
                                 <a href="#"><img alt="Hi Guys" src="{{asset('assets/themebasic/images/banner/'.$imagen['bannerL'])}}" /></a>
                             </div>
                         </div>
-                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="single-banner">
                                 <a href="#"><img alt="Hi Guys" src="{{asset('assets/themebasic/images/banner/'.$imagen['bannerL2'])}}" /></a>
                             </div>

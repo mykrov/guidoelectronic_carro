@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Usuario;
+use App\Provincias;
+use App\Cantones;
 use PHPUnit\Util\Json;
 use App\Mail\RegistroUsuario;
 use Illuminate\Support\Facades\Crypt;
@@ -17,9 +19,12 @@ class LoginController extends Controller
 {
     public function index()
     {
+        $provincias =DB::select(DB::raw('SELECT * FROM provincia where codigo in (select provincia from canton)'));
+        
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
+        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -29,7 +34,7 @@ class LoginController extends Controller
             $imgweb[$item->nombre_seccion] = $item->nombre;
         }
 
-        return view('login',['cates'=>$categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos]);
+        return view('login',['cates'=>$categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro,'provincias'=>$provincias]);
     }
 
     public function login()
@@ -46,7 +51,7 @@ class LoginController extends Controller
             \Session::forget('usuario-id');
             \Session::put('usuario-id',$consulta[0]->idusuario);
             \Session::forget('usuario-tipo');
-            \Session::put('usuario-tipo',$consulta[0]->idtipo);
+        \Session::put('usuario-tipo','CTB' /*$consulta[0]->idtipo*/);
             \Session::forget('identificacion');
             \Session::put('identificacion',$consulta[0]->numero_identificacion);
                       
@@ -83,7 +88,8 @@ class LoginController extends Controller
             && $request->password != null 
             && $request->dir1 != null
             && $request->pais != null 
-            && $request->ciudad != null 
+            && $request->ciudad != null
+            && $request->canton != null 
             && $request->tlf1 != null ) {
 
             if(strlen($request->num_id) == 13){
@@ -111,8 +117,8 @@ class LoginController extends Controller
                 $hoy = date("d-m-Y");
         
                 $usuario->activacion = "inhabilitado";
-                $usuario->nombre = $request->name;
-                $usuario->apellido = $request->lastname;
+                $usuario->nombre = strtoupper($request->name);
+                $usuario->apellido = strtoupper($request->lastname);
                 $usuario->correo = $request->email;
                 $usuario->contrasenia = $request->password;
                 $usuario->identificacion = $request->id_type;
@@ -132,6 +138,7 @@ class LoginController extends Controller
                 $usuario->ruc = $request->ruc_empre;
                 $usuario->idtipo = "CTA";
                 $usuario->ingreso = $hoy;
+                $usuario->canton = $request->canton;
                 $usuario->save();
 
                 \Mail::to($usuario->correo)->send(new RegistroUsuario($usuario));
@@ -200,8 +207,6 @@ class LoginController extends Controller
         }else{
             return response()->json(["res"=>"email-utilizado","dato"=>"no"]);
         }
-
-       
     }
 
 
@@ -235,8 +240,18 @@ class LoginController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $ruc = $user->numero_identificacion;
+        $textos = DB::table('texto')->get();
+        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
+        $imagenes = DB::table('seccion_imagen')
+        ->join('imagen','id_imagen','=','idimagen')->get();
 
-        return view('resetPassword',['cates'=>$categorias,'familias'=>$familias,'usuario'=> $user,'ruc'=>$ruc]);
+        $imgweb = array();
+
+        foreach($imagenes as $item){
+            $imgweb[$item->nombre_seccion] = $item->nombre;
+        }
+
+        return view('resetPassword',['cates'=>$categorias,'familias'=>$familias,'usuario'=> $user,'ruc'=>$ruc,'texto'=>$textos,'imagen'=>$imgweb,'parametros'=>$parametro]);
 
     }
 

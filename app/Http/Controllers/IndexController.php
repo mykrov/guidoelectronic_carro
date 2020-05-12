@@ -12,7 +12,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-        
+        $precioAc = 'precio2';
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $parametros = DB::table('parametros')->first();
@@ -29,36 +29,34 @@ class IndexController extends Controller
            
         $productosNuevos = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where('precio','!=',0)
+        ->where( $precioAc,'!=',0)
         ->take(10)
         ->get();
 
         $tecnoNew = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['precio','!=',0],['idcategoria','=','C0060']])
+        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0004']])
         ->take(10)
         ->get();
 
         $descarNew = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['precio','!=',0],['idcategoria','=','C0027']])
+        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0027']])
         ->take(10)
         ->get();
 
         $papeNew = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['precio','!=',0],['idcategoria','=','C0002']])
+        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0017']])
         ->take(10)
         ->get();
 
         $utilNew = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['precio','!=',0],['idcategoria','=','C0050']])
+        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0035']])
         ->take(10)
         ->get();
 
-
-        
         //\Session::flush();
 
         return view('layout',['cates'=> $categorias,
@@ -79,6 +77,7 @@ class IndexController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
+        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -89,7 +88,7 @@ class IndexController extends Controller
         }
                                 
 
-        return view('nosotros',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos]);
+        return view('nosotros',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro]);
 
     }
 
@@ -98,6 +97,7 @@ class IndexController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
+        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -107,7 +107,7 @@ class IndexController extends Controller
             $imgweb[$item->nombre_seccion] = $item->nombre;
         }
              
-        return view('contacto',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos]);
+        return view('contacto',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro]);
 
     }
 
@@ -117,6 +117,7 @@ class IndexController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
+        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -128,7 +129,7 @@ class IndexController extends Controller
                                 
 
         if (\Session::get('usuario-id') == null) {
-            return view('login',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos]);
+            return view('login',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro]);
         } else {
             $idUser = \Session::get('usuario-id');
 
@@ -148,7 +149,7 @@ class IndexController extends Controller
 
             //$cabeceras = DB::table("ventas")->where(['idusuario','=',"$idUser"]);
 
-            return view('cuenta',['dataus'=>$datauser,'cuenta','cates'=> $categorias,'familias'=>$familias,'detalles'=>$pedidos,'cabeceras'=>$cabeceras,'imagen'=>$imgweb,'texto'=>$textos]);
+            return view('cuenta',['dataus'=>$datauser,'cuenta','cates'=> $categorias,'familias'=>$familias,'detalles'=>$pedidos,'cabeceras'=>$cabeceras,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro]);
         }
         
     }
@@ -175,6 +176,7 @@ class IndexController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
+        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
         
@@ -184,7 +186,7 @@ class IndexController extends Controller
             $imgweb[$item->nombre_seccion] = $item->nombre;
         }
                              
-        return view('guiacompra',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos]);
+        return view('guiacompra',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro]);
     }
 
     public function tarifas(Request $request){
@@ -192,6 +194,7 @@ class IndexController extends Controller
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
+        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
         $imagenes = DB::table('seccion_imagen')
         ->join('imagen','id_imagen','=','idimagen')->get();
 
@@ -203,7 +206,7 @@ class IndexController extends Controller
             $imgweb[$item->nombre_seccion] = $item->nombre;
         }
 
-        return view('tarifas',['tarifas'=>$tarifas,'cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos]);
+        return view('tarifas',['tarifas'=>$tarifas,'cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro]);
 
     }
 }

@@ -337,10 +337,16 @@
             data: {'_token': token,'code':code},
             dataType: 'json',
             success: function (data) {
-                console.log(data);
+                //console.log(data);
+                if (data['Graba_Iva'] == 'S') {
+                    $("#modal-precio").text('$'+(parseFloat(data['precio2']) * iva_global + parseFloat(data['precio2']) ).toFixed(2));
+                }else{
+                    $("#modal-precio").text('$'+(parseFloat(data['precio2'])).toFixed(2));
+                }
+
                 $("#modal-nombre").text(data["descripcion"]);
                 $("#modal-codigo").text(data['idproducto']);
-                $("#modal-precio").text('$'+(parseFloat(data['precio'])).toFixed(2));
+                
                 $("#modal-imagen").attr('src','/assets/productos/'+data['idproducto'].trim()+'.jpg');
                
             }
@@ -348,7 +354,9 @@
     }); 
 
     $(document).on('click','#realizar-pedido',function(e){
+
         e.preventDefault();
+        $('#realizar-pedido').attr('disabled', true);
         $.ajax({
             type: "POST",
             url: "/realizar-compra",
@@ -357,8 +365,10 @@
             success: function (response) {
                 
                 if (response == 'menor_30') {
+                    $('#realizar-pedido').attr('disabled', false);
                     swal("Pedido menor a $30!", "Estimado cliente los pedidos deben ser superiores al monto minimo.", "error");                           
                 } else if (response == "carro_vacio") {
+                    $('#realizar-pedido').attr('disabled', false);
                     swal("Upss","Verifica que tengas productos en el carro", "error");
                 } else if (response == "pedido_guardado") {
                     swal("Pedido Registrado con Exito","Felicidades su pedido ha sido almacenado", "success");

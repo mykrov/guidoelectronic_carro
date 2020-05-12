@@ -18,6 +18,6 @@
     margin-top:16px;
 }
 </style>
-<a href="https://api.whatsapp.com/send?phone=+593961213849&text=Enviado desde Web:%20" class="float" target="_blank">
+<a href="https://api.whatsapp.com/send?phone=+593993865606&text=Enviado desde Web:%20" class="float" target="_blank">
     <i class="fa fa-whatsapp my-float"></i>
 </a>

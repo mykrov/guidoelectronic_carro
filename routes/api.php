@@ -30,17 +30,20 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 	Route::post('usuarios','ApiController@addUsuarios')->name('addUsuarios');
 	Route::post('productos','ApiController@addProductos')->name('addProductos');
 	Route::post('tipocliente','ApiController@clientePrecio')->name('clienteprecio');
+	Route::post('provincias','Provincias@PostProvincias')->name('postprovincias');
+	Route::post('cantones','Cantones@PostCantones')->name('postcantones');
 });
-
-
 
 Route::put('productos','ApiController@updateProductos')->name('updateProductos');
 Route::post('actualizarcab','ApiController@updatePedidos')->name('updatePedidos');
 
 //login de API para obtener Token
 Route::post('login', 'AuthenticateController@login');
+
 //Activar solo items que tienen imagen en el directorio /public/assets/productos
 Route::any('imgenes','Apicontroller@disableItemNoImage')->name('imagesno');
+
+
 
 
 

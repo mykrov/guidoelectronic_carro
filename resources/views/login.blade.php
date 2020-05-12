@@ -170,10 +170,22 @@
 												</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                            <div class="checkout-form-list">
-                                                <label>Ciudad <span class="required">*</span></label>
-                                                <input type="text" placeholder="Ciudad" name="ciudad" required />
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="country-select">
+                                                <label>Ciudad<span class="required">*</span></label>
+                                                <select name="ciudad" id="Ciudad" required>
+                                                    @foreach ($provincias as $provi)
+                                                       <option value="{{$provi->codigo}}">{{$provi->nombre}}</option>
+                                                    @endforeach                                            
+                                                </select>
+                                                <!-- <input type="text" placeholder="Ciudad" name="ciudad" required /> -->
+                                            </div>
+                                             <div class="country-select">
+                                                <label>Canton<span class="required">*</span></label>
+                                                <select name="canton" id="Canton" required>
+                                                                                         
+                                                </select>
+                                                <!-- <input type="text" placeholder="Ciudad" name="ciudad" required /> -->
                                             </div>
                                         </div>
                                         
@@ -616,6 +628,35 @@
                         }
                     });
                 }
+            });
+
+
+            $('#Ciudad').change(function(event) {
+                $('#Canton')
+                .find('option')
+                .remove()
+                .end();
+
+                let provin = $(this).children("option:selected").val()
+                $.ajax({
+                    url: '{{route("getcantones")}}',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {provincia: provin },
+                })
+                .done(function(data2) {
+                    $.each(data2,function(i, item){
+                        $('#Canton').append($('<option>', { 
+                            value: item.codigo,
+                            text : item.nombre 
+                        }));
+                    });
+                     
+                })
+                .fail(function() {
+                    console.log("error");
+                });
+                
             });
 
         </script>

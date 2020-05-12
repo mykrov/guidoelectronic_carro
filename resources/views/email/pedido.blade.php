@@ -1,4 +1,4 @@
-@component('mail::message')
+º@component('mail::message')
 
 # Gracias por preferirnos.
 
@@ -30,8 +30,10 @@ Pedido Numero: {{$venta->idventas}}
 </table>
 
 <br>
-Total: ${{$venta->total}}.<br>
+SubTotal: ${{$venta->subtotal}}
 IVA: ${{$venta->iva}}.<br>
+Total: <strong>${{$venta->total}}.<strong><br>
+
 Fecha:{{$venta->fecha}}.<br> 
 
 {{ config('app.name') }}
