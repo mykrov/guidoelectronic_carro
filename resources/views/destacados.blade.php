@@ -69,8 +69,8 @@
                                                     @else
                                                         ${{round($dest1->$precioAc,2)}}
                                                     @endif
-                                                        </span>
-                                                        <span class="old-price"><del>${{$dest1->$precioAc}}</del></span>
+                                                        <!-- </span>
+                                                        <span class="old-price"><del>${{$dest1->$precioAc}}</del></span> -->
                                                     </div>
                                                 </div>
                                             </div>
@@ -137,7 +137,7 @@
                                                                         ${{round($dest1->$precioAc,2)}}
                                                                     @endif
                                                              </span>
-                                                             <span class="old-price"><del>${{$dest1->$precioAc}}</del></span>
+                                                            <!--  <span class="old-price"><del>${{$dest1->$precioAc}}</del></span> -->
                                                          </div>
                                                      </div>
                                                  </div>
@@ -202,7 +202,7 @@
                                                                         ${{round($dest1->$precioAc,2)}}
                                                                     @endif
                                                              </span>
-                                                             <span class="old-price"><del>${{$dest1->$precioAc}}</del></span>
+                                                             <!-- <span class="old-price"><del>${{$dest1->$precioAc}}</del></span> -->
                                                          </div>
                                                      </div>
                                                  </div>
@@ -267,7 +267,7 @@
                                                         ${{round($dest1->$precioAc,2)}}
                                                     @endif
                                                              </span>
-                                                             <span class="old-price"><del>${{$dest1->$precioAc}}</del></span>
+                                                            <!--  <span class="old-price"><del>${{$dest1->$precioAc}}</del></span> -->
                                                          </div>
                                                      </div>
                                                  </div>

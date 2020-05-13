@@ -172,7 +172,7 @@
                                     </div>
                                     <div class="product-details">
                                         <div class="product-content">
-                                            <div class="pro-rating single-p">
+                                     <!--        <div class="pro-rating single-p">
                                                 <ul class="single-pro-rating">
                                                     <li><i class="fa fa-star"></i></li>
                                                     <li><i class="fa fa-star"></i></li>
@@ -185,7 +185,7 @@
                                                     <span class="separator">|</span>
                                                     <a href="#" class="add-to-review">Añadir comentario</a>
                                                 </div>
-                                            </div><br>
+                                            </div><br> -->
                                             <div class="pro-price single-p">
                                                 <span class="price-text">Precio:</span>
                                                 <span class="normal-price">

@@ -38,6 +38,7 @@ class SearchController extends Controller
         $productosLike = DB::table('producto')
         ->orderBy('idproducto','DESC')
         ->where($where)
+        ->orWhere('idproducto','like',"%$text%")
         ->paginate(15)
         ->setpath('');
 

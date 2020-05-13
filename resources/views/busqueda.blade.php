@@ -285,7 +285,7 @@
                                                                                 ${{round($item->$precioAc,2)}}
                                                                             @endif 
                                                                         </span>
-                                                                        <span class="old-price"><del>${{round($item->$precioAc*0.3+$item->$precioAc,2)}}</del></span>
+                                                                       <!--  <span class="old-price"><del>${{round($item->$precioAc*0.3+$item->$precioAc,2)}}</del></span> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -335,7 +335,7 @@
                                                                             @endif 
                                                                             {{-- ${{round($item2->$precioAc,2)}} --}}
                                                                         </span>
-                                                                        <span class="old-price"><del>${{round($item2->$precioAc,2)}}</del></span>
+                                                                        <!-- <span class="old-price"><del>${{round($item2->$precioAc,2)}}</del></span> -->
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -349,14 +349,14 @@
                                                                         </a>
                                                                     </div>
                                                                 </div>
-                                                                <div class="add-to-link shop"> 
+                                                                <!-- <div class="add-to-link shop"> 
                                                                     <a href="#">
                                                                         <div><i class="fa fa-heart"></i><span>Añadir a Deseos</span></div>
                                                                     </a>
                                                                     <a href="#">
                                                                         <div><i class="fa fa-random"></i><span>Comparar</span></div>
                                                                     </a>
-                                                                </div>
+                                                                </div> -->
                                                             </div>
                                                         </div>
                                                         <!-- single-product-end -->

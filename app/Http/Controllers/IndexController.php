@@ -113,6 +113,7 @@ class IndexController extends Controller
 
     public function cuenta ()
     {
+        $provincias =DB::select(DB::raw('SELECT * FROM provincia where codigo in (select provincia from canton)'));
 
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
@@ -129,7 +130,7 @@ class IndexController extends Controller
                                 
 
         if (\Session::get('usuario-id') == null) {
-            return view('login',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro]);
+            return view('login',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro,'provincias'=>$provincias]);
         } else {
             $idUser = \Session::get('usuario-id');
 
@@ -149,7 +150,7 @@ class IndexController extends Controller
 
             //$cabeceras = DB::table("ventas")->where(['idusuario','=',"$idUser"]);
 
-            return view('cuenta',['dataus'=>$datauser,'cuenta','cates'=> $categorias,'familias'=>$familias,'detalles'=>$pedidos,'cabeceras'=>$cabeceras,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro]);
+            return view('cuenta',['dataus'=>$datauser,'cuenta','cates'=> $categorias,'familias'=>$familias,'detalles'=>$pedidos,'cabeceras'=>$cabeceras,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro,'provincias'=>$provincias]);
         }
         
     }
