@@ -1,5 +1,5 @@
 <div class="featured-product-wrap home-4 padding-t">
-        <div class="container">				   
+        			   
             <!-- section-heading start -->
             <div class="section-heading">
                 <h3><span class="h-color">PRODUCTOS</span> DESTACADOS</h3>
@@ -284,5 +284,5 @@
                 </div>
                 
             </div>
-        </div>
+        
     </div>

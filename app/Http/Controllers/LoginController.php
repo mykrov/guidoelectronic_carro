@@ -139,6 +139,7 @@ class LoginController extends Controller
                 $usuario->idtipo = "CTA";
                 $usuario->ingreso = $hoy;
                 $usuario->canton = $request->canton;
+                $usuario->sincronizado = 'N';
                 $usuario->save();
 
                 \Mail::to($usuario->correo)->send(new RegistroUsuario($usuario));
@@ -263,4 +264,7 @@ class LoginController extends Controller
         return response()->json(["res"=>"actualizado"]);
 
     }
+
+    
+
 }

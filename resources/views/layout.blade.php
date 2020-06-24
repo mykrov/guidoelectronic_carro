@@ -51,7 +51,7 @@
             @show
             
             @section('slider')
-                @include('slider-index')
+               
             @show
 
             <!-- Start-slider-->
@@ -66,7 +66,7 @@
                         <div class="col-lg-3 col-md-3">
                             <div class="category-main-wrap home-4 hidden-sm hidden-xs">
                                 <div class="category-title"><h3>Categorias</h3></div>
-                                    <div class="cat-single-wrap" style="display:none;">
+                                    <div class="cat-single-wrap">
                                         <ul class="nav">
                                             @foreach ($cates as $lefcate)
                                                 <li>
@@ -97,13 +97,13 @@
                             </div>
                         </div>
                         <!--end-category-area-->
-						
+					@include('banners')
+                    <hr>
                 
 					<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div class="latest-content text-center">
                         <div class="section-heading">
-                            <h3><span class="h-color">Productos</span> Nuevos</h3>
-                          
+                            <h3 class="animate__animated animate__bounce" ><span class="h-color">Productos</span> Nuevos</h3>
                         </div>
                     </div>
                     <div class="row">
@@ -166,57 +166,56 @@
                                     </div>
                                 </div>
                                 <!-- End-single-product -->
-                            @endforeach
+                                @endforeach
                             
-                        </div>
-                    </div>
-					</div>
-					</div>
+                                </div>
+                            </div>
+                            @include('destacados')
+                           <div >
+                            <div class="latest-content text-center">
+                                    <div class="section-heading">
+                                        <h3 style="font-size: 50px;" class="my-element" ><span class="h-color">Promociones</span></h3>
+                                    </div>
+                                </div>
+                                <div class="row col-md-12">
+                                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="single-banner banner-r-b">
+                                            <a href="#"><img class="img-fluid" alt="Hi Guys" src="{{asset('assets/productos/promocion/camara8final.jpg') }}" style=" height: auto;" /></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="single-banner">
+                                            <a href="#"><img class="img-fluid" alt="Hi Guys" src="{{asset('assets/productos/promocion/camarafinal.jpg') }}" style=" height: auto;" /></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row col-md-12" style="padding-top: 2rem">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="single-banner">
+                                            <a href="#"><img class="img-fluid" alt="Hi Guys" src="{{asset('assets/productos/promocion/soporte.jpg') }}"  style=" height: auto;"/></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="single-banner">
+                                            <a href="#"><img class="img-fluid" alt="Hi Guys" src="{{asset('assets/productos/promocion/sonido.jpg') }}"  style=" height: auto;"/></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+				        </div>
+     
+                        
+				    </div>
                 </div>
             </div>
             <!--End-latest-products-wrap-->
-            @include('banners');
+            
             <!-- Start-featured-area-->
-            @include('destacados');
+            
             <!--End-featured-area-->
             <!--Satar-business-policy-wrap-->
             <div class="business-policy-wrap padding-t">
-                <div class="container">
-                    <div class="row">
-                       <!--Satar-single-p-wrap-->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <div class="single-p-wrap banner-r-b text-center">
-                                <span><i class="fa fa-plane"></i></span>
-                                <h4>{{$texto->where('seccion','Servicio1')->first()->contenido}}</h4>
-                            </div>
-                        </div>
-                        <!--end-single-p-wrap-->
-                        <!--Satar-single-p-wrap-->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <div class="single-p-wrap banner-r-b text-center">
-                                <span><i class="fa fa-life-ring"></i></span>
-                                <h4>{{$texto->where('seccion','Servicio2')->first()->contenido}}</h4>
-                            </div>
-                        </div>
-                        <!--end-single-p-wrap-->
-                        <!--Satar-single-p-wrap-->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <div class="single-p-wrap banner-r-b text-center">
-                                <span><i class="fa fa-money"></i></span>
-                                <h4>{{$texto->where('seccion','Servicio3')->first()->contenido}}</h4>
-                            </div>
-                        </div>
-                        <!--end-single-p-wrap-->
-                        <!--Satar-single-p-wrap-->
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            <div class="single-p-wrap text-center">
-                                <span><i class="fa fa-clock-o"></i></span>
-                                <h4>{{$texto->where('seccion','Servicio4')->first()->contenido}}</h4>
-                            </div>
-                        </div>
-                        <!--end-single-p-wrap-->
-                    </div>
-                </div>
+                
             </div>
             <!--End-business-policy-wrap-->
             <!--Start-banner-area-->
@@ -236,681 +235,21 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <br>
             <!--End-banner-area-->
             <div class="clear"></div>
              <!--Start-top-catagories-wrap-->
-            {{-- <div class="latest-products-wrap home-4 padding-t">
-                <div class="container">
-                    <!--start-top-categories-heading-->
-                    <div class="latest-content text-center">
-                        <div class="section-heading">
-                            <h3><span class="h-color">Top</span> Categorias</h3>
-                        </div>
-                    </div>
-                    <!--end-top-categories-heading-->
-                    <div class="row">
-                        <div class="featured-carousel indicator">
-                            <!-- Start-single-product -->
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                <div class="single-product">
-                                <div class="sale">-5%</div>
-                                <div class="sale-border"></div>
-                                    <div class="product-img-wrap"> 
-                                        <a class="product-img" href="#"><img src="{{asset('assets/themebasic/images/product/26.jpg')}}" alt="product-image" /></a>
-                                        <div class="add-to-cart">
-                                            <a href="#" title="add to cart">
-                                                <div><span>Ver más</span></div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product-info text-center">
-                                        <div class="product-content">
-                                            <a href="#"><h3 class="pro-name">Energía</h3></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End-single-product -->
-                            <!-- Start-single-product -->
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                <div class="single-product">
-                                <div class="sale">-10%</div>
-                                <div class="new">NUEVO</div>
-                                <div class="sale-border"></div>
-                                    <div class="product-img-wrap"> 
-                                        <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/33.jpg')}}" alt="product-image" /></a>
-                                        <div class="add-to-cart">
-                                            <a href="#" title="add to cart">
-                                                <div><span>Ver más</span></div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product-info text-center">
-                                        <div class="product-content">
-                                            <a href="#"><h3 class="pro-name">Insumos de Limpieza</h3></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End-single-product -->
-                            <!-- Start-single-product -->
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                <div class="single-product">
-                                <div class="sale">-5%</div>
-                                <div class="sale-border"></div>
-                                    <div class="product-img-wrap"> 
-                                        <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/27.jpg')}}" alt="product-image" /></a>
-                                        <div class="add-to-cart">
-                                            <a href="#" title="add to cart">
-                                                <div><span>Ver más</span></div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product-info text-center">
-                                        <div class="product-content">
-                                            <a href="#"><h3 class="pro-name">Suministros de Tecnología</h3></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End-single-product -->
-                            <!-- Start-single-product -->
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                <div class="single-product">
-                                <div class="new">NUEVO</div>
-                                    <div class="product-img-wrap"> 
-                                        <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/29.jpg')}}" alt="product-image" /></a>
-                                        <div class="add-to-cart">
-                                            <a href="#" title="add to cart">
-                                                <div><span>Ver más</span></div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product-info text-center">
-                                        <div class="product-content">
-                                            <a href="#"><h3 class="pro-name">Descartable</h3></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End-single-product -->
-                            <!-- Start-single-product -->
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                <div class="single-product">
-                                <div class="sale">-10%</div>
-                                <div class="sale-border"></div>
-                                    <div class="product-img-wrap"> 
-                                        <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/34.jpg')}}" alt="product-image" /></a>
-                                        <div class="add-to-cart">
-                                            <a href="#" title="add to cart">
-                                                <div><span>Ver más</span></div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product-info text-center">
-                                        <div class="product-content">
-                                            <a href="#"><h3 class="pro-name">Consumo</h3></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End-single-product -->
-                            <!-- Start-single-product -->
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                <div class="single-product">
-                                <div class="sale">-30%</div>
-                                <div class="new">Nuevo</div>
-                                <div class="sale-border"></div>
-                                    <div class="product-img-wrap"> 
-                                        <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/35.jpg')}}" alt="product-image" /></a>
-                                        <div class="add-to-cart">
-                                            <a href="#" title="add to cart">
-                                                <div><span>Ver más</span></div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product-info text-center">
-                                        <div class="product-content">
-                                            <a href="#"><h3 class="pro-name">Archivos</h3></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End-single-product -->
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
+         
             <!--End-top-categories-wrap-->
             <!--Start-latest-testimonials-->    
-            <div class="latest-testimonial-wrap home-4">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">
-                            <!--start-testimonial-heading-->
-                            <div class="testimonial-heading home-4">
-                                <div class="section-heading">
-                                    <h3><span class="h-color">Últimos</span> Testimonios</h3>
-                                </div>
-                            </div>
-                            <!--End-testimonial-heading-->
-                        </div>
-                    </div>
-                </div>
-                <div class="main-testimonial home-4">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <div class="testimonial-carousel indicator">
-                                    <!--single-testimonial-start-->
-                                    <div class="single-testimonial">
-                                        <div class="testimonial-img">
-                                            <p><img src="{{asset('assets/themebasic/images/testimonial/'.$imagen['testi1'])}}" alt=""></p>
-                                        </div>
-                                        <div class="testimonial-des home-1">
-                                            <p>{{$texto->where('seccion','Testimonio1')->first()->contenido}}</p>
-                                        </div>
-                                        <div class="testimonial-author">
-                                            <h5>{{$texto->where('seccion','TestimonioAutor1')->first()->contenido}}</h5>
-                                        </div>
-                                    </div>
-                                    <!--single-testimonial-end-->
-                                    <!--single-testimonial-start-->
-                                    <div class="single-testimonial">
-                                        <div class="testimonial-img">
-                                            <p><img src="{{asset('assets/themebasic/images/testimonial/'.$imagen['testi2'])}}" alt=""></p>
-                                        </div>
-                                        <div class="testimonial-des">
-                                            <p>{{$texto->where('seccion','Testimonio2')->first()->contenido}}</p>
-                                        </div>
-                                        <div class="testimonial-author">
-                                            <h5>{{$texto->where('seccion','TestimonioAutor2')->first()->contenido}}</h5>
-                                        </div>
-                                    </div>
-                                    <!--single-testimonial-end-->
-                                    <!--single-testimonial-start-->
-                                    <div class="single-testimonial">
-                                        <div class="testimonial-img">
-                                            <p><img src="{{asset('assets/themebasic/images/testimonial/'.$imagen['testi3'])}}" alt=""></p>
-                                        </div>
-                                        <div class="testimonial-des">
-                                            <p>{{$texto->where('seccion','Testimonio3')->first()->contenido}}</p>
-                                        </div>
-                                        <div class="testimonial-author">
-                                            <h5>{{$texto->where('seccion','TestimonioAutor3')->first()->contenido}}</h5>
-                                        </div>
-                                    </div>
-                                    <!--single-testimonial-end-->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>    
+            
             <!--End-latest-testimonials-->
             <!--Start-variety-products-wrap-->
-            {{-- <div class="variety-products-wrap home-4 padding-t">
-                <div class="container">
-                    <div class="row">
-                        <!--start-best-seller-product-->
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="best-heading">
-                                <div class="section-heading best-h">
-                                    <h3><span class="h-color">Más</span> Vendidas</h3>
-                                </div>
-                            </div>
-                            <div class="best-carousel">
-                                <!--start-double-best-product-->
-                                <div class="best-double-product">
-                                    <!-- Start-single-product -->
-                                    <div class="single-product margin-b">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/31.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                    <!-- Start-single-product -->
-                                    <div class="single-product">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/28.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                </div>
-                                <!--end-double-best-product-->
-                                <!--start-double-best-product-->
-                                <div class="best-double-product">
-                                    <!-- Start-single-product -->
-                                    <div class="single-product margin-b">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/30.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                    <!-- Start-single-product -->
-                                    <div class="single-product">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/26.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                </div>
-                                <!--end-double-best-product-->
-                            </div>
-                        </div>
-                        <!--end-best-seller-product-->
-                        <!--start-Top-rated-product-->
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 top-rated">
-                            <div class="best-heading">
-                                <div class="section-heading best-h">
-                                    <h3><span class="h-color">Ventas</span> Recientes</h3>
-                                </div>
-                            </div>
-                            <div class="best-carousel">
-                                <!--start-double-best-product-->
-                                <div class="best-double-product">
-                                    <!-- Start-single-product -->
-                                    <div class="single-product margin-b">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/27.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                    <!-- Start-single-product -->
-                                    <div class="single-product">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/29.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                </div>
-                                <!--end-double-best-product-->
-                                <!--start-double-best-product-->
-                                <div class="best-double-product">
-                                    <!-- Start-single-product -->
-                                    <div class="single-product margin-b">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/33.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                    <!-- Start-single-product -->
-                                    <div class="single-product">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/32.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                </div>
-                                <!--end-double-best-product-->
-                            </div>
-                        </div>
-                        <!--end-Top-rated-product-->
-                        <!--start-best-offer-product-->
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 best-off">
-                            <div class="best-heading">
-                                <div class="section-heading best-h">
-                                    <h3><span class="h-color">Mejores</span> Ofertas</h3>
-                                </div>
-                            </div>
-                            <div class="best-carousel">
-                                <!--start-double-best-product-->
-                                <div class="best-double-product">
-                                    <!-- Start-single-product -->
-                                    <div class="single-product margin-b">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/32.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                    <!-- Start-single-product -->
-                                    <div class="single-product">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/33.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                </div>
-                                <!--end-double-best-product-->
-                                <!--start-double-best-product-->
-                                <div class="best-double-product">
-                                    <!-- Start-single-product -->
-                                    <div class="single-product margin-b">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/26.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                    <!-- Start-single-product -->
-                                    <div class="single-product">
-                                        <div class="product-img-wrap best-s-w"> 
-                                            <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/30.jpg')}}" alt="product-image" /></a>
-                                        </div>
-                                        <div class="product-info best-s text-center">
-                                            <div class="product-content">
-                                                <a href="#"><h3 class="pro-name">Ejemplo Producto</h3></a>
-                                                <div class="pro-rating">
-                                                    <ul>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star"></i></li>
-                                                        <li class="r-grey"><i class="fa fa-star-half-o"></i></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="pro-price">
-                                                    <span class="price-text">Precio:</span>
-                                                    <span class="normal-price">$140.00</span>
-                                                    <span class="old-price"><del>$170.00</del></span>
-                                                </div>
-                                                <div class="add-to-cartbest">
-                                                    <a href="#" title="add to cart">
-                                                        <div><span>Añadir</span></div>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- End-single-product -->
-                                </div>
-                                <!--end-double-best-product-->
-                            </div>
-                        </div>
-                        <!--end-best-offer-product-->
-                    </div>
-                </div>
-            </div> --}}
+          
             <!--End-variety-products-wrap-->
             <!--Start-newsletter-wrap-->
-            {{-- <div class="news-letter-wrap text-center home-4">
-                <div class="container">
-                    <div class="row">
-                        <div class="news-subscribe">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="letter-text">
-                                    <h3><span class="h-color">No</span> se pierda <br> <span><img src="{{asset('assets/themebasic/images/newsletter/1.png')}}" alt=""></span></h3>
-                                    <p>Suscribase a nuestro boletín semanal para recibir nuestros descuentos del <span class="h-color">30%</span> en su primera compra.</p>
-                                </div>
-                            </div>    
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <div class="email-area">
-                                    <form class="input-group" action="#" method="post">
-                                        <span class="input-group-addon icon-envlop">
-                                        <i class="fa fa-envelope-o"></i>
-                                        </span>
-                                        <input type="email" class="form-control form_text" placeholder="Ingresa tu email aquí">
-                                        <input type="submit" class="submit" value="Enviar">
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
+            
             <!--End-newsletter-wrap-->
             <!--Start-footer-wrap-->
           @include('footer')
@@ -928,6 +267,10 @@
             <script>
                 swal("Pedido Registrado con Exito","{{ session('compraResult') }}", "success");
             </script> 
+        @endif
+        
+        @if(session('message') != '')
+            @include('message')
         @endif
         
 		<!-- all js here -->

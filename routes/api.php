@@ -32,6 +32,9 @@ Route::group(['middleware' => ['jwt.auth']], function () {
 	Route::post('tipocliente','ApiController@clientePrecio')->name('clienteprecio');
 	Route::post('provincias','Provincias@PostProvincias')->name('postprovincias');
 	Route::post('cantones','Cantones@PostCantones')->name('postcantones');
+	Route::post('stock','ApiController@stockProducto')->name('stock');
+	Route::post('usersaved','ApiController@sincUser')->name('sink');
+
 });
 
 Route::put('productos','ApiController@updateProductos')->name('updateProductos');
@@ -42,6 +45,9 @@ Route::post('login', 'AuthenticateController@login');
 
 //Activar solo items que tienen imagen en el directorio /public/assets/productos
 Route::any('imgenes','Apicontroller@disableItemNoImage')->name('imagesno');
+
+//pagos PlaceTo^Pay
+Route::post('ptpnotify','PagosController@Notificacion');
 
 
 

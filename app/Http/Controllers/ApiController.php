@@ -33,7 +33,8 @@ class ApiController extends Controller
    //obtener los usuarios por una fecha dada.
    public function getUsuarios($fecha)
    {
-       $usuarios = DB::table('usuario')->where('ingreso','=',$fecha)->get();
+        $usuarios = DB::table('usuario')->where('ingreso','=',$fecha)->get();
+       //$usuarios = DB::table('usuario')->where('sincronizado','=','N')->get();
        return response()->json(['status'=>'OK','fecha'=>$fecha,'usuariosw'=>$usuarios]);
    }
 
@@ -226,6 +227,14 @@ class ApiController extends Controller
 
                     array_push($codes,['product'=>$value['idproducto'],'status'=>'Saved']);
                 } else {
+                    $producto = DB::table('producto')->where('idproducto','=',$value['idproducto'])->first();
+                    if ($producto->precio != $value['precio']) {
+                        $producto->precio = $value['precio'];
+                    } else {
+                        # code...
+                    }
+                    
+
                     array_push($codes,['product'=>$value['idproducto'],'status'=>'NoSaved']);
                 }
            } catch (\Throwable $th) {
@@ -366,15 +375,56 @@ class ApiController extends Controller
         $nombre = explode('.',$imgbase);
         $nombre1 = $nombre[0];
         $producto = Producto::find($nombre1);
-        if($producto != null){
-            $producto->estado = 'A';
-            $producto->save();
-            $arrayImg[]=['Procesado'=>$producto['idproducto']];
-        }else{
-            $nulos[]=['NoProcesado'=>$nombre1];
+            if($producto != null){
+                $producto->estado = 'A';
+                $producto->save();
+                $arrayImg[]=['Procesado'=>$producto['idproducto']];
+            }else{
+                $nulos[]=['NoProcesado'=>$nombre1];
+            }
         }
-      }
+
+        foreach (glob($dir."/assets/productos/*.JPG") as $filename) {
+            $file = realpath($filename);
+            rename($file, str_replace(".JPG",".jpg",$file));
+        }
+
+
       return response()->json(['Nulos'=>$nulos,'Procesados'=>$arrayImg]);
     
+    }
+
+
+    public function stockProducto(Request $request){
+        
+        $seMantiene = 0;
+        $actualizado = 0;
+        $noEncontrado = 0;
+
+        foreach($request->stock as $key => $value){
+            $producto = Producto::where('idproducto','=',$value['ITEM'])->first();
+
+            if($producto != null){
+                if ($producto->stock != $value['STOCK']){
+                    $producto->stock = $value['STOCK'];
+                    $producto->save();
+                    $actualizado++;
+                }else{
+                    $seMantiene++;
+                }
+            }else{
+                $noEncontrado++;
+            }
+        }
+
+        return response()->json(['actualizados'=>$actualizado,'noEncontrado'=>$noEncontrado,'igual'=>$seMantiene]);
+    }
+
+    public function sincUser(Request $r){
+
+        foreach ($users as $key => $value) {
+            $usuario = Usuario::where('numero_identificacion','=',$value['ruc'])->first();    
+        }
+        
     }
 }

@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $token
  * @property string $idusuario
  * @property string $ruc
+ * @property string $tipoPago
+ * @property string $estadoPago
  */
 class Ventas extends Model
 {
@@ -32,6 +34,6 @@ class Ventas extends Model
     /**
      * @var array
      */
-    protected $fillable = ['iddetalle_ventas', 'subtotal', 'iva', 'costo_envio', 'envio_gratuito', 'total', 'fecha', 'estado', 'Graba_Iva', 'token', 'idusuario','ruc'];
+    protected $fillable = ['iddetalle_ventas', 'subtotal', 'iva', 'costo_envio', 'envio_gratuito', 'total', 'fecha', 'estado', 'Graba_Iva', 'token', 'idusuario','ruc','tipoPago','estadoPago'];
 
 }

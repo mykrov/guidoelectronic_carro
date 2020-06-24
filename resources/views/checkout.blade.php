@@ -372,7 +372,6 @@
                                    <div class="payment-method">
                                         {{-- caja de pago --}}
                                         {{-- <form id="test-form" action=""></form> --}}
-                                   
                                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                           <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingOne">
@@ -382,13 +381,16 @@
                                                 </a>
                                               </h4>
                                             </div>
-                                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
                                               <div class="panel-body">
                                                 <p>Haga su pago directamente en nuestra cuenta bancaria. Al realizarlo notificanos para validar la operación.</p>
                                                 <h4><b>Banco del Pacifico</b></h4>
                                                 <h4>Cta. Corriente:  7559817</h4>  
                                                 <h4>JAQUELINE BURGOS HUILCAPI</h4>
                                                 <h4>CI: 1202302285</h4>
+                                                <div class="order-button-payment">
+                                                    <input class="realizar-pedido" type="submit" value="Realizar Pedido" />
+                                                </div>
                                               </div>
                                             </div>
                                           </div>
@@ -403,27 +405,35 @@
                                             <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                               <div class="panel-body">
                                                  <p>Puede recibir sus productos en la comodidad de su casa y relaizar el pago al momento de la entrega.</p>
+                                                 <div class="order-button-payment">
+                                                    <input class="realizar-pedido" type="submit" value="Realizar Pedido" />
+                                                </div>
                                               </div>
                                             </div>
                                           </div>
-                                          {{--  <div class="panel panel-default">
+                                          <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingThree">
                                               <h4 class="panel-title">
                                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                  Tarjeta de Crédito o Débito (A través de PAYPAL)
+                                                  Pago con Tarjeta(PlaceToPay)
                                                 </a>
                                               </h4>
                                             </div>
-                                           <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                              <div class="panel-body">
-                                                <p>Pague con PayPal; Puede pagar con su tarjeta de crédito si no tiene una cuenta de PayPal.</p>
+                                           <div id="collapseThree" class="panel-collapse" role="tabpanel" aria-labelledby="headingThree">
+                                              <div class="panel-body text-center">
+                                                <img src="/assets/themebasic/images/place2p/logo.png" alt="" class="img text-center" style="max-width: 200px">
+                                                <p style="font-size: 1.5rem">Puede realizar el pago con la plataforma segura de PlaceToPay dando click en el siguiente botón:</p>
+                                                <div class="text-center">
+                                                    <div class="text-center">
+                                                        <a href="{{route('pagoptp')}}" id="pago-ptp"><button style="border: 2px solid #ff6f04;border-radius: 3px;padding: 1rem;font-size: 14px;">Pago con PlaceToPay</button></a>
+                                                    </div>
+                                                </div>                                    
                                               </div>
                                             </div> 
                                           </div>
-                                        </div>	--}}							
-                                        <div class="order-button-payment">
-                                            <input id="realizar-pedido" type="submit" value="Realizar Pedido" />
-                                        </div> 
+                                        </div>
+
+                                        
                                     </div> 
 									</form>
                                 </div>
@@ -462,5 +472,34 @@
                 swal("Resultado del Proceso:",msg, tipo);
             }
         </script>
+               
+        <script>
+            $('#pago-ptp').on('click',function(e){
+                e.preventDefault();
+                swal("Estimado Cliente: Será redirigido a la pagina de PlacetoPay para continuar el proceso de pago. ¿Está de acuerdo?", {
+                closeOnClickOutside: false,
+                buttons: {
+                    cancelar: {
+                        text:"Permanecer",
+                        value: "cancel",
+                    },
+                    confirm: {
+                        text: "Continuar",
+                        value: "confirm",
+                    }, 
+                },
+                })
+                .then((value) => {
+                    switch (value) {
+                        case "confirm":
+                        window.location.href = "/pagoptp";
+                        break;
+                        case "cancel":
+                        swal("Entendido.!!", "Seguimos Comprando", "success");
+                        break;
+                    }
+                });
+            });
+        </script>   
     </body>
 </html>     

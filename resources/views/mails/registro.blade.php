@@ -472,7 +472,7 @@
                         
                         <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
                         
-                            <h3>Hola {{$usuario->nombre}} {{$usuario->apellido}}, hemos registrado un usuario con esta dirección de correo electrónico y el ruc {{$usuario->numero_identificacion}}.</h3>
+                            <h3>Hola {{$usuario->nombre}} {{$usuario->apellido}}, hemos registrado un usuario con esta dirección de correo electrónico y la Identificación {{$usuario->numero_identificacion}}.</h3>
 
 <p>Para completar la activacion de la cuenta por favor de click en el siguiente boton.</p>
 

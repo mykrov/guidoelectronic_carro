@@ -1,4 +1,4 @@
-º@component('mail::message')
+@component('mail::message')
 
 # Gracias por preferirnos.
 

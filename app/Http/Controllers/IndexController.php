@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Http\Models\Producto;
 use App\config;
+Use Cache;
 
 use Illuminate\Http\Request;
 
@@ -12,6 +13,15 @@ class IndexController extends Controller
 {
     public function index()
     {
+
+        $visita = \App\Parametros::find(1);
+       
+        if(Cache::has('visita') == false){
+            Cache::add('contador',1);
+             $visita->visitas++;
+             $visita->save();
+        }
+
         $precioAc = 'precio2';
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
@@ -27,33 +37,36 @@ class IndexController extends Controller
 
         $textos = DB::table('texto')->get();
            
+ 
         $productosNuevos = DB::table('producto')
         ->orderBy('idproducto','DESC')
         ->where( $precioAc,'!=',0)
+        ->where('stock','>',0)
+        ->where('estado','=','A')
         ->take(10)
         ->get();
 
         $tecnoNew = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0004']])
+        ->where([[ $precioAc,'>',0],['idcategoria','=','C0004'],['stock','>',0],['estado','=','A']])
         ->take(10)
         ->get();
 
         $descarNew = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0027']])
+        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0027'],['stock','>',0],['estado','=','A']])
         ->take(10)
         ->get();
 
         $papeNew = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0017']])
+        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0017'],['stock','>',0],['estado','=','A']])
         ->take(10)
         ->get();
 
         $utilNew = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0035']])
+        ->where([[ $precioAc,'!=',0],['idcategoria','=','C0035'],['stock','>',0],['estado','=','A']])
         ->take(10)
         ->get();
 

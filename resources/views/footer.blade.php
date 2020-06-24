@@ -52,7 +52,7 @@
                                     @else
                                     <li><a href="{{route('cuenta')}}">Mi cuenta</a></li>
                                     @endif 
-                                <li><a href="{{route('carro')}}">Mi carrito</a></li>
+                                <li><a href="{{route('carro')}}">Mi Carro</a></li>
                                 <li><a href="{{route('contacto')}}">Contacto</a></li>
                                 </ul>
                             </div>
@@ -67,7 +67,10 @@
                                 <p class="adress"><label>Dirección:</label><span class="ft-content">{{$texto->where('seccion','Empresa_direccion')->first()->contenido}}</span></p>
                                 <p class="phone"><label>Teléfono:</label><span class="ft-content phone-num"><span class="phone1">{{$texto->where('seccion','Empresa_tlf')->first()->contenido}}</span></span></p>
                                 <p class="web"><label>Email:</label><span class="ft-content web-site"><a href="mailto: {{$texto->where('seccion','Empresa_email')->first()->contenido}}">{{$texto->where('seccion','Empresa_email')->first()->contenido}}</a></span></p>
+
+                                <p class="web"><label>Visitas:</label> <span style="font-size: 2rem">{{$parametros->visitas}}</span></p>
                             </div>
+
                         </div>
                     </div>
                     <!--footer-contact-info-end-->
@@ -80,8 +83,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                        <div class="copy-right">
-                            <span> Copyright &copy; Birobid. {{ now()->year }}</span>
+                        <div class="copy-right ">
+                            <span style="color:black"> Copyright &copy; <a href="https://www.birobid.com">Birobid. {{ now()->year }}</a> </span>
                         </div>
                     </div>
                     {{-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

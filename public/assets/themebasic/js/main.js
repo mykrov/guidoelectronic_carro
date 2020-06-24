@@ -353,10 +353,10 @@
         });
     }); 
 
-    $(document).on('click','#realizar-pedido',function(e){
+    $(document).on('click','.realizar-pedido',function(e){
 
         e.preventDefault();
-        $('#realizar-pedido').attr('disabled', true);
+        $('.realizar-pedido').attr('disabled', true);
         $.ajax({
             type: "POST",
             url: "/realizar-compra",

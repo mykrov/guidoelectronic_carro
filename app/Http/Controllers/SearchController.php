@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Redirect;
 
 class SearchController extends Controller
 {
@@ -30,9 +31,9 @@ class SearchController extends Controller
 
         if($category == 'TODAS')
         {
-            $where =[['descripcion','like',"%$text%"],['precio2','!=',0],['estado','=','A']];
+            $where =[['descripcion','like',"%$text%"],['precio2','!=',0],['estado','=','A'],['stock','>',0]];
         }else{
-            $where =[['descripcion','like',"%$text%"],['idcategoria','=',"$category"],['precio2','!=',0],['estado','=','A']];
+            $where =[['descripcion','like',"%$text%"],['idcategoria','=',"$category"],['precio2','!=',0],['estado','=','A'],['stock','>',0]];
         }
 
         $productosLike = DB::table('producto')
@@ -74,11 +75,25 @@ class SearchController extends Controller
         
         $result = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['idcategoria','=',"$code"],['estado','=','A'],['precio2','>',0]])
+        ->where([['idcategoria','=',"$code"],['estado','=','A'],['precio2','>',0],['stock','>',0]])
         ->paginate(15)
         ->setpath('');
 
         $codigo_buscado = DB::table('categoria')->where('idcategoria','=',"$code")->first();
+
+        if ($codigo_buscado == null) {
+            return redirect()->back()->with('message','Categoría No disponible.');
+        } else {
+            return view('busqueda',['cates'=>$categorias,
+            'familias'=>$familias,
+            'productosLike'=>$result,
+            'buscado'=>$codigo_buscado->nombre,
+            'imagen'=> $imgweb,
+            'texto'=>$textos,
+            'parametros' => $parametros
+            ]);
+        }
+        
         
         return view('busqueda',['cates'=>$categorias,
         'familias'=>$familias,
@@ -108,7 +123,7 @@ class SearchController extends Controller
         
         $result = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['idfamilia','=',"$code"],['estado','=','A'],['precio2','>',0]])
+        ->where([['idfamilia','=',"$code"],['estado','=','A'],['precio2','>',0],['stock','>',0]])
         ->paginate(15)
         ->setpath('');
 
@@ -142,7 +157,7 @@ class SearchController extends Controller
         }
         $result = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['idfamilia','=',"$code"],['estado','=','A']])
+        ->where([['idfamilia','=',"$code"],['estado','=','A'],['stock','>',0]])
         ->paginate(15)
         ->setpath('');
 
@@ -203,18 +218,25 @@ class SearchController extends Controller
         
         $tecnoNew = DB::table('producto')
         ->orderBy('idproducto','DESC')
-        ->where([['precio2','!=',0],['idcategoria','=','C0060']])
+        ->where([['precio2','!=',0],['idcategoria','=','C0060'],['stock','>',0]])
         ->take(10)
         ->get();
 
         $producto = DB::table('producto')->where('idproducto','=',"$code")->first();
-        return view('singleproduct',['tenoNew'=>$tecnoNew,
-        'cates'=>$categorias,
-        'familias'=>$familias,
-        'producto'=>$producto,
-        'imagen'=>$imgweb,
-        'texto'=>$textos,
-        'parametros' => $parametros
-        ]);
+
+        if ($producto == null) {
+            return redirect()->back()->with('message','');
+        } else {
+            return view('singleproduct',['tenoNew'=>$tecnoNew,
+            'cates'=>$categorias,
+            'familias'=>$familias,
+            'producto'=>$producto,
+            'imagen'=>$imgweb,
+            'texto'=>$textos,
+            'parametros' => $parametros
+            ]);
+        }
+        
+        
     }
 }

@@ -85,7 +85,6 @@
                                     
                                       <div class="tab-content">
                                         <div id="home" class="tab-pane fade in active">
-                                              
                                                 <form action="#" style="margin-top:3rem;">
                                                         <h3>Lista de Pedidos Anteriores</h3>
                                                         <div class="wishlist-table table-responsive">
@@ -98,6 +97,8 @@
                                                                         <th class="product-price"><span class="nobr"> Total </span></th>
                                                                         <th class="product-stock-stauts"><span class="nobr"> Fecha</span></th>
                                                                         <th class="product-add-to-cart"><span class="nobr">Detalles </span></th>
+                                                                        <th><span class="nobr">Tipo de Pago</span></th>
+                                                                        <th><span class="nobr">Estado de pago</span></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -109,6 +110,8 @@
                                                                         <td class="product-price">${{$cabe->total}}</td>
                                                                         <td class="product-stock-status">{{$cabe->fecha}}</td>
                                                                         <td class="product-add-to-cart"><button class="btn btn-secondary detalle-ped" data-pedido="{{$cabe->idventas}}">Ver Detalles</button></td>
+                                                                        <td>{{ $cabe->tipoPago }}</td>
+                                                                        <td><strong>{{ $cabe->estadoPago }}</strong></td>
                                                                     </tr>
                                                                     @endforeach
                                                                 </tbody>
@@ -117,7 +120,6 @@
                                                     </form>
                                         </div>
                                         <div id="menu1" class="tab-pane fade">
-                                               
                                                 <form data-toggle="validator" role="form" id="form_register" style="margin-top:2rem;">
                                                         {{ csrf_field() }}
                                                         <div class="row">

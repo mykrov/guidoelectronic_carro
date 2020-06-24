@@ -415,7 +415,7 @@
             <!--shop-product-area-end--> 
 			<br>
             <!--Start-newsletter-wrap-->
-            <div class="news-letter-wrap text-center home-4">
+           <!--  <div class="news-letter-wrap text-center home-4">
                 <div class="container">
                     <div class="row">
                         <div class="news-subscribe">
@@ -439,7 +439,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!--End-newsletter-wrap-->
             <!--Start-footer-wrap-->
             @include('footer')
@@ -451,6 +451,11 @@
         <!-- End quickview product -->
 		<!-- all js here -->
 		@include('js-end')
+
+        @if(session('message') != '')
+            @include('message')
+        @endif
+
     </body>
 </html>
         

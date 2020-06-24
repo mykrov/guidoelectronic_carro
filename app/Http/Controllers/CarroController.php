@@ -123,6 +123,7 @@ class CarroController extends Controller
 
    public function checkout()
    {
+        $provincias =DB::select(DB::raw('SELECT * FROM provincia where codigo in (select provincia from canton)'));
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
 
@@ -139,11 +140,11 @@ class CarroController extends Controller
         
         
         if (\Session::get('usuario-nombre') == null) {
-            return view('login',['cates'=>$categorias,'familias'=>$familias,'texto'=>$textos,'imagen'=>$imgweb,'parametros'=>$parametro]);
+            return view('login',['cates'=>$categorias,'familias'=>$familias,'texto'=>$textos,'imagen'=>$imgweb,'parametros'=>$parametro,'provincias'=>$provincias]);
         } else {
             $id = \Session::get('usuario-id');
             $Usuario2 = DB::table('usuario')->where('idusuario','=',"$id")->first();
-            return view('checkout',['cates'=>$categorias,'familias'=>$familias,'user'=>$Usuario2,'texto'=>$textos,'imagen'=>$imgweb,'parametros'=>$parametro]);
+            return view('checkout',['cates'=>$categorias,'familias'=>$familias,'user'=>$Usuario2,'texto'=>$textos,'imagen'=>$imgweb,'parametros'=>$parametro,'provincias'=>$provincias]);
         }
    }
 
@@ -190,8 +191,9 @@ class CarroController extends Controller
                     $venta->token = md5(uniqid(rand(), true));
                     $venta->idusuario = \Session::get('usuario-id');
                     $venta->ruc = $Usuario2->numero_identificacion;
+                    $venta->tipoPago = "EFE/BAN/CE";
+                    $venta->estadoPago = "Por Acordar";
                     
-
                     $venta->save();
 
                     foreach (\Session::get('carro') as $key => $value) {
@@ -271,7 +273,7 @@ class CarroController extends Controller
 
         //         $id = \Session::get('usuario-id');
         //         $Usuario2 = DB::table('usuario')->where('idusuario','=',"$id")->first();
-                //Cliente para peticion a la API Kushki
+                 //Cliente para peticion a la API Kushki
                 // $guzzle = new \GuzzleHttp\Client();
                 // $url2 = "https://api-uat.kushkipagos.com/card/v1/charges";
                

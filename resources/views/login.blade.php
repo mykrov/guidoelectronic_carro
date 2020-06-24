@@ -485,7 +485,7 @@
                             success: function (response) {
                                 if (response == 'registrado') {
                                     $("#btn-register").attr("disabled", false);
-                                    swal("Registado!", "Por favor 'ACTIVE' su usuario con el link  de activación que enviamos a su correo.", "success");                           
+                                    swal("Registado!", "Por favor 'ACTIVE' su usuario con el link  de activación que enviamos a su correo. Recuerde Verificar en la Bandeja de Correo Spam (No Deseado)", "success");                           
                                     $('#form_register')[0].reset();
                                   
                                 } else if (response == "campos_vacios") {
