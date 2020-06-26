@@ -13,7 +13,7 @@
                             
                             <div class="product-images">
                                 <div class="main-image images">
-                                    <img id="modal-imagen" alt="" src="{{asset('assets/themebasic/images/product/')}}">
+                                    <img id="modal-imagen" alt="" src="{{asset('/assets/productos/SINIMAGEN.jpg')}}">
                                 </div>
                             </div>
                             

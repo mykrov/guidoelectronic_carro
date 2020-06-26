@@ -39,7 +39,7 @@
                                 <div class="my-account"><a href="{{route('cuenta')}}"><span class="">{{Session::get('usuario-nombre')}}</span></a></div>    
                                 @endif
                                 {{-- <div class="wishlist"><a href="wishlist.html"><span class="">Deseos</span></a></div> --}}
-                                <div class="check"><a href="{{route('checkout')}}"><span class="">Checkout</span></a></div>
+                                <div class="check"><a href="{{route('checkout')}}"><span class="">Revisión Final</span></a></div>
                                 @if (Session::get('usuario-nombre') == '' or null)
                                 <div class="login"><a href="{{route('login')}}"><span  class="">Iniciar Sesión</span></a></div>
                                 @else
@@ -217,6 +217,7 @@
                                     </li>
                                     {{-- <li><a href="wishlist.html">Mis Deseos</a></li> --}}
                                     <li><a href="{{route('guiacompra')}}">Como Comprar</a></li>
+                                    <li><a href="{{route('politicas')}}">Politicas</a></li>
                                     <li><a href="{{route('tarifas')}}">Tarifas</a></li>
                                     <li><a href="{{route('contacto')}}">Contacto</a></li>
                                 </ul>
@@ -249,6 +250,7 @@
                                 </li>
                                 {{-- <li><a href="wishlist.html">Mis Deseos</a></li> --}}
                                 <li><a href="{{route('guiacompra')}}">Como Comprar</a></li>
+                                <li><a href="{{route('politicas')}}">Politicas</a></li>
                                 <li><a href="{{route('tarifas')}}">Tarifas</a></li>
                                 <li><a href="{{route('contacto')}}">Contacto</a></li>
                             </ul>

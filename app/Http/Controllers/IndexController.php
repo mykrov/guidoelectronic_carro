@@ -203,6 +203,26 @@ class IndexController extends Controller
         return view('guiacompra',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro]);
     }
 
+
+    public function politicas()
+    {
+        $categorias = DB::table('categoria')->where('estado','=','A')->get();
+        $familias = DB::table('familia')->get();
+        $textos = DB::table('texto')->get();
+        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
+        $imagenes = DB::table('seccion_imagen')
+        ->join('imagen','id_imagen','=','idimagen')->get();
+        
+        $imgweb = array();
+
+        foreach($imagenes as $item){
+            $imgweb[$item->nombre_seccion] = $item->nombre;
+        }
+                             
+        return view('politicas',['cates'=> $categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro]);
+
+    }
+
     public function tarifas(Request $request){
 
         $categorias = DB::table('categoria')->where('estado','=','A')->get();

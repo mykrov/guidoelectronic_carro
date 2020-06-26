@@ -138,7 +138,7 @@
 		@include('js-end')
         
         <!-- Google Map js -->
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9PVYKr0fwtx4R9e7PTSj8qL1hhMU7My0"></script>
+		{{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9PVYKr0fwtx4R9e7PTSj8qL1hhMU7My0"></script>
 		<script>
 			function initialize() {
 			  var mapOptions = {
@@ -158,11 +158,11 @@
 			  });
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);
-		</script>
+		</script> --}}
 		<!-- plugins js -->
-        <script src="js/plugins.js"></script>
+        {{-- <script src="js/plugins.js"></script>
 		<!-- main js -->
-        <script src="js/main.js"></script>
+        <script src="js/main.js"></script> --}}
     </body>
 </html>
         

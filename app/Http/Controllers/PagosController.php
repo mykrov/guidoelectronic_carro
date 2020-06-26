@@ -50,7 +50,7 @@ class PagosController extends Controller
     }
 
 
-    public function GererarRequestPago(Ventas $venta,Usuario $user )
+    public function GererarRequestPago(Ventas $venta, Usuario $user, Request $req )
     {
         $dataPTP = \App\DatosPTP::where('ambiente','=',1)->first();
         $secretKey = $dataPTP->secretKey;
@@ -59,7 +59,7 @@ class PagosController extends Controller
         #Datos Harcodeados.
         $numPedido = $venta->idventas; //1582;
         $monto = $venta->total;
-        $urlRetorno = "http://guido.test:8000/cuenta";
+        $urlRetorno = route('cuenta');
         $reference = $venta->idusuario."-".$numPedido;
         $seed = Carbon::now()->toIso8601String();
        
@@ -97,12 +97,12 @@ class PagosController extends Controller
         'payment'=>$payment,
         'expiration'=>$expiration,
         'returnUrl'=>$urlRetorno,
-        'ipAddress'=>'181.198.213.18',
-        'userAgent'=>'userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.106 Safari/537.36'
+        'ipAddress'=>$req->ip(),
+        'userAgent'=>$req->header('User-Agent')
         ];
 
          //Cliente para peticion a la API PlaceToPay.
-        $guzzle = new \GuzzleHttp\Client(['base_uri' => $dataPTP->endpoint]);
+        $guzzle = new \GuzzleHttp\Client(['base_uri'=>$dataPTP->endpoint]);
         $url2 = "api/session";
         $headers2 = [
             'Content-type'=>'application/json',
@@ -154,13 +154,15 @@ class PagosController extends Controller
         }
     }
 
-    public function GeneraPago()
+    public function GeneraPago(Request $r)
     {
+
+        
         //Carro en Session de Usuario
         $precioAc = 'precio2';
         $ivaconsulta = DB::table('parametros')->where('idparametro','=',1)->first();
         $ivaVal = $ivaconsulta->iva;
-        
+       
         if (!is_null(\Session::get('carro'))) {
             $subtotal = 0.0;
             $total = 0.0;
@@ -227,7 +229,7 @@ class PagosController extends Controller
                         $compra->idventa = $venta->idventas;
                         $compra->save();
                     }
-                    return $this->GererarRequestPago($venta,$userT);
+                    return $this->GererarRequestPago($venta,$userT,$r);
 
                 } catch (\Throwable $th) {
                     echo 'Excepción capturada: ',  $th->getMessage(), "\n";

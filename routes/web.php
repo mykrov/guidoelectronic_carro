@@ -7,6 +7,7 @@ Route::get('/cuenta','IndexController@cuenta')->name('cuenta');
 Route::post('/detallePed','IndexController@detPedidos')->name('detalleped');
 Route::get('/guiacompra','IndexController@howbuy')->name('guiacompra');
 Route::get('/tarifas','IndexController@tarifas')->name('tarifas');
+Route::get('/politicas','IndexController@politicas')->name('politicas');
 //Rutas de Login
 Route::get('/login','LoginController@index')->name('login');
 Route::post('/login','LoginController@login')->name('login-process');

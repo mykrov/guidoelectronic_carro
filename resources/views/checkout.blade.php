@@ -421,11 +421,13 @@
                                             </div>
                                            <div id="collapseThree" class="panel-collapse" role="tabpanel" aria-labelledby="headingThree">
                                               <div class="panel-body text-center">
-                                                <a href="https://www.placetopay.com/"><img src="/assets/themebasic/images/place2p/logo.png" alt="PlacetoPay" class="img text-center" style="max-width: 200px"></a>
+                                                <a href="https://www.placetopay.com/" target="blank"><img src="/assets/themebasic/images/place2p/logo.png" alt="PlacetoPay" class="img text-center" style="max-width: 200px"></a>
                                                 <p style="font-size: 1.5rem">Puede realizar el pago con la plataforma segura de PlaceToPay dando click en el siguiente botón:</p>
                                                 <div class="text-center">
                                                     <div class="text-center">
-                                                        <a href="{{route('pagoptp')}}" id="pago-ptp"><button style="border: 2px solid #ff6f04;border-radius: 3px;padding: 1rem;font-size: 14px;"><strong>Pagar ${{$subtotal+$iva}} con PlaceToPay</strong></button></a>
+                                                        <button id="pago-ptp" disabled="true" style="border: 2px solid #ff6f04;border-radius: 3px;padding: 1rem;font-size: 14px;"><strong>Pagar ${{$subtotal+$iva}} con PlaceToPay</strong></button><br>
+                                                        <input type="checkbox" class="form-check-input"  id="politicascheck" name="terminos" value="si">
+                                                        <label for="terminos">Acepto los <a href="{{route('politicas')}}" target="blank" style="color:rgb(48, 48, 228)">Terminos y Condiciones</a></label>
                                                     </div>
                                                 </div> 
                                                 <div class="text-center">
@@ -435,8 +437,6 @@
                                             </div> 
                                           </div>
                                         </div>
-
-                                        
                                     </div> 
 									</form>
                                 </div>
@@ -503,6 +503,20 @@
                     }
                 });
             });
+
+
+            const checkboxPoliticas = document.getElementById('politicascheck')
+
+            checkboxPoliticas.addEventListener('change', (event) => {
+            if (event.target.checked) {
+                $("#pago-ptp").prop('disabled', false);
+                $("#pago-ptp").css("background-color", "#ff7209");
+            } else {
+                $("#pago-ptp").prop('disabled', true);
+                $("#pago-ptp").css("background-color", "#fff");
+            }
+            })
+
         </script> 
         @if($errors->any())
             <script>
