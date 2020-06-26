@@ -11,6 +11,7 @@ use App\Mail\PedidoRealizado;
 use App\Usuario;
 use App\PagosKushki;
 use Carbon\Carbon;
+use Redirect;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
@@ -49,7 +50,7 @@ class PagosController extends Controller
     }
 
 
-    public function GererarRequestPago(Ventas $venta,string $email )
+    public function GererarRequestPago(Ventas $venta,Usuario $user )
     {
         $dataPTP = \App\DatosPTP::where('ambiente','=',1)->first();
         $secretKey = $dataPTP->secretKey;
@@ -69,15 +70,30 @@ class PagosController extends Controller
         } else {
             $nonce = mt_rand();
         }
+
+        $idType = "CI";
+
+        if (strlen(trim($user->RUC)) == 13) {
+            $idType = 'RUC';
+        }
         
         $nonceBase64 = base64_encode($nonce);
         $tranKey = base64_encode(sha1($nonce. $seed . $secretKey, true));
+        $direccion = ['street'=>$user->direccion,'city'=>$user->ciudad,'country'=>'EC'];
+        $buyer = ['documentType'=>$idType,
+        'document'=>$user->RUC,
+        'name'=>$user->nombre,
+        'surname'=>$user->apellido,
+        'email'=>$user->correo,
+        'address'=>$direccion
+        ];
         $auth = ['login'=>$login,'tranKey'=>$tranKey,'nonce'=>$nonceBase64,'seed'=>$seed];
         $amount =['currency'=>'USD','total'=>$monto];
         $payment = ['reference'=>$reference,'description'=>'Pedido Número '.$numPedido,'amount'=>$amount];
         $expiration = Carbon::now()->addDays(1)->toIso8601String();
 
         $peticion = ['auth'=>$auth,
+        'buyer'=>$buyer, 
         'payment'=>$payment,
         'expiration'=>$expiration,
         'returnUrl'=>$urlRetorno,
@@ -119,7 +135,7 @@ class PagosController extends Controller
                 //Envio de Email del pedido.
                 try {
                     $array = \Session::get('carro');
-                    \Mail::to($email)
+                    \Mail::to($user->correo)
                     ->cc(['rikardomoncada12@gmail.com'])
                     ->send(new PedidoRealizado($venta,$array));
                     \Session::forget('carro');
@@ -161,6 +177,7 @@ class PagosController extends Controller
             if ($total >= $ivaconsulta->min_pedido) {
 
                 $id = \Session::get('usuario-id');
+                $userT= \App\Usuario::where('idusuario','=',"$id")->first();
                 $Usuario2 = DB::table('usuario')->where('idusuario','=',"$id")->first();
                 try {
                     $hoy = date("d/m/Y");
@@ -171,7 +188,7 @@ class PagosController extends Controller
                     $iva_g = 'S';
                     } 
                     $venta->iddetalle_ventas = 0; 
-                    $venta->subtotal= $subtotal;
+                    $venta->subtotal= round($subtotal,2);
                     $venta->iva = $iva;
                     $venta->costo_envio = 0;
                     $venta->envio_gratuito = 0; 
@@ -210,18 +227,18 @@ class PagosController extends Controller
                         $compra->idventa = $venta->idventas;
                         $compra->save();
                     }
-                    return $this->GererarRequestPago($venta,$Usuario2->correo);
+                    return $this->GererarRequestPago($venta,$userT);
 
                 } catch (\Throwable $th) {
                     echo 'Excepción capturada: ',  $th->getMessage(), "\n";
                 }
 
             } else {
-                return response()->json('menor_30');
+                return Redirect::back()->withErrors(['error'=>'El monto minimo de compra es: $'.$ivaconsulta->min_pedido]);
             }
             
         } else {
-            return response()->json('carro_vacio');
+            return Redirect::back()->withErrors(['error'=>'El Carro no tiene Articulos']);
         }
 
     }
@@ -293,7 +310,7 @@ class PagosController extends Controller
         $login = $dataPTP->login;
 
         #Datos Harcodeados.
-        $numPedido = 174872;
+        $numPedido = 175694;
         $seed = Carbon::now()->toIso8601String();
        
         if (function_exists('random_bytes')) {

@@ -421,13 +421,16 @@
                                             </div>
                                            <div id="collapseThree" class="panel-collapse" role="tabpanel" aria-labelledby="headingThree">
                                               <div class="panel-body text-center">
-                                                <img src="/assets/themebasic/images/place2p/logo.png" alt="" class="img text-center" style="max-width: 200px">
+                                                <a href="https://www.placetopay.com/"><img src="/assets/themebasic/images/place2p/logo.png" alt="PlacetoPay" class="img text-center" style="max-width: 200px"></a>
                                                 <p style="font-size: 1.5rem">Puede realizar el pago con la plataforma segura de PlaceToPay dando click en el siguiente botón:</p>
                                                 <div class="text-center">
                                                     <div class="text-center">
-                                                        <a href="{{route('pagoptp')}}" id="pago-ptp"><button style="border: 2px solid #ff6f04;border-radius: 3px;padding: 1rem;font-size: 14px;">Pago con PlaceToPay</button></a>
+                                                        <a href="{{route('pagoptp')}}" id="pago-ptp"><button style="border: 2px solid #ff6f04;border-radius: 3px;padding: 1rem;font-size: 14px;"><strong>Pagar ${{$subtotal+$iva}} con PlaceToPay</strong></button></a>
                                                     </div>
-                                                </div>                                    
+                                                </div> 
+                                                <div class="text-center">
+                                                    <img src="/assets/themebasic/images/payment/tarjetasCredito.jpg" alt="visa">
+                                                </div>                                   
                                               </div>
                                             </div> 
                                           </div>
@@ -500,6 +503,11 @@
                     }
                 });
             });
-        </script>   
+        </script> 
+        @if($errors->any())
+            <script>
+                swal('Error','{{$errors->first("error")}}','error');
+            </script>
+        @endif
     </body>
 </html>     
