@@ -10,8 +10,8 @@
         border: 1px solid #ccc;
         border-radius: 4px 4px 0 0;
         font-weight: 700;
-        font-size: 2rem;
-        color: #c32923;
+        font-size: 1.5rem;
+        color: #00b200;
     }
     </style>    
     <body>
@@ -55,7 +55,7 @@
                     <div class="row">
                         <!--start-shop-head -->
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="shop-head-menu">
+                            <div class="shop-head-menu" >
                                 <ul>
                                 <li><i class="fa fa-home"></i><a class="shop-home" href="{{route('index')}}"><span>Incio</span></a><span><i class="fa fa-angle-right"></i></span></li>
                                     <li class="shop-pro">Mi cuenta  </li>
@@ -74,7 +74,7 @@
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="wishlist-content">
                                 <div style="margin-bottom: 3rem;">
-                                    <h2>Usuario: {{Session::get('usuario-nombre')}}</h2>
+                                    <h4><strong>Usuario: </strong>{{Session::get('usuario-nombre')}}</h4>
                                     
                                 </div>
                                 <ul class="nav nav-tabs">
@@ -86,19 +86,21 @@
                                       <div class="tab-content">
                                         <div id="home" class="tab-pane fade in active">
                                                 <form action="#" style="margin-top:3rem;">
-                                                        <h3>Lista de Pedidos Anteriores</h3>
-                                                        <div class="wishlist-table table-responsive">
-                                                            <table style="border: 2px solid black; border-collapse: collapse;" id="table1">
-                                                                <thead>
-                                                                    <tr style="border: 1px solid black; background-color: #EEE; font-size: 17px;">
+                                                    <div class="text-center " style="padding-bottom: 3rem">
+                                                         <h3>Lista de Pedidos Anteriores</h3>
+                                                    </div>
+                                                        <div class="table-responsive" style="width: 100%">
+                                                            <table  id="table1" class="table table-striped">
+                                                                <thead class="thead-dark">
+                                                                    <tr>
                                                                         <th class="product-remove"><span class="nobr">ID</span></th>
                                                                         <th class="product-thumbnail">SubTotal</th>
                                                                         <th class="product-name"><span class="nobr">Iva</span></th>
                                                                         <th class="product-price"><span class="nobr"> Total </span></th>
                                                                         <th class="product-stock-stauts"><span class="nobr"> Fecha</span></th>
-                                                                        <th class="product-add-to-cart"><span class="nobr">Detalles </span></th>
+                                                                        <th class="product-add-to-cart"><span class="nobr">Articulos </span></th>
                                                                         <th><span class="nobr">Tipo de Pago</span></th>
-                                                                        <th><span class="nobr">Estado de pago</span></th>
+                                                                        <th><span class="nobr">Estado</span></th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
@@ -109,9 +111,24 @@
                                                                         <td class="product-name">${{$cabe->iva}}</td>
                                                                         <td class="product-price">${{$cabe->total}}</td>
                                                                         <td class="product-stock-status">{{$cabe->fecha}}</td>
-                                                                        <td class="product-add-to-cart"><button class="btn btn-secondary detalle-ped" data-pedido="{{$cabe->idventas}}">Ver Detalles</button></td>
+                                                                        <td class="product-add-to-cart"><button class="btn btn-secondary detalle-ped" data-pedido="{{$cabe->idventas}}">Ver Articulos</button></td>
                                                                         <td>{{ $cabe->tipoPago }}</td>
-                                                                        <td><strong>{{ $cabe->estadoPago }}</strong></td>
+                                                                        <td>
+                                                                            @if ($cabe->estadoPago == "APROBADO")
+                                                                                <strong style="color:green">{{ $cabe->estadoPago }}</strong>
+                                                                            @elseif ($cabe->estadoPago == "PENDIENTE")
+                                                                                <strong style="color:#499ed0">{{ $cabe->estadoPago }}</strong>
+                                                                            @elseif ($cabe->estadoPago == "RECHAZADO")
+                                                                                <strong style="color:red">{{ $cabe->estadoPago }}</strong>
+                                                                            @elseif($cabe->estadoPago == 'ConflictoPTP')
+                                                                                <div style="align-content: center">
+                                                                                    <strong style="color:#d88a23">No Pagado</strong><br>
+                                                                                    <button data-venta="{{ $cabe->idventas }}" class="btn btn-xs" style="background-color: coral; color:white">Reintentar Pago</button>
+                                                                                </div>
+                                                                            @else
+                                                                                <strong style="color:gray">{{ $cabe->estadoPago }}</strong>
+                                                                            @endif
+                                                                        </td>
                                                                     </tr>
                                                                     @endforeach
                                                                 </tbody>
@@ -216,7 +233,9 @@
                                                             </div>
                                                         							
                                                         </div>
-                                                        <input class="login-sub" id="register-btn" type="submit" value="Modificar" />
+                                                        <div class="text-center" style="padding-bottom: 3rem;">
+                                                              <input class="login-sub btn btn-lg btn-info " id="register-btn" type="submit" value="Modificar Datos" />
+                                                        </div>
                                                     </form>
                                         </div>
                                       </div>
@@ -247,8 +266,9 @@
                     <h4 class="modal-title" id="cab-modal">Modal Header</h4>
                 </div>
                 <div class="modal-body">
-                   <table class="table table-striped " id="table-modal">
-                       <thead class="thead-dark" style=" background: black;color: #FFF;font-size: 1.5rem;">
+                    <div class="table-responsive">
+                        <table class="table table-striped " id="table-modal">
+                        <thead class="thead-dark" style=" background: black;color: #FFF;font-size: 1.5rem;">
                            <tr>
                                <th>Producto</th>
                                <th>Cantidad</th>
@@ -256,11 +276,12 @@
                                <th>Paga Iva</th>
                                <th>Total</th>
                            </tr>
-                       </thead>
-                       <tbody id="table-body" >
+                        </thead>
+                        <tbody id="table-body" >
 
-                       </tbody>
-                   </table>
+                        </tbody>
+                        </table> 
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -279,7 +300,11 @@
         <script>
             $(document).ready(function() {
                 $('#table1').DataTable(
+
+
                     {
+
+
                         "language":{
                         "sProcessing":     "Procesando...",
                         "sLengthMenu":     "Mostrar _MENU_ registros",

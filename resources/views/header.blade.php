@@ -237,7 +237,7 @@
                     <div class="mobile-menu">
                         <nav id="dropdown">
                             <ul>
-                                <li ><a href="index.html">Inicio</a>
+                                <li ><a href="{{route('index')}}">Inicio</a>
                                 </li>
                                 <li><a href="{{route('nosotros')}}">Quienes Somos</a></li>
                                 <li><a href="{{route('cuenta')}}">Mi Cuenta</a></li>

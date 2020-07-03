@@ -49,7 +49,7 @@ Route::get('getCantones','Cantones@getCantones')->name('getcantones');
 
 //Pagos PlaceToPay
 Route::get('/pagoptp','PagosController@GeneraPago')->name('pagoptp');
-Route::get('/pagocon','PagosController@ConsultaPagoInterno')->name('consultapago');
-
+Route::get('/pagocon/{pago}','PagosController@ConsultaPagoInterno')->name('consultapago');
+Route::get('/consultapagos','PagosController@ProcesoDiario');
 
 

@@ -159,7 +159,7 @@
 			  var mapOptions = {
 				zoom: 19,
 				scrollwheel: false,
-				center: new google.maps.LatLng(-2.101770, -79.936992)
+				center: new google.maps.LatLng(-2.137059, -79.884914)
 			  };
                 
 			  var map = new google.maps.Map(document.getElementById('googleMap'),
@@ -168,16 +168,16 @@
 			  var marker = new google.maps.Marker({
 				position: map.getCenter(),
 				animation:google.maps.Animation.BOUNCE,
-				icon: 'images/icon/map-marker.png',
+				icon: '/assets/themebasic/images/icon/map-marker.png',
 				map: map
 			  });
 			}
 			google.maps.event.addDomListener(window, 'load', initialize);
 		</script>
 		<!-- plugins js -->
-        <script src="js/plugins.js"></script>
+        {{-- <script src="/assets/themebasic/js/plugins.js"></script> --}}
 		<!-- main js -->
-        <script src="js/main.js"></script>
+        {{-- <script src="/assets/themebasic/js/main.js"></script> --}}
     </body>
 </html>
         

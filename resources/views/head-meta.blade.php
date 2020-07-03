@@ -29,7 +29,7 @@
     z-index: 3;
     color: #fff;
     cursor: default;
-    background-color: #cc2520;
+    background-color: #00b200;
     border-color: #150932;
 
     
@@ -130,10 +130,10 @@ Usage
 
 .single-banner-top {
     background: url({{asset('assets/themebasic/images/bg/bg-t2.jpg')}}) no-repeat top center / cover;
-    height: 200px;
+    height: 110px;
 }
 .home-1 .layer-1-1 .title1 {
-    color: #f30202;
+    color: #00b200;
     font-size: 60px;
     font-weight: 700;
     letter-spacing: 1px;

@@ -131,7 +131,7 @@ body {
     padding: 0.2em 0;
 }
 #scrollUp {
-  background: #606060 none repeat scroll 0 0;
+  background: #00b200 none repeat scroll 0 0;
   bottom: 51px;
   color: #ffffff;
   font-size: 23px;
@@ -735,7 +735,7 @@ a.mega-title:hover {
     background: #09b2b9;
 }
 .mainmenu-area.home-4 .sticky-wrapper.is-sticky #sticker {
-    background: #0a841f;
+    background: #00b200;
 }
 .mainmenu-area.home-5 .sticky-wrapper.is-sticky #sticker {
     background: #c514d0;
@@ -765,7 +765,7 @@ a.mega-title:hover {
 }
 .mean-container .mean-nav ul li:hover { background: #fff none repeat scroll 0 0;
 }
-.mean-container .mean-bar { background: #0a841f none repeat scroll 0 0;
+.mean-container .mean-bar { background: #00b200 none repeat scroll 0 0;
 }
 .mean-container .mean-bar::after { content: "Menu"; top: 7px; left: 12px;
 }
@@ -1154,7 +1154,7 @@ a.shop-n.saleup-button:hover,.home-1 .layer-2-4 a.shop-n:hover, .home-1 .layer-1
   transform: rotate(-45deg);
   z-index: 100;
 }
-.single-product .new { background: #0a841f none repeat scroll 0 0;
+.single-product .new { background: #00b200 none repeat scroll 0 0;
   color: #fff;
   font-size: 12px;
   font-weight: bold;
@@ -1178,7 +1178,7 @@ a.shop-n.saleup-button:hover,.home-1 .layer-2-4 a.shop-n:hover, .home-1 .layer-1
 .product-img-wrap {
   position: relative;
 	overflow: hidden;
-  border: 2px solid #0a841f;
+  border: 2px solid #27d;
   border-radius: 1rem;
   box-shadow: 6px 3px 5px grey;
 
@@ -1613,7 +1613,7 @@ a h3.pro-name {
 .single-p-wrap i { background-color: #f7f7f7;
   border-radius: 50%;
   display: inline-block;
-  color: #0a841f;
+  color: #00b200;
   font-size: 30px;
   width: 80px;
   height: 80px;
@@ -1842,7 +1842,7 @@ a h3.pro-name {
 .owl-theme .owl-controls .owl-page { display: inline-block;
 }
 .owl-theme .owl-controls .owl-page span {
-    background: #0a841f none repeat scroll 0 0;
+    background: #00b200 none repeat scroll 0 0;
     border: 0px solid #7b7b7b;
     outline: 1px solid #000;
     outline-offset: 3px;
@@ -2663,14 +2663,14 @@ label { display: inline-block;
 /*-----------------sticky-wrapper is-sticky
     20. Home-4
 -------------------*/
-.header-top-wrap.home-4 {  background: #0a841f; none repeat scroll 0 0;
+.header-top-wrap.home-4 {  background: #00b200; none repeat scroll 0 0;
 }
 .home-4 .section-heading h3:before,.home-4 .section-heading h3:after {
     color: #229232;
 }  
 .header-mid-wrap.home-4 {  background: #F3F2F2;
 }
-.mainmenu-area.home-4 {  background: #0a841f;
+.mainmenu-area.home-4 {  background: #00b200;
 }
 .mainmenu.home-4 ul#nav > li:nth-child(1) {  background: #198cd2;
 }
@@ -2722,7 +2722,7 @@ label { display: inline-block;
 .home-4 .email-area input[type="submit"] { color: #198cd2;
     color: #fff;
 }
-.home-4 #btn-search-category { background: #326f1f none repeat scroll 0 0;
+.home-4 #btn-search-category { background: #00b200 none repeat scroll 0 0;
 }
 .home-4 .header-cart-wrap > li > a::before {  color: #198cd2;
 }
@@ -3458,7 +3458,7 @@ margin-right: 20px;
 .panel-default > .panel-heading {border-radius: 0;
 }
 .your-order{background: #f2f2f2 none repeat scroll 0 0;
-    padding: 30px 40px 45px
+    padding: 2px 2px 2px
 }
 .your-order h3 { border-bottom: 1px solid #d8d8d8;
   color: #222;
@@ -4387,13 +4387,13 @@ left: 50%;margin-left: -5px;
 32. Single Product
 ---------------------------*/
 .single-banner-top { background: url("../images/bg/bg-t.jpg") no-repeat top center / cover;
-    height: 200px;
+    height: 100px;
 }
 .single-ban-top-content > p { color: #fff;
   font-size: 40px;
   font-weight: 600;
   margin: 0;
-  padding: 80px 0;
+  padding: 40px 0;
   text-transform: uppercase;
 }
 .signle-heading { background: #e3e3e3 none repeat scroll 0 0;

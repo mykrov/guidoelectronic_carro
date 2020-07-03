@@ -172,7 +172,7 @@
                             </div>
                             @include('destacados')
                            <div >
-                            <div class="latest-content text-center">
+                            <div class="latest-content">
                                     <div class="section-heading">
                                         <h3 style="font-size: 50px;" class="my-element" ><span class="h-color">Promociones</span></h3>
                                     </div>

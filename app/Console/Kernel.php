@@ -4,6 +4,9 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\DB;
+use App\Ventas;
+use App\Http\Controllers\PagosController;
 
 class Kernel extends ConsoleKernel
 {
@@ -24,8 +27,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        \Log::info('*-*- Comienzo proceso de sonda diario para pedidos pendientes. -*-*');
+        $schedule->call('App\Http\Controllers\PagosController@ProcesoDiario')->everyMinute();
     }
 
     /**
