@@ -25,10 +25,11 @@
         featured-product-carousel
     -------------------------------*/
     $(".featured-carousel").owlCarousel({
-        autoPlay: false, 
+        autoPlay: true, 
         slideSpeed:1500,
         items : 4,
         pagination:false,
+        stopOnHover: true,
         navigation:true,
         navigationText:["<i class='fa fa-long-arrow-left'></i>","<i class='fa fa-long-arrow-right'></i>"],
         itemsDesktop : [1199,4],
@@ -38,11 +39,12 @@
     });
 	
     $(".featured-carousel2").owlCarousel({
-        autoPlay: false, 
-        slideSpeed:1500,
+        autoPlay: true, 
+        slideSpeed:2000,
         items : 3,
         pagination:false,
         navigation:true,
+        stopOnHover: true,
         navigationText:["<i class='fa fa-long-arrow-left'></i>","<i class='fa fa-long-arrow-right'></i>"],
         itemsDesktop : [1199,4],
         itemsDesktopSmall : [980,3],

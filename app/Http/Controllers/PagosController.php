@@ -51,7 +51,7 @@ class PagosController extends Controller
 
     public function GererarRequestPago(Ventas $venta, Usuario $user, Request $req )
     {
-        $dataPTP = \App\DatosPTP::where('ambiente','=',1)->first();
+        $dataPTP = \App\DatosPTP::where('ambiente','=',env('APP_PAGO_ENV',1))->first();
         $secretKey = $dataPTP->secretKey;
         $login = $dataPTP->login;
        
@@ -86,8 +86,10 @@ class PagosController extends Controller
         'address'=>$direccion
         ];
         $auth = ['login'=>$login,'tranKey'=>$tranKey,'nonce'=>$nonceBase64,'seed'=>$seed];
-        $detailsAmout = ['subtotal'=>$venta->subtotal,'IVA'=>$venta->iva];
-        $amount =['currency'=>'USD','total'=>$monto];
+        
+        $taxes = [['kind'=>'valueAddedTax','amount'=>$venta->iva,'base'=>$venta->subtotal]];
+        $amount =['currency'=>'USD','total'=>$monto,'taxes'=>$taxes];
+
         $payment = ['reference'=>$reference,'description'=>'Pedido Número '.$numPedido,'amount'=>$amount];
         $expiration = Carbon::now()->addDays(1)->toIso8601String();
 
@@ -99,6 +101,8 @@ class PagosController extends Controller
         'ipAddress'=>$req->ip(),
         'userAgent'=>$req->header('User-Agent')
         ];
+
+        //return response()->json($peticion);
 
          //Cliente para peticion a la API PlaceToPay.
         $guzzle = new \GuzzleHttp\Client(['base_uri'=>$dataPTP->endpoint]);
@@ -353,7 +357,7 @@ class PagosController extends Controller
 
     public function ConsultaPagoInterno($pago)
     {   
-        $dataPTP = \App\DatosPTP::where('ambiente','=',1)->first();
+        $dataPTP = \App\DatosPTP::where('ambiente','=',env('APP_PAGO_ENV',1))->first();
         $secretKey = $dataPTP->secretKey;
         $login = $dataPTP->login;
         $numPedido = $pago;

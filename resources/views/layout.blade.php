@@ -59,8 +59,11 @@
             <!-- End-slider-->
 			
             <!--Start-latest-products-wrap-->
-            <div class="latest-products-wrap home-4 padding-t">
+            <div class="latest-products-wrap home-4">
 					<div class="container">
+                        <div class="row animate__animated animate__backInLeft" style="padding-top: 1rem; padding-bottom: 1rem;">
+                            <img class="img img-fluid" style="border-radius:1rem;" alt="GuidoEectronic" src="{{asset('assets/themebasic/images/banner/publi.png')}}" />
+                        </div>
 						<div class="row">
 				        <!--start-categry-area-->
                         <div class="col-lg-3 col-md-3">
@@ -107,7 +110,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        
                         <div class="featured-carousel2 indicator">
                             @foreach ($proNuevos as $itemNuevo)
                                   <!-- Start-single-product -->
@@ -167,18 +169,17 @@
                                 </div>
                                 <!-- End-single-product -->
                                 @endforeach
-                            
-                                </div>
+                            </div>
                             </div>
                             @include('destacados')
-                           <div >
-                            <div class="latest-content">
+                           <div class="row">
+                                <div class="">
                                     <div class="section-heading">
-                                        <h3 style="font-size: 50px;" class="my-element" ><span class="h-color">Promociones</span></h3>
+                                        <p style="font-size: 50px;" class="my-element" ><span class="h-color">Promociones</span></p>
                                     </div>
                                 </div>
                                 <div class="row col-md-12">
-                                   <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                         <div class="single-banner banner-r-b">
                                             <a href="#"><img class="img-fluid" alt="Hi Guys" src="{{asset('assets/productos/promocion/camara8final.jpg') }}" style=" height: auto;" /></a>
                                         </div>
@@ -203,8 +204,6 @@
                                 </div>
                             </div>
 				        </div>
-     
-                        
 				    </div>
                 </div>
             </div>
@@ -224,12 +223,12 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="single-banner banner-r-b">
-                                <a href="#"><img alt="Hi Guys" src="{{asset('assets/themebasic/images/banner/'.$imagen['bannerL'])}}" /></a>
+                                <a href="#"><img alt="GuidoElectronic" style="width:90%" src="{{asset('assets/themebasic/images/banner/'.$imagen['bannerL'])}}" /></a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="single-banner">
-                                <a href="#"><img alt="Hi Guys" src="{{asset('assets/themebasic/images/banner/'.$imagen['bannerL2'])}}" /></a>
+                                <a href="#"><img alt="GuidoElectronic" style="width:90%" src="{{asset('assets/themebasic/images/banner/'.$imagen['bannerL2'])}}" /></a>
                             </div>
                         </div>
                     </div>

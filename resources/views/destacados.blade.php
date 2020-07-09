@@ -25,7 +25,7 @@
                                        <!-- Start-single-product -->
                                        <div class="col-lg-3">
                                         <div class="single-product">
-                                            <div class="product-img-wrap"  style="max-height: 300px; min-height:300px;"> 
+                                            <div class="product-img-wrap"  style="max-height: 300px; min-height:250px;"> 
                                                 @if(file_exists("assets/productos/".trim($dest1->idproducto).".jpg"))
                                                     <a class="product-img" href="single/{{trim($dest1->idproducto)}}"> <img src="/assets/productos/{{trim($dest1->idproducto)}}.jpg" alt="product-image" /></a>
                                                 @else
@@ -34,10 +34,10 @@
                                                 @endif
                                                 {{-- <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/29.jpg')}}" alt="product-image" /></a> --}}
                                                 <div class="add-to-link"> 
-                                                    <a href="#">
+                                                    {{-- <a href="#">
                                                         <div><i class="fa fa-heart"></i><span>Añadir a Deseos</span></div>
-                                                    </a>
-                                                    <a data-toggle="modal" data-target="#productModal" href="#">
+                                                    </a> --}}
+                                                    <a data-toggle="modal" data-target="#productModal" class="vista-modal" data-code="{{trim($dest1->idproducto)}}" href="#">
                                                         <div><i class="fa fa-eye"></i><span>Vista Rápida</span></div>
                                                     </a>
                                                     
@@ -92,7 +92,7 @@
                                             <!-- Start-single-product -->
                                             <div class="col-lg-3">
                                              <div class="single-product">
-                                                 <div class="product-img-wrap"  style="max-height: 300px; min-height:300px;"> 
+                                                 <div class="product-img-wrap"  style="max-height: 300px; min-height:250px;"> 
                                                      @if(file_exists("assets/productos/".trim($dest1->idproducto).".jpg"))
                                                          <a class="product-img" href="single/{{trim($dest1->idproducto)}}"> <img src="/assets/productos/{{trim($dest1->idproducto)}}.jpg" alt="product-image" /></a>
                                                      @else
@@ -101,10 +101,10 @@
                                                      @endif
                                                      {{-- <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/29.jpg')}}" alt="product-image" /></a> --}}
                                                      <div class="add-to-link"> 
-                                                         <a href="#">
+                                                         {{-- <a href="#">
                                                              <div><i class="fa fa-heart"></i><span>Añadir a Deseos</span></div>
-                                                         </a>
-                                                         <a data-toggle="modal" data-target="#productModal" href="#">
+                                                         </a> --}}
+                                                         <a data-toggle="modal" data-target="#productModal" class="vista-modal" data-code="{{trim($dest1->idproducto)}}" href="#">
                                                              <div><i class="fa fa-eye"></i><span>Vista Rápida</span></div>
                                                          </a>
                                                          
@@ -157,7 +157,7 @@
                                             <!-- Start-single-product -->
                                             <div class="col-lg-3">
                                              <div class="single-product">
-                                                 <div class="product-img-wrap"  style="max-height: 300px; min-height:300px;"> 
+                                                 <div class="product-img-wrap"  style="max-height: 300px; min-height:250px;"> 
                                                      @if(file_exists("assets/productos/".trim($dest1->idproducto).".jpg"))
                                                          <a class="product-img" href="single/{{trim($dest1->idproducto)}}"> <img src="/assets/productos/{{trim($dest1->idproducto)}}.jpg" alt="product-image" /></a>
                                                      @else
@@ -166,10 +166,10 @@
                                                      @endif
                                                      {{-- <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/29.jpg')}}" alt="product-image" /></a> --}}
                                                      <div class="add-to-link"> 
-                                                         <a href="#">
+                                                         {{-- <a href="#">
                                                              <div><i class="fa fa-heart"></i><span>Añadir a Deseos</span></div>
-                                                         </a>
-                                                         <a data-toggle="modal" data-target="#productModal" href="#">
+                                                         </a> --}}
+                                                         <a data-toggle="modal" data-target="#productModal" class="vista-modal" data-code="{{trim($dest1->idproducto)}}" href="#">
                                                              <div><i class="fa fa-eye"></i><span>Vista Rápida</span></div>
                                                          </a>
                                                          
@@ -222,7 +222,7 @@
                                             <!-- Start-single-product -->
                                             <div class="col-lg-3">
                                              <div class="single-product">
-                                                 <div class="product-img-wrap" style="max-height: 300px; min-height:300px;"> 
+                                                 <div class="product-img-wrap" style="max-height: 300px; min-height:250px;"> 
                                                      @if(file_exists("assets/productos/".trim($dest1->idproducto).".jpg"))
                                                          <a class="product-img" href="single/{{trim($dest1->idproducto)}}"> <img src="/assets/productos/{{trim($dest1->idproducto)}}.jpg" alt="product-image" /></a>
                                                      @else
@@ -231,10 +231,10 @@
                                                      @endif
                                                      {{-- <a class="product-img" href="#"> <img src="{{asset('assets/themebasic/images/product/29.jpg')}}" alt="product-image" /></a> --}}
                                                      <div class="add-to-link"> 
-                                                         <a href="#">
+                                                         {{-- <a href="#">
                                                              <div><i class="fa fa-heart"></i><span>Añadir a Deseos</span></div>
-                                                         </a>
-                                                         <a data-toggle="modal" data-target="#productModal" href="#">
+                                                         </a> --}}
+                                                         <a data-toggle="modal" data-target="#productModal" class="vista-modal" data-code="{{trim($dest1->idproducto)}}" href="#">
                                                              <div><i class="fa fa-eye"></i><span>Vista Rápida</span></div>
                                                          </a>
                                                          
