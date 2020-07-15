@@ -100,6 +100,7 @@
                                                                         <th class="product-stock-stauts"><span class="nobr"> Fecha</span></th>
                                                                         <th class="product-add-to-cart"><span class="nobr">Articulos </span></th>
                                                                         <th><span class="nobr">Tipo de Pago</span></th>
+                                                                        <th>Referencia</th>
                                                                         <th><span class="nobr">Estado</span></th>
                                                                     </tr>
                                                                 </thead>
@@ -113,6 +114,7 @@
                                                                         <td class="product-stock-status">{{$cabe->fecha}}</td>
                                                                         <td class="product-add-to-cart"><button class="btn btn-secondary detalle-ped" data-pedido="{{$cabe->idventas}}">Ver Articulos</button></td>
                                                                         <td>{{ $cabe->tipoPago }}</td>
+                                                                        <td>{{$cabe->idusuario.'-'.$cabe->idventas}}</td>
                                                                         <td>
                                                                             @if ($cabe->estadoPago == "APROBADO")
                                                                                 <strong style="color:green">{{ $cabe->estadoPago }}</strong>

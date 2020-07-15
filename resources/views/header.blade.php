@@ -48,11 +48,9 @@
 
                             </div>
                         </div>
-                        
                     </div>
-
                 </div>
-                    <!-- End-Header-links -->
+                <!-- End-Header-links -->
             </div>
         </div>
     </div>
@@ -200,7 +198,11 @@
             <div class="container">
                 <div class="row">   
                     <div class="col-lg-12 col-md-12 hidden-sm hidden-xs">
-                    <div class="log-small"><a class="logo" href="{{route('index')}}"><img alt="Mt-Shop" src="{{asset('assets/themebasic/images/logo/'.$imagen['logo2_nav'])}}"></a></div>
+                        <div class="log-small">
+                            <a class="logo" href="{{route('index')}}">
+                                <img alt="Mt-Shop" src="{{asset('assets/themebasic/images/logo/'.$imagen['logo2_nav'])}}">
+                            </a>
+                        </div>
                         <div class="mainmenu home-4">
                             <nav>
                                 <ul id="nav">

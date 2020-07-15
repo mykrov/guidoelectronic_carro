@@ -24,16 +24,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
     
 
-    <style>
+<style>
     .pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
     z-index: 3;
     color: #fff;
     cursor: default;
     background-color: #00b200;
     border-color: #150932;
-
-    
-}
+    }
 
 /* Make the element pulse (grow large and small slowly) */
 /* Usage

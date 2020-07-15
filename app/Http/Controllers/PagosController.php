@@ -166,11 +166,17 @@ class PagosController extends Controller
 
     public function GeneraPago(Request $r)
     {
+        // $seed = Carbon::now()->toIso8601String();
+        // $expiration = Carbon::now()->addDays(1)->toIso8601String();
+        // return response()->json(['seed'=>$seed,'expiration'=>$expiration]);
+
         $pagoPendiente = \App\Ventas::where('estadoPago','=','PENDIENTE')->count();
 
         if ($pagoPendiente > 0) {
 
-            return Redirect::back()->withErrors(['error'=>'Estimado Cliente: Actualmente posee un proceso de pago con estado PENDIENTE, debe esperar el resultado para realizar otro pago.']);
+            $pagoPData = \App\Ventas::where('estadoPago','=','PENDIENTE')->first();
+
+            return Redirect::back()->withErrors(['error'=>'Estimado Cliente: Actualmente posee un proceso de pago con estado PENDIENTE : Referencia: '.$pagoPData->idusuario.'-'.$pagoPData->idventas .', debe esperar el resultado para realizar otro pago.']);
 
         } else {
                 
@@ -225,8 +231,8 @@ class PagosController extends Controller
                             $venta->token = md5(uniqid(rand(), true));
                             $venta->idusuario = \Session::get('usuario-id');
                             $venta->ruc = $Usuario2->numero_identificacion;
-                            $venta->tipoPago = "PlaceToPay";
-                            $venta->estadoPago = "Procesando";
+                            $venta->tipoPago = "Placetopay";
+                            $venta->estadoPago = "PENDIENTE";
                             
                             $venta->save();
 

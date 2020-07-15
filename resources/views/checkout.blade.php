@@ -415,17 +415,17 @@
                                             <div class="panel-heading" role="tab" id="headingThree">
                                               <h4 class="panel-title">
                                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                  Pago con Tarjeta(PlaceToPay)
+                                                  Pago con Tarjeta(Placetopay)
                                                 </a>
                                               </h4>
                                             </div>
                                            <div id="collapseThree" class="panel-collapse" role="tabpanel" aria-labelledby="headingThree">
                                               <div class="panel-body text-center">
                                                 <a href="https://www.placetopay.com/" target="blank"><img src="/assets/themebasic/images/place2p/logo.png" alt="PlacetoPay" class="img text-center" style="max-width: 200px"></a>
-                                                <p style="font-size: 1.5rem">Puede realizar el pago con la plataforma segura de PlaceToPay dando click en el siguiente botón:</p>
+                                                <p style="font-size: 1.5rem">Puede realizar el pago con la plataforma segura de Placetopay dando click en el siguiente botón:</p>
                                                 <div class="text-center">
                                                     <div class="text-center">
-                                                        <button id="pago-ptp" disabled="true" style="border: 2px solid #ff6f04;border-radius: 3px;padding: 1rem;font-size: 14px;"><strong>Pagar ${{$subtotal+$iva}} con PlaceToPay</strong></button><br>
+                                                        <button id="pago-ptp" disabled="true" style="border: 2px solid #ff6f04;border-radius: 3px;padding: 1rem;font-size: 14px;"><strong>Pagar ${{$subtotal+$iva}} con Placetopay</strong></button><br>
                                                         <input type="checkbox" class="form-check-input"  id="politicascheck" name="terminos" value="si">
                                                         <label for="terminos">Acepto los <a href="{{route('politicas')}}" target="blank" style="color:rgb(48, 48, 228)">Terminos y Condiciones</a></label>
                                                     </div>
@@ -479,7 +479,7 @@
         <script>
             $('#pago-ptp').on('click',function(e){
                 e.preventDefault();
-                swal("Estimado Cliente: Será redirigido a la pagina de PlacetoPay para continuar el proceso de pago. ¿Está de acuerdo?", {
+                swal("Estimado Cliente: Será redirigido a la pagina de Placetopay para continuar el proceso de pago. ¿Está de acuerdo?", {
                 closeOnClickOutside: false,
                 buttons: {
                     cancelar: {

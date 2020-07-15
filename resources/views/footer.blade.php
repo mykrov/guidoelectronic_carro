@@ -1,5 +1,5 @@
 <footer class="footer-area">
-        <div class="footer-top-area home-4">
+    <div class="footer-top-area home-4">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-5 col-xs-12">
@@ -36,7 +36,6 @@
                                     <li><a href="{{route('categoria-search','C0023')}}">Electrónica</a></li>
                                     <li><a href="{{route('categoria-search','C0025')}}">Seguridad</a></li>
                                 </ul>
-                               
                             </div>
                         </div>
                     </div>
@@ -70,7 +69,6 @@
 
                                 <p class="web"><label>Visitas:</label> <span style="font-size: 2rem">{{$parametros->visitas}}</span></p>
                             </div>
-
                         </div>
                     </div>
                     <!--footer-contact-info-end-->
@@ -101,5 +99,6 @@
                 </div>
             </div>
         </div>
-        <!--footer-bottom-area-end-->
-    </footer>
+    </div>
+    <!--footer-bottom-area-end-->
+</footer>

@@ -146,13 +146,13 @@
                                         <div class="panel-heading p-3 mb-3" role="tab" id="heading0">
                                           <h3 class="panel-title">
                                             <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse0" aria-expanded="true" aria-controls="collapse0">
-                                               ¿Qué es PlacetoPay? 
+                                               ¿Qué es Placetopay? 
                                             </a>
                                           </h3>
                                         </div>
                                         <div id="collapse0" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading0">
                                           <div class="panel-body px-3 mb-4">
-                                            <p>PlacetoPay es la plataforma de pagos electrónicos que usa GuidoElectronic para procesar en línea las transacciones generadas en la tienda virtual con las formas de pago habilitadas para tal fin.</p>
+                                            <p>Placetopay es la plataforma de pagos electrónicos que usa GuidoElectronic para procesar en línea las transacciones generadas en la tienda virtual con las formas de pago habilitadas para tal fin.</p>
                                           </div>
                                         </div>
                                       </div>
@@ -180,10 +180,10 @@
                                             </div>
                                             <div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading2">
                                                 <div class="panel-body px-3 mb-4">
-                                                    <p>Para proteger tus datos GuidoElectronic delega en PlacetoPay la captura de la información sensible. Nuestra plataforma de pagos cumple con los más altos estándares exigidos por la norma internacional PCI DSS de seguridad en transacciones con tarjeta de crédito. Además tiene certificado de seguridad SSL expedido por GeoTrust una compañía Verisign, el cual garantiza comunicaciones seguras mediante la encriptación de todos los datos hacia y desde el sitio; de esta manera, te podrás sentir seguro a la hora de ingresar la información de su tarjeta. <p>
-                                                    <p>Durante el proceso de pago, en el navegador se muestra el nombre de la organización autenticada, la autoridad que lo certifica y la barra de dirección cambia a color verde. Estas características son visibles de inmediato y dan garantía y confianza para completar la transacción en PlacetoPay.<p>
-                                                    <p>PlacetoPay también cuenta con el monitoreo constante de McAfee Secure y la firma de mensajes electrónicos con Certicámara.</p>
-                                                    <p>PlacetoPay es una marca de la empresa colombiana EGM Ingeniería Sin Fronteras S.A.S. </p>    
+                                                    <p>Para proteger tus datos GuidoElectronic delega en Placetopay la captura de la información sensible. Nuestra plataforma de pagos cumple con los más altos estándares exigidos por la norma internacional PCI DSS de seguridad en transacciones con tarjeta de crédito. Además tiene certificado de seguridad SSL expedido por GeoTrust una compañía Verisign, el cual garantiza comunicaciones seguras mediante la encriptación de todos los datos hacia y desde el sitio; de esta manera, te podrás sentir seguro a la hora de ingresar la información de su tarjeta. <p>
+                                                    <p>Durante el proceso de pago, en el navegador se muestra el nombre de la organización autenticada, la autoridad que lo certifica y la barra de dirección cambia a color verde. Estas características son visibles de inmediato y dan garantía y confianza para completar la transacción en Placetopay.<p>
+                                                    <p>Placetopay también cuenta con el monitoreo constante de McAfee Secure y la firma de mensajes electrónicos con Certicámara.</p>
+                                                    <p>Placetopay es una marca de la empresa colombiana EGM Ingeniería Sin Fronteras S.A.S. </p>    
                                                 </div>
                                             </div>
                                       </div>
@@ -229,7 +229,7 @@
                                             </div>
                                             <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5">
                                             <div class="panel-body px-3 mb-4">
-                                                <p>No, los pagos electrónicos realizados a través de PlacetoPay no generan costos adicionales para el comprador. </p>
+                                                <p>No, los pagos electrónicos realizados a través de Placetopay no generan costos adicionales para el comprador. </p>
                                             </div>
                                             </div>
                                         </div>
@@ -261,7 +261,7 @@
                                             </div>
                                             <div id="collapse7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading3">
                                             <div class="panel-body px-3 mb-4">
-                                                <p>Por cada transacción aprobada a través de PlacetoPay, recibirás un comprobante del pago con la referencia de compra en la dirección de correo electrónico que indicaste al momento de pagar.  Si no lo recibes, podrás contactar a la línea GuidoElectronic o al correo electrónico GuidoElectronic, para solicitar el reenvío del comprobante a la misma dirección de correo electrónico registrada al momento de pagar. En última instancia, puedes remitir tu solicitud a servicioposventa@placetopay.ec. </p>
+                                                <p>Por cada transacción aprobada a través de Placetopay, recibirás un comprobante del pago con la referencia de compra en la dirección de correo electrónico que indicaste al momento de pagar.  Si no lo recibes, podrás contactar a la línea GuidoElectronic o al correo electrónico GuidoElectronic, para solicitar el reenvío del comprobante a la misma dirección de correo electrónico registrada al momento de pagar. En última instancia, puedes remitir tu solicitud a servicioposventa@placetopay.ec. </p>
                                                 
                                             </div>
                                             </div>
