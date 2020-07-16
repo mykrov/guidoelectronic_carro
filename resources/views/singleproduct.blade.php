@@ -350,10 +350,9 @@
                 dataType: 'json',
                 success: function (data) {
                     console.log(location.href);
-                    $("header").load( location.href+(" header"));
+                    $(".header-mid-content").load( location.href+(" .header-mid-content"));
                 }
             });
-
         });
         </script>
     </body>

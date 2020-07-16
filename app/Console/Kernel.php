@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         \Log::info('*-*- Comienzo proceso de sonda diario para pedidos pendientes. -*-*');
-        $schedule->call('App\Http\Controllers\PagosController@ProcesoDiario')->everyMinute();
+        $schedule->call('App\Http\Controllers\PagosController@ProcesoDiario')->daily();
     }
 
     /**

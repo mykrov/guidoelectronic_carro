@@ -284,8 +284,9 @@
             data: {'_token': token,code:producto,cantidad:cantidad},
             dataType: 'json',
             success: function (data) {
-                Command: toastr["success"]("____________________", "Producto Agregado")
-
+                console.log(location.href);
+                $(".header-mid-content").load( location.href+(" .header-mid-content"));
+                Command: toastr["success"]("_________", "Producto Agregado");
                 toastr.options = {
                   "closeButton": false,
                   "debug": false,
@@ -303,7 +304,8 @@
                   "showMethod": "fadeIn",
                   "hideMethod": "fadeOut"
                 }
-                $("header").load( location.href+(" header"));
+                // $("header").load( location.href+(" header"));
+                
             }
         });
 
@@ -319,7 +321,7 @@
             dataType: 'json',
             success: function (data) {
                 console.log(data);
-                $("header").load( location.href+(" header"));
+                $(".header-mid-content").load( location.href+(" .header-mid-content"));
 
                 if ($(".carro-table")[0]) {
                     $(".carro-table").load( location.href+(" .carro-table"));

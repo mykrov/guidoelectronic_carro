@@ -23,7 +23,7 @@ use GuzzleHttp\Exception\BadResponseException;
 class PagosController extends Controller
 {
     public function Notificacion(Request $r)
-    {
+    {   
         $statusIn = $r->status;
         $message = $statusIn['message'];
         $reason = $statusIn['reason'];
@@ -91,7 +91,7 @@ class PagosController extends Controller
         $amount =['currency'=>'USD','total'=>$monto,'taxes'=>$taxes];
 
         $payment = ['reference'=>$reference,'description'=>'Pedido Número '.$numPedido,'amount'=>$amount];
-        $expiration = Carbon::now()->addDays(1)->toIso8601String();
+        $expiration = Carbon::now()->addMinutes(40)->toIso8601String();
 
         $peticion = ['auth'=>$auth,
         'buyer'=>$buyer, 
@@ -167,7 +167,7 @@ class PagosController extends Controller
     public function GeneraPago(Request $r)
     {
         // $seed = Carbon::now()->toIso8601String();
-        // $expiration = Carbon::now()->addDays(1)->toIso8601String();
+        // $expiration = Carbon::now()->addMinutes(30)->toIso8601String();
         // return response()->json(['seed'=>$seed,'expiration'=>$expiration]);
 
         $pagoPendiente = \App\Ventas::where('estadoPago','=','PENDIENTE')->count();

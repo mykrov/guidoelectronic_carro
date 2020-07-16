@@ -46,7 +46,7 @@ Route::post('login', 'AuthenticateController@login');
 //Activar solo items que tienen imagen en el directorio /public/assets/productos
 Route::any('imgenes','Apicontroller@disableItemNoImage')->name('imagesno');
 
-//pagos PlaceTo^Pay
+//pagos PlaceToPay
 Route::post('ptpnotify','PagosController@Notificacion');
 
 //Consulta de Pagos con estado 

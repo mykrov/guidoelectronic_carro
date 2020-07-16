@@ -52,4 +52,16 @@ Route::get('/pagoptp','PagosController@GeneraPago')->name('pagoptp');
 Route::get('/pagocon/{pago}','PagosController@ConsultaPagoInterno')->name('consultapago');
 Route::get('/consultapagos','PagosController@ProcesoDiario');
 
+// clear application cache
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Application cache flushed";
+});
+
+// clear route cache
+Route::get('/clear-route-cache', function() {
+    Artisan::call('route:clear');
+    return "Route cache file removed";
+});
+
 
