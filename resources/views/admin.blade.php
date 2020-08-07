@@ -93,6 +93,12 @@
               <span>Textos</span></a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="{{route('admin')}}">
+                  <i class="fas fa-fw fa-money-bill"></i>
+                  <span>PAGOS</span>
+              </a>
+          </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{route('salir')}}">
                     <i class="fas fa-fw fa-sign-out-alt"></i>
                 <span>Salir</span></a>
@@ -124,8 +130,7 @@
                             <th>Imagen</th>
                             <th>Carpeta</th>
                             <th>Tamaño</th>
-                            <th>Vista Previa</th>
-                                                     
+                            <th>Vista Previa</th>                       
                         </tr>
                     </thead>
                     <tbody>

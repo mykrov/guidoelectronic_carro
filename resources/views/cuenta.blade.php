@@ -361,6 +361,19 @@
                     });
 
                 });
+
+
+                var veces = 1;
+                var interval = setInterval(function() { 
+                if (veces <= 5) { 
+                    $("#table1").load(location.href + " #table1");
+                    console.log(veces);
+                    veces++;
+                }
+                else { 
+                    clearInterval(interval);
+                }
+                }, 5000);
             } );
 
 

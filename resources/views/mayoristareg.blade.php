@@ -1,6 +1,30 @@
 <!doctype html>
 <html class="no-js" lang="en">
     @include('head-meta')
+    <style>
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+           
+            
+        }
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            background-color: aquamarine;
+            cursor: inherit;
+            display: block;
+        }
+    </style>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -29,7 +53,7 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12  text-center">
                             <div class="single-ban-top-content">
-                                <p>Inicio Sesión</p>
+                                <p>Formulario para Mayorista</p>
                             </div>
                         </div>
                     </div>
@@ -58,61 +82,28 @@
             <div class="login-area">
                 <div class="container">
                     <div class="row">
+                        
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <div class="login-content banner-r-b">
-                                <h2 class="login-title">Inicio Sesión</h2>
-                                <p>Hola, Bienvenido a tu cuenta</p>
-                                <div class="social-sign" style="margin-bottom:2rem;">
-                                    <a href="javascrip:void(0)" id="clienteadm" style=" background-color:crimson;">¿Ya eres usuario de Nuestra Empresa?</a>
-                                </div>
-                                <div class="social-sign" style="margin-bottom: 1rem;">
-                                    <a href="{{route('mayorista')}}" style=" background-color:#0178dc;">¿Aplicar a una Cuenta Mayorista?</a>
-                                </div>
-                                {{-- <div class="social-sign">
-                                    <a class="banner-r-b" href="#"><i class="fa fa-facebook"></i> Iniciar Sesión con Facebook</a>
-                                    <a class="twitter" href="#"><i class="fa fa-twitter"></i> Iniciar Sesión con twitter</a>
-                                </div> --}}
-                                <form data-toggle="validator" role="form" id="form-login">
-                                    {{ csrf_field() }}
-                                    <label>Correo Electrónico</label>
-                                    <input type="text" required name="email" id="user"/>
-                                    <label>Contraseña</label>
-                                    <input type="password" required name="password" id="password"/>
-                                    <div class="login-lost">
-                                        <span class="log-rem">
-                                            <input type="checkbox" />
-                                            <label>Recordarme!</label>
-                                        </span>
-                                        <span class="forgot-login">
-                                            <a href="#">¿Olvidaste tu contraseña?</a>
-                                        </span>
-                                    </div>
-                                    <input class="login-sub" type="submit" id="login-btn" value="Iniciar Sesión" />
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-							
                             <div class="login-content login-margin">
-                                <h2 class="login-title">Crear una nueva cuenta</h2>
-                                <p>Cree su propia cuenta personalizada.</p>
-                                                               
-                                <form data-toggle="validator" role="form" id="form_register">
+                                <h2 class="login-title">Formulario de Mayorista</h2>
+                                <p>Llene los campos y adjunte los documentos necesarios para aplicar.</p>
+                                <p>Campos con <span style="color: red; font-size:2rem">*</span> son obligatorios</p>
+                                <form data-toggle="validator" role="form" id="form_register_mayor" enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <div class="row">
 										<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="checkout-form-list">
-                                                <label>Correo Electrónico</label>
+                                                <label>Correo Electrónico<span class="required">*</span></label>
                                                 <input type="email" placeholder="Dirección de correo válida" id="emailr" name="email" required data-parsley-type="email"/>
-                                                <label>Contraseña</label>
+                                                {{-- <label>Contraseña</label>
                                                 <input type="password" placeholder="Al menos 6 cracteres" id="password1r" name="password" required minlength="6" />
                                                 <label>Repita Contraseña</label>
-                                                <input type="password" placeholder="Ingrese nuevamente" id="password2r" name="password2" required required data-parsley-equalto="#password1r" />
+                                                <input type="password" placeholder="Ingrese nuevamente" id="password2r" name="password2" required required data-parsley-equalto="#password1r" /> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <div class="checkout-form-list">
-                                                <label>Nombre <span class="required">*</span></label>										
+                                                <label> Nombre<span class="required">*</span></label>										
                                                 <input type="text" placeholder="Su nombre" id="nombre" name="name" required />
                                             </div>
                                         </div>
@@ -137,41 +128,53 @@
                                                 <input type="text" name="num_id" id="numero_identidad" placeholder="Numero de Identificación" maxlength="13" minlength=10 required />
                                             </div>
                                         </div>
-										{{-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-											<div class="login-lost">
-												<span class="log-rem">
-													<input id="cbox" type="checkbox" name="es_empresa" />
-													<label>¿Es usted una empresa?</label>
-												</span>
-											</div>
-                                            <div id="cbox_info" class="checkout-form-list create-account">
-												<div class="checkout-form-list">
-													<label>Nombre de Empresa</label>
-													<input type="text" placeholder="" name="nombre_empre"/>
-													<label>RUC</label>
-													<input type="text" pattern="^[0-9]{1,}$" maxlength="13" minlength=13 placeholder="RUC" name="ruc_empre" />
-													<label>Adjuntar RUC (Documento en PDF)</label>
-													<input type="file" class="login-sub" id="pdf_ruc" accept=".pdf">
-													<label>Planilla de Servicios Basicos (Documento en PDF)</label>
-													<input type="file" class="login-sub" accept=".pdf">
-													<label>Nombramiento del Representante Legal (Documento en PDF)</label>
-													<input type="file" class="login-sub" accept=".pdf">
-													<label>Cédula del Representante Legal (Formato JPG o PNG)</label>
-													<input type="file" class="login-sub" accept=".jpg,.png">
-												</div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="checkout-form-list">
+                                                <label> Nombre de Representante</label>										
+                                                <input type="text" placeholder="Nombre de Representante" id="nombrerepre" name="namerepre" />
                                             </div>
-                                        </div> --}}
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="country-select">
+                                                <label>Identificación Representante</label>										
+                                                <select name="id_type2" id="id_type2">
+                                                  <option value="cedula" selected>Cédula</option>
+                                                  <option value="ruc">Ruc</option>
+                                                  <option value="pasaporte">Pasaporte</option>
+                                                </select> 
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="checkout-form-list">									
+                                                <input type="text" name="num_id_repre" id="numero_identidad_repre" placeholder="Identificació Representante" maxlength="13" minlength=10 />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="checkout-form-list">									
+                                                <span class="btn btn-primary btn-file" style="width: 100%">
+                                                    Imagen de Documento de Identidad<input type="file" name="file_id" id="file_id"  required>
+                                                    <label class="custom-file-label2" for="file_id" style="color:white">Seleccionar</label>
+                                                 </span>
+                                            </div>
+                                            <div class="checkout-form-list">									
+                                                <span class="btn btn-primary btn-file" style="width: 100%">
+                                                    Imagen de Papeleta Votación<input type="file" name="papeleta_id" id="papeleta_id"  required>
+                                                    <label class="custom-file-label3" for="papeleta_id" style="color:white">Seleccionar</label>
+                                                 </span>
+                                            </div>
+                                            <div class="checkout-form-list">									
+                                                <span class="btn btn-primary btn-file" style="width: 100%">
+                                                    Imagen de Recibo <input type="file" name="recibo_id" id="recibo_id"  required>
+                                                    <label class="custom-file-label" for="recibo_id" style="color:white">Seleccionar</label>
+                                                 </span>
+                                            </div>
+                                        </div>
+                                      								
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="checkout-form-list">
                                                 <label>Dirección <span class="required">*</span></label>
                                                 <input type="text" placeholder="Calle y sector" name="dir1" required />
 												<input type="text" name="dir2" placeholder="Apartamento, Oficina, referencias de locales (Opcional)" />
-												<div class="country-select">
-													<label>País <span class="required">*</span></label>
-													<select name="pais">
-													  <option value="ecuador">Ecuador</option>
-													</select> 										
-												</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -184,10 +187,9 @@
                                                 </select>
                                                 <!-- <input type="text" placeholder="Ciudad" name="ciudad" required /> -->
                                             </div>
-                                             <div class="country-select">
-                                                <label>Canton<span class="required">*</span></label>
-                                                <select name="canton" id="Canton" required>
-                                                                                         
+                                             <div class="country-select" style="display:none;">
+                                                <label>Canton<span >*</span></label>
+                                                <select name="canton" id="Canton" >                           
                                                 </select>
                                                 <!-- <input type="text" placeholder="Ciudad" name="ciudad" required /> -->
                                             </div>
@@ -195,34 +197,40 @@
                                         
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                             <div class="checkout-form-list">
-                                                <label>Celular  <span class="required">*</span></label>										
+                                                <label>Telf. Celular  <span class="required">*</span></label>										
                                                 <input type="text" name="tlf1" placeholder="Celular" pattern="^[0-9]{1,}$" maxlength="12" minlength=7 required />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="checkout-form-list">
+                                                <label>Telf. Domicilio  <span class="required">*</span></label>										
+                                                <input type="text" name="tlf2" placeholder="Domicilio" pattern="^[0-9]{1,}$" maxlength="12" minlength=7 required />
                                             </div>
                                         </div>
                                         							
                                     </div>
                                     <h4 id="error-validacionr" style="color:red"></h4>
-                                    <input class="login-sub" id="register-btn" type="submit" value="Registrarse" />
+                                    <input class="login-sub" id="register-btn" type="submit" value="APLICAR" />
                                 </form>
                                 <div class="sign-up-today">
-                                    <h2 class="login-title">Registrese hoy y podrá:</h2>
+                                    <h2 class="login-title">La Información será Evaluada:</h2>
                                     <ul>
                                         <li>
                                             <span>
                                                 <i class="fa fa-check-square-o"></i>
-                                                <span>Acelerar su camino a través del checkout</span>
+                                                <span>El Minimo de compras para Mayoristas es 100$</span>
                                             </span>									
                                         </li>
                                         <li>
                                             <span>
                                                 <i class="fa fa-check-square-o"></i>
-                                                <span>Rastree su pedido facilmente</span>
+                                                <span>Los documentos debe ser en formato JPG no mayores a 200Kb</span>
                                             </span>									
                                         </li>
                                         <li>
                                             <span>
                                                 <i class="fa fa-check-square-o"></i>
-                                                <span>Mantenga un registro de todas sus comprar</span>
+                                                <span>De ser aceptada la solicitud nos comunicaremos via telefónica.</span>
                                             </span>									
                                         </li>
                                     </ul>
@@ -396,43 +404,17 @@
                 }
             });
 
-            $("#login-btn").click(function(e){
-
-                e.preventDefault();
-
-                var user = $("#user").val();
-                var password = $("#password").val();
-
-                var form = $("#form-login").serialize();
-
-                $.ajax({
-                type: "POST",
-                url: "{{route('login-process')}}",
-                data: form,
-                success: function (response) {
-                        if(response == 'logueado'){
-                            $(location).attr('href','/');
-                        } else{
-                            swal("Error en los datos!", "Verifique los datos de inicio de sesión.", "error");                                                       
-                        }
-                    }
-                });
-
-            });
-
             $('#register-btn').click(function(e){
-               // $('#register-btn').prop('disabled',true);
-                
+              
                 e.preventDefault();
                 var formulario = $("#form_register").serialize();
-                var emailr = $("#password1r").parsley();
-                var con1r = $("#password1r").parsley();
-                var con2r = $("#password2r").parsley();
+                var emailr = $("#emailr").parsley();
+                // var con1r = $("#password1r").parsley();
+                // var con2r = $("#password2r").parsley();
                 
                 var total = 0;
                 var tipo = $("#id_type").val();
                 var num_ide = document.getElementById("numero_identidad").value;
-                var total = 0;
                 var longitud = num_ide.length;
                 var longcheck = longitud - 1;
 
@@ -476,33 +458,28 @@
                 }
 
                 function registrar(){
-                    if ($("#form_register").parsley().isValid()) {
-
+                    
+                    if ($("#form_register_mayor").parsley().isValid()) {
                         $("#error-validacionr").text("");
+                        
+                        var form_data = new FormData(document.getElementById("form_register_mayor"));
+
                         $.ajax({
-                            type: "POST",
-                            url: "{{route('register')}}",
-                            data: formulario,
-                            success: function (response) {
-                                if (response == 'registrado') {
-                                    $("#btn-register").attr("disabled", false);
-                                    swal("Registado!", "Por favor 'ACTIVE' su usuario con el link  de activación que enviamos a su correo. Recuerde Verificar en la Bandeja de Correo Spam (No Deseado)", "success");                           
-                                    $('#form_register')[0].reset();
-                                  
-                                } else if (response == "campos_vacios") {
-                                    swal("Upss","Verifica que todos los datos obligatorios esten llenos y que el email y/o RUC no esté ya registrado", "error");
-                                    $("#btn-register").attr("disabled", false);
-
-                                } else if (response == "ruc_registrado") {
-                                    swal("Atención","El número de identificación ingresado ya se encuentra registrado", "error");
-                                    $("#btn-register").attr("disabled", false);
-                                } else if(response == "ruc_invalido"){
-                                    swal("Atención","El RUC ingresado es incorrecto", "error");
-                                    $("#btn-register").attr("disabled", false);
-                                }
+                            url:"{{ route('mayoristareg') }}",
+                            method:"POST",
+                            data:form_data,
+                            dataType:'JSON',
+                            contentType: false,
+                            cache: false,
+                            processData: false,
+                            success:function(data)
+                            {
+                                $('#message').css('display', 'block');
+                                $('#message').html(data.message);
+                                $('#message').addClass(data.class_name);
+                                $('#uploaded_image').html(data.uploaded_image);
                             }
-                        });
-
+                        })
                     } else {
                         $("#error-validacionr").text("Verifique los campos del formulario");
                         $('#register-btn').prop('disabled',false);
@@ -511,125 +488,6 @@
                 }
               
             });
-
-            $("#clienteadm").click(function(e){
-                e.preventDefault();
-                $("#modal-registrado").modal("show");
-            });
-
-            $("#consultar-btn").click(function(e){
-              
-                e.preventDefault();
-                var identificacion = $("#documento-identi").val();
-                
-                if(identificacion != ''){
-                    $.ajax({
-                    type: "POST",
-                    url: "{{route('consultarADM')}}",
-                    data: {"identi":identificacion},
-                    dataType: "json",
-                    success: function (response) {
-                        if(response["res"] == "encontrado"){
-                            $("#resultado-consulta").html("Encontrado: "+response["dato"]+", cree una contraseña en indique Email a continuación:");
-                            $('.desac').removeAttr("disabled");
-                            $("#documento-identi").attr('disabled',true);
-                        }else if (response["res"] == "no-encontrado"){
-                            $("#modal-registrado").modal("hide");
-                            swal("Atención","El número ingresado no se encuenra en registrado en nuestra WEB, proceda a registrarse","info");
-                        }else if(response["res"] == "encontrado-condatos"){
-                            $("#modal-registrado").modal("hide");
-                            swal("Atención","Al parecer ya tiene una cuenta en esta web con el Email: "+response["dato"] +", de Click en ¿Olvidaste tu Contraseña? en caso de no recordarla.","info");
-                        }
-                    }
-                });
-                }else{
-                    $("#modal-registrado").modal("hide");
-                    swal("Atención","Tiene que indicar un número de Identificación.","error");
-                }
-            });
-
-
-            $("#set-pass").click(function(e){
-                e.preventDefault();
-                var email = $("#email-pedido").parsley();
-                var con1 = $("#contrasena1").parsley();
-                var con2 = $("#contrasena2").parsley();
-                
-                if(!email.isValid()){
-                    $("#error-validacion").text("El email no es correcto.");
-                };
-                if(!con1.isValid()){
-                    $("#error-validacion").text("Verifique la contraseña.");
-                };
-                if(!con2.isValid()){
-                    $("#error-validacion").text("Las contraseñas no coinciden.");
-                };
-
-                if($("#form-seteo").parsley().isValid()){
-                    $("#error-validacion").text("");
-                    
-                    var contr = $("#contrasena1").val();
-                    var emaild = $("#email-pedido").val()
-                    var identificacion = $("#documento-identi").val();
-
-                    $.ajax({
-                        type: "POST",
-                        url: "{{route('seteo-data')}}",
-                        data: {"email":emaild,"contrasena":contr,"ruc":identificacion},
-                        dataType: "json",
-                        success: function (response) {
-                            if(response["res"] == "actualizado"){
-                                $("#modal-registrado").modal("hide");
-                                swal("Exito","Hemos configurado tu contraseña y correo, enviamos un email para que puedas verificar tu cuenta a: "+response["dato"],"info");
-
-                            }else if(response["res"] == "no-actualizado"){
-                                $("#modal-registrado").modal("hide");
-                                swal("Error","Problema al actualizar los datos: "+response["dato"],"error");
-
-                            }else if(response["res"] == "email-utilizado"){
-                                $("#modal-registrado").modal("hide");
-                                swal("Inconveniente","El email que indicó ya está siendo utilizado por otro usuario.","info");
-                            }
-
-                        }
-                    });
-                }
-
-            });
-
-            $(".forgot-login").click(function(e){
-                e.preventDefault();
-                $("#modal-recuperar").modal("show");
-            });
-
-            $("#consultar-email").click(function(e){
-
-                var email = $("#email-recuperar").parsley();
-                e.preventDefault();
-               
-                if(email.isValid()){
-                    
-                    $("#consultar-email").prop('disabled',true);
-
-                    $.ajax({
-                        type: "POST",
-                        url: "{{route('recuperar')}}",
-                        data: {'email':$("#email-recuperar").val()},
-                        dataType: "json",
-                        success: function (response) {
-                            if(response['res']== "process-open"){
-                                $("#modal-recuperar").modal("hide");
-                                swal("Revisar Correo","Se envió un Email al correo indicado con un enlace para que resetee su contraseña.","info");
-                            }else if (response["res"] == "no-finded"){
-                                $("#consultar-email").prop('disabled',false);   
-                                $("#modal-recuperar").modal("hide");
-                                swal("Correo no Encontrado","El Email que indicó no fue encontrado.","error");
-                            }
-                        }
-                    });
-                }
-            });
-
 
             $('#Ciudad').change(function(event) {
                 $('#Canton')
@@ -656,6 +514,27 @@
                     console.log("error");
                 });
             });
+
+
+            $('#recibo_id').on('change',function(){
+                //get the file name
+                var fileName = $(this).val();
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+            $('#file_id').on('change',function(){
+                //get the file name
+                var fileName = $(this).val();
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label2').html(fileName);
+            })
+            $('#papeleta_id').on('change',function(){
+                //get the file name
+                var fileName = $(this).val();
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label3').html(fileName);
+            })
         </script>
+
     </body>
 </html>     

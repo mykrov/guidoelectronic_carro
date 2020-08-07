@@ -19,6 +19,9 @@ Route::post('/setdata','LoginController@setearDatos')->name('seteo-data');
 Route::post('/recuperar','LoginController@recuperaPass')->name('recuperar');
 Route::get('/resetpass/{id}','LoginController@resetIndex')->name('reset-index');
 Route::post('/reset','LoginController@resetProcess')->name('reset');
+Route::get('/mayorista','MayoristaController@RegistroIndex')->name('mayorista');
+Route::post('/mayoristareg','MayoristaController@GuardarRegistro')->name('mayoristareg');
+
 //Rutas de Busquedas
 Route::any('/search','SearchController@search')->name('search');
 Route::get('categoria/{code}','SearchController@categoria')->name('categoria-search');
@@ -51,6 +54,10 @@ Route::get('getCantones','Cantones@getCantones')->name('getcantones');
 Route::get('/pagoptp','PagosController@GeneraPago')->name('pagoptp');
 Route::get('/pagocon/{pago}','PagosController@ConsultaPagoInterno')->name('consultapago');
 Route::get('/consultapagos','PagosController@ProcesoDiario');
+
+
+//consulta de SQL
+Route::get('/sqlraw','ApiController@getPedidos');
 
 // clear application cache
 Route::get('/clear-cache', function() {

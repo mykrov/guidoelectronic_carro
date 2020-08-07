@@ -78,29 +78,35 @@
 
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav ">
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('admin')}}">
-                    <i class="fas fa-fw fa-image"></i>
-                    <span>Imagenes</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('colores')}}">
-                    <i class="fas fa-fw fa-paint-brush"></i>
-                    <span>Colores</span>
-                </a>
-            </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{route('textos')}}">
-              <i class="fas fa-fw fa-comment"></i>
-              <span>Textos</span></a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="{{route('salir')}}">
-                  <i class="fas fa-fw fa-sign-out-alt"></i>
-              <span>Salir</span></a>
-          </li>
-        </ul>
+      <li class="nav-item">
+          <a class="nav-link" href="{{route('admin')}}">
+              <i class="fas fa-fw fa-image"></i>
+              <span>Imagenes</span>
+          </a>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link" href="{{route('colores')}}">
+              <i class="fas fa-fw fa-paint-brush"></i>
+              <span>Colores</span>
+          </a>
+      </li>
+      <li class="nav-item">
+      <a class="nav-link" href="{{route('textos')}}">
+        <i class="fas fa-fw fa-comment"></i>
+        <span>Textos</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{route('admin')}}">
+            <i class="fas fa-fw fa-money-bill"></i>
+            <span>PAGOS</span>
+        </a>
+    </li>
+      <li class="nav-item">
+          <a class="nav-link" href="{{route('salir')}}">
+              <i class="fas fa-fw fa-sign-out-alt"></i>
+          <span>Salir</span></a>
+      </li>
+  </ul>
 
     <div id="content-wrapper">
 

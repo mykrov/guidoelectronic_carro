@@ -18,8 +18,14 @@ class ApiController extends Controller
 {
     //obtener las cabeceras y detarlles del pedido.
    public function getPedidos()
-   {
-       $ventas = DB::table('ventas')->where('estado','=','A')->get();
+    {
+        DB::enableQueryLog();
+        $ventas = DB::table('ventas')
+        ->where('estado','=','A')
+        ->where('estadoPago','=','APROBADO')
+        ->orWhere('estadoPago','=','Por Acordar')
+        ->get();
+
        $ids = [];
 
        foreach ($ventas as $venta) {
@@ -28,7 +34,7 @@ class ApiController extends Controller
        $detalles = DB::table('compras')->whereIn('idventa',$ids)->get();
 
        return response()->json(['status'=>'OK','pedidos'=>$ventas,'detalles'=>$detalles]);
-   }
+    }
 
    //obtener los usuarios por una fecha dada.
    public function getUsuarios($fecha)

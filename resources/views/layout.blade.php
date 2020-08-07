@@ -53,8 +53,16 @@
             <!--Start-latest-products-wrap-->
             <div class="latest-products-wrap home-4">
                 <div class="container">
-                    <div class="row animate__animated animate__backInLeft" style="padding-top: 1rem; padding-bottom: 1rem;">
-                        <img class="img img-fluid" style="border-radius:1rem;" alt="GuidoEectronic" src="{{asset('assets/themebasic/images/banner/publi.jpg')}}" />
+                    <div id="publicidad-owl" class="text-center" style="padding-top: 1rem; padding-bottom: 1rem;">
+                        <div class="item">
+                            <img class="img img-fluid" style="border-radius:1rem;" alt="GuidoEectronic" src="{{asset('assets/themebasic/images/banner/publi.jpg')}}" />
+                        </div>
+                        <div class="item">
+                            <img class="img img-fluid" style="border-radius:1rem;" alt="GuidoEectronic" src="{{asset('assets/themebasic/images/banner/publi2.jpg')}}"/>
+                        </div>
+                        <div class="item">
+                            <img class="img img-fluid" style="border-radius:1rem;" alt="GuidoEectronic" src="{{asset('assets/themebasic/images/banner/tarjetas.jpg')}}"/>
+                        </div>
                     </div>
                     <div class="row">
 				        <!--start-categry-area-->
@@ -223,6 +231,25 @@
                 @include('message')
             @endif
         </div> 
+
+        <script>
+            $(document).ready(function(){
+                var owl1 = $('#publicidad-owl');
+                owl1.owlCarousel({
+                    autoPlay: true, 
+                    slideSpeed:2000,
+                    items : 1,
+                    pagination:false,
+                    navigation:false,
+                    stopOnHover: true,
+                    navigationText:["<i class='fa fa-long-arrow-left'></i>","<i class='fa fa-long-arrow-right'></i>"],
+                    itemsDesktop : [1199,1],
+                    itemsDesktopSmall : [980,1],
+                    itemsTablet : [767,1],
+                    itemsMobile : [479,1]                  
+                });
+            });  
+        </script>
         <!--END Start-main-wrapper-->
     </body>
 </html>     

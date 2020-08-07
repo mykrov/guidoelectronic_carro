@@ -363,7 +363,7 @@ class PagosController extends Controller
 
     public function ConsultaPagoInterno($pago)
     {   
-        $dataPTP = \App\DatosPTP::where('ambiente','=',env('APP_PAGO_ENV',1))->first();
+        $dataPTP = \App\DatosPTP::where('ambiente','=',env('APP_PAGO_ENV',2))->first();
         $secretKey = $dataPTP->secretKey;
         $login = $dataPTP->login;
         $numPedido = $pago;
@@ -379,11 +379,12 @@ class PagosController extends Controller
         
         $nonceBase64 = base64_encode($nonce);
         $tranKey = base64_encode(sha1($nonce. $seed . $secretKey, true));
-        $auth = ['login'=>$login,'tranKey'=>$tranKey,'nonce'=>$nonceBase64,'seed'=>$seed];      
+        $auth = ['login'=>$login,'tranKey'=>$tranKey,'nonce'=>$nonceBase64,'seed'=>$seed];  
         $peticion = ['auth'=>$auth];
 
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $dataPTP->endpoint]);
         $url2= 'api/session/'.$numPedido;
+        
         $headers2 = [
             'Content-type'=>'application/json',
             'Accept'=>'application/json'
