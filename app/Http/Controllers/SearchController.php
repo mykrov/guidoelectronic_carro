@@ -31,15 +31,15 @@ class SearchController extends Controller
 
         if($category == 'TODAS')
         {
-            $where =[['descripcion','like',"%$text%"],['precio2','!=',0],['estado','=','A'],['stock','>',0]];
+            $where =[['descripcion','like',"%$text%"],['precio2','>',0],['estado','=','A'],['stock','>',0]];
         }else{
-            $where =[['descripcion','like',"%$text%"],['idcategoria','=',"$category"],['precio2','!=',0],['estado','=','A'],['stock','>',0]];
+            $where =[['descripcion','like',"%$text%"],['idcategoria','=',"$category"],['precio2','>',0],['estado','=','A'],['stock','>',0]];
         }
 
         $productosLike = DB::table('producto')
         ->orderBy('idproducto','DESC')
         ->where($where)
-        ->orWhere('idproducto','like',"%$text%")
+        ->orWhere([['idproducto','like',"%$text%"],['precio','>',0],['estado','=','A'],['stock','>',0]])
         ->paginate(15)
         ->setpath('');
 

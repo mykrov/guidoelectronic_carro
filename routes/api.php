@@ -49,6 +49,7 @@ Route::any('imgenes','Apicontroller@disableItemNoImage')->name('imagesno');
 //pagos PlaceToPay
 Route::post('ptpnotify','PagosController@Notificacion');
 
+
 //Consulta de Pagos con estado 
 Route::get('consultapagos','PagosController@ProcesoDiario');
 

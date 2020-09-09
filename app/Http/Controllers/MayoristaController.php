@@ -81,7 +81,7 @@ class MayoristaController extends Controller
     
             try {
                 Mail::send('email.mayoristare', ['datos'=>$datos], function ($mail) use ($new_name,$new_name2,$new_name3) {
-                    $mail->from('mrangel@birobid.com', 'Petición de Mayorista');
+                    $mail->from('carroweb@guidoelectronic.com', 'Petición de Mayorista');
                     $mail->to('salvatorex89@gmail.com');
                     $mail->subject('Petición de Usuario Mayorista');
                     $mail->attach(storage_path('mayoristas').'\\'.$new_name);

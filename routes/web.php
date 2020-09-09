@@ -21,6 +21,7 @@ Route::get('/resetpass/{id}','LoginController@resetIndex')->name('reset-index');
 Route::post('/reset','LoginController@resetProcess')->name('reset');
 Route::get('/mayorista','MayoristaController@RegistroIndex')->name('mayorista');
 Route::post('/mayoristareg','MayoristaController@GuardarRegistro')->name('mayoristareg');
+Route::post('/valorenvio','CarroController@valor_envio');
 
 //Rutas de Busquedas
 Route::any('/search','SearchController@search')->name('search');

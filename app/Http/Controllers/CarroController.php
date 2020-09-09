@@ -44,6 +44,12 @@ class CarroController extends Controller
         }
         $precioAc = 'precio2';
 
+        $ivaconsulta = DB::table('parametros')->where('idparametro','=',1)->first();
+        $ivaVal = $ivaconsulta->iva;
+        $montoSinIva = round(3 - (3 * $ivaVal),2);
+
+        \Session::put(['envio' => 3]);
+
         $producto = DB::table('producto')->where('idproducto','=',"$request->code")->first();
         $precio = $producto->$precioAc;
         $nombre = $producto->descripcion;
@@ -54,7 +60,7 @@ class CarroController extends Controller
                 'precio' => $precio,
                 'nombre' => $nombre,
                 'gr_iva' => $gr_iva,];
-
+   
         if(\Session::has('carro')){
 
             $products = session()->pull('carro', []);
@@ -62,24 +68,22 @@ class CarroController extends Controller
             foreach ($products as $clave => $valor){
                 if(array_search($request->code, $valor)){
                     unset($products[$clave]);
+                    
                 }
             }
             session()->put('carro', $products);
             \Session::push('carro',$item);  
-
+           
         }else{
-            
             \Session::put('carro',[]);
             \Session::push('carro',$item);
         }
-
         return response()->json('agregado');
    }
 
     //Vaciar Carro
    public function empty_car()
-   {
-      
+   {      
         \Session::forget('carro');
         session()->pull('carro', []);
         return response()->json('limpiado');
@@ -87,7 +91,7 @@ class CarroController extends Controller
 
    //Borrar Item del carro
    public function delete_item(Request $request)
-   {
+    {
         $products = session()->pull('carro', []);
         $code = $request->code;
 
@@ -98,7 +102,38 @@ class CarroController extends Controller
         }
         session()->put('carro', $products);
         return response()->json($products);
-   }
+    }
+
+    public function valor_envio(Request $r)
+    {
+        $montoor = $r['valor'];
+        $monto = $montoor;
+
+        if (\Session::has('envio')) {
+            \Session::put('envio',$monto);
+
+        }
+
+        $envioactual = \Session::get('envio');
+        //return response()->json($envioactual);
+        $products = session()->pull('carro', []);
+            
+        foreach ($products as $clave => $valor){
+            if(array_search('ENV01', $valor)){
+                unset($products[$clave]);
+            }
+        }
+
+        $itemEnvio =[ 'item' => 'ENV01',
+                    'cantidad'  =>1,
+                    'precio' => $monto,
+                    'nombre' => 'Envio',
+                    'gr_iva' => 'N'];
+
+        session()->put('carro', $products);
+        \Session::push('carro',$itemEnvio);
+        return response()->json('cambio_valor');
+    }
 
    //cambiar catidad de un item
    public function change_cant(Request $request)
@@ -142,6 +177,29 @@ class CarroController extends Controller
         if (\Session::get('usuario-nombre') == null) {
             return view('login',['cates'=>$categorias,'familias'=>$familias,'texto'=>$textos,'imagen'=>$imgweb,'parametros'=>$parametro,'provincias'=>$provincias]);
         } else {
+
+            $products = session()->pull('carro', []);
+            
+            foreach ($products as $clave => $valor){
+                if(array_search('ENV01', $valor)){
+                    unset($products[$clave]);
+                }
+            }
+
+            $envioactual = \Session::get('envio');
+
+           
+            $montoEnvios = $envioactual;
+
+            $itemEnvio =[ 'item' => 'ENV01',
+                    'cantidad'  =>1,
+                    'precio' => $montoEnvios,
+                    'nombre' => 'Envio',
+                    'gr_iva' => 'N'];
+
+            session()->put('carro', $products);
+            \Session::push('carro',$itemEnvio);
+
             $id = \Session::get('usuario-id');
             $Usuario2 = DB::table('usuario')->where('idusuario','=',"$id")->first();
             return view('checkout',['cates'=>$categorias,'familias'=>$familias,'user'=>$Usuario2,'texto'=>$textos,'imagen'=>$imgweb,'parametros'=>$parametro,'provincias'=>$provincias]);
@@ -224,7 +282,7 @@ class CarroController extends Controller
 
                         $array = \Session::get('carro');
                         \Mail::to($Usuario2->correo)
-                        ->cc(['rikardomoncada12@gmail.com'])
+                        ->cc(['contabilidad@guidolectronic.com'])
                         ->send(new PedidoRealizado($venta,$array));
                         
                         \Session::forget('carro');

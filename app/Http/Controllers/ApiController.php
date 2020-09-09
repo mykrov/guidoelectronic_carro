@@ -40,8 +40,8 @@ class ApiController extends Controller
    public function getUsuarios($fecha)
    {
         $usuarios = DB::table('usuario')->where('ingreso','=',$fecha)->get();
-       //$usuarios = DB::table('usuario')->where('sincronizado','=','N')->get();
-       return response()->json(['status'=>'OK','fecha'=>$fecha,'usuariosw'=>$usuarios]);
+        //$usuarios = DB::table('usuario')->where('sincronizado','=','N')->get();
+        return response()->json(['status'=>'OK','fecha'=>$fecha,'usuariosw'=>$usuarios]);
    }
 
    //añadir categoria
@@ -154,8 +154,10 @@ class ApiController extends Controller
 
                     if ( $value['contrasenia'] == null || $value['contrasenia'] == '') {
                         $user->correo = "";
+                        $user->contrasenia = "";
                     } else {
                         $user->correo = $value['correo'];
+                        $user->contrasenia = $value['contrasenia'];
                     }
                                         
                     $user->identificacion = $value['identificacion'];

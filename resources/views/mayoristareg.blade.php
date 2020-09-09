@@ -152,19 +152,19 @@
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <div class="checkout-form-list">									
                                                 <span class="btn btn-primary btn-file" style="width: 100%">
-                                                    Imagen de Documento de Identidad<input type="file" name="file_id" id="file_id"  required>
+                                                    Imagen de Documento de Identidad<input type="file" name="file_id" id="file_id"  accept="image/x-png,image/jpg,image/jpeg" required>
                                                     <label class="custom-file-label2" for="file_id" style="color:white">Seleccionar</label>
                                                  </span>
                                             </div>
                                             <div class="checkout-form-list">									
                                                 <span class="btn btn-primary btn-file" style="width: 100%">
-                                                    Imagen de Papeleta Votación<input type="file" name="papeleta_id" id="papeleta_id"  required>
+                                                    Imagen de Papeleta Votación<input type="file" name="papeleta_id" id="papeleta_id" accept="image/x-png,image/jpg,image/jpeg"  required>
                                                     <label class="custom-file-label3" for="papeleta_id" style="color:white">Seleccionar</label>
                                                  </span>
                                             </div>
                                             <div class="checkout-form-list">									
                                                 <span class="btn btn-primary btn-file" style="width: 100%">
-                                                    Imagen de Recibo <input type="file" name="recibo_id" id="recibo_id"  required>
+                                                    Imagen de Recibo <input type="file" name="recibo_id" id="recibo_id" accept="image/x-png,image/jpg,image/jpeg"  required>
                                                     <label class="custom-file-label" for="recibo_id" style="color:white">Seleccionar</label>
                                                  </span>
                                             </div>
@@ -474,10 +474,11 @@
                             processData: false,
                             success:function(data)
                             {
-                                $('#message').css('display', 'block');
-                                $('#message').html(data.message);
-                                $('#message').addClass(data.class_name);
-                                $('#uploaded_image').html(data.uploaded_image);
+                                if(data.estado == 'enviado'){
+                                    swal("Formulario Enviado","Verificaremos la información y nos pondremos en contacto.", "success");
+                                }else{
+                                    swal("Error Enviado Formulario","Por Favor intente más tarde.", "error");
+                                }
                             }
                         })
                     } else {
@@ -535,6 +536,5 @@
                 $(this).next('.custom-file-label3').html(fileName);
             })
         </script>
-
     </body>
 </html>     

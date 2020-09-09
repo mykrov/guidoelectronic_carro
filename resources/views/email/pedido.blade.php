@@ -22,7 +22,12 @@ Pedido Numero: {{$venta->idventas}}
                 <td>x {{ $item['cantidad']}}</td>
                 <td>${{round($item['precio'],2)}}</td>
                 <td>{{$item['gr_iva']}}</td>
-                <td>${{round(((floatval($item['precio'])*floatval($item['cantidad']))*0.12)+floatval($item['precio'])*floatval($item['cantidad']),2)}}</td>
+                @if ( {{$item['gr_iva']}} == 'N')
+                    <td>${{round(((floatval($item['precio'])*floatval($item['cantidad']))),2)}}</td>
+                @else
+                    <td>${{round(((floatval($item['precio'])*floatval($item['cantidad']))*0.12)+floatval($item['precio'])*floatval($item['cantidad']),2)}}</td>
+                @endif
+                
             </tr>
             @endforeach
         </tbody>
@@ -30,8 +35,8 @@ Pedido Numero: {{$venta->idventas}}
 </table>
 
 <br>
-SubTotal: ${{$venta->subtotal}}
-IVA: ${{$venta->iva}}.<br>
+SubTotal: ${{$venta->subtotal}}<br>
+IVA: ${{$venta->iva}}<br>
 Total: <strong>${{$venta->total}}.<strong><br>
 
 Fecha:{{$venta->fecha}}.<br> 

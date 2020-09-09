@@ -1,6 +1,9 @@
 <!doctype html>
 <html class="no-js" lang="en">
    @include('head-meta')
+   <script>
+       var valorEnvioGlobal = 3;
+   </script>
     <body>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -342,23 +345,44 @@
                                                 </tr>
                                                 <tr class="shipping">
                                                     <th>Envío</th>
+                                                    <form id="envioForm">
                                                     <td>
-                                                        <h5>Acordar con Vendedor</h5>
-                                                        {{-- <ul>
+                                                        <ul>
                                                             <li>
-                                                                <input type="radio" name="envio" required />
+                                                                @if (Session::get('envio') == 3)
+                                                                    <input class="envioPre" type="radio" name="envio" id="envio5" value ="3" required checked />
+                                                                @else
+                                                                    <input class="envioPre" type="radio" name="envio" id="envio5" value ="3" required />
+                                                                @endif
                                                                 <label>
-                                                                    Tarifa Fija: <span class="amount">$7.00</span>
+                                                                    Guayaquil,Duran,Samborondon: <span class="amount">$3.00</span>
                                                                 </label>
                                                             </li>
                                                             <li>
-                                                                <input type="radio" name="envio" required />
-                                                                <label>Envio Gratuito:</label>
+                                                                @if (Session::get('envio') == 5)
+                                                                    <input class="envioPre" type="radio" name="envio" id="envio5" value ="5" required checked />
+                                                                @else
+                                                                    <input class="envioPre" type="radio" name="envio" id="envio5" value ="5" required />
+                                                                @endif
+                                                                
+                                                                <label>Resto del Pais: <span class="amount">$5.00</span></label>
                                                             </li>
-                                                            <li></li>
-                                                        </ul> --}}
+                                                            <li>
+                                                                @if (Session::get('envio') == 0)
+                                                                    <input class="envioPre" type="radio" name="envio" id="envio5" value ="0" required checked />
+                                                                @else
+                                                                    <input class="envioPre" type="radio" name="envio" id="envio5" value ="0" required />
+                                                                @endif
+                                                                <label>Retiro en Tienda Matriz: <span class="amount">$0.00</span></label></label>
+                                                            </li>
+                                                            <li>
+
+                                                            </li>
+                                                        </ul>
                                                     </td>
+                                                    </form>
                                                 </tr>
+                                                
                                                 <tr class="order-total">
                                                     <th>Orden Total</th>
                                                     <td><strong><span class="amount">${{$subtotal+$iva}}</span></strong>
@@ -430,6 +454,10 @@
                                                         <label for="terminos">Acepto los <a href="{{route('politicas')}}" target="blank" style="color:rgb(48, 48, 228)">Terminos y Condiciones</a></label>
                                                     </div>
                                                 </div> 
+                                                <script>
+        
+                                                    
+                                                </script>
                                                 <div class="text-center">
                                                     <img src="/assets/themebasic/images/payment/tarjetasCredito.jpg" alt="visa">
                                                 </div>                                   
@@ -477,6 +505,7 @@
         </script>
                
         <script>
+            
             $('#pago-ptp').on('click',function(e){
                 e.preventDefault();
                 swal("Estimado Cliente: Será redirigido a la pagina de Placetopay para continuar el proceso de pago. ¿Está de acuerdo?", {
@@ -503,19 +532,44 @@
                     }
                 });
             });
+            
+            $(document).on('click','.envioPre',function(e){
+                var valor = $('input:radio[name=envio]:checked').val();
+                valorEnvioGlobal = valor;
+                console.log('Se precionó el envio de ' + valor);
+                var token = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    type: "POST",
+                    url: "/valorenvio",
+                    data: {'_token': token,'valor': valor},
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log(data);
+                        if(data == 'cambio_valor'){
+                            $(".your-order").load( location.href+(" .your-order"));
+                        }
+                    }
+                });
 
-
-            const checkboxPoliticas = document.getElementById('politicascheck')
-
-            checkboxPoliticas.addEventListener('change', (event) => {
-            if (event.target.checked) {
-                $("#pago-ptp").prop('disabled', false);
-                $("#pago-ptp").css("background-color", "#ff7209");
-            } else {
-                $("#pago-ptp").prop('disabled', true);
-                $("#pago-ptp").css("background-color", "#fff");
-            }
+                                                   
             })
+
+            $(document).on( 'click', '#politicascheck', function(e){
+                const checkboxPoliticas = document.getElementById('politicascheck');
+
+                if (event.target.checked) {
+                        $("#pago-ptp").prop('disabled', false);
+                        $("#pago-ptp").css("background-color", "#ff7209");
+                    } else {
+                        $("#pago-ptp").prop('disabled', true);
+                        $("#pago-ptp").css("background-color", "#fff");
+                    }
+                // checkboxPoliticas.addEventListener('change', (event) => {
+                    
+                // })
+
+            });
+
 
         </script> 
         @if($errors->any())
