@@ -137,8 +137,7 @@ class SearchController extends Controller
         $result = DB::table('producto')
         ->orderBy('idproducto','DESC')
         ->where([['idfamilia','=',"$code"],['estado','=','A'],['precio2','>',0],['stock','>',0]])
-        ->paginate(15)
-        ->setpath('');
+        ->paginate(15);
 
         //información de la familia
         $codigo_buscado = DB::table('familia')->where('idfamilia','=',"$code")->first();
@@ -174,8 +173,7 @@ class SearchController extends Controller
         $result = DB::table('producto')
         ->orderBy('idproducto','DESC')
         ->where([['idfamilia','=',"$code"],['estado','=','A'],['stock','>',0]])
-        ->paginate(15)
-        ->setpath('');
+        ->paginate(15);
 
         //información de la familia
         $codigo_buscado = DB::table('familia')->where('idfamilia','=',"$code")->first();
