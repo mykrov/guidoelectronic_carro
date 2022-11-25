@@ -397,7 +397,7 @@
                                         {{-- caja de pago --}}
                                         {{-- <form id="test-form" action=""></form> --}}
                                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                          <div class="panel panel-default">
+                                          {{--<div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingOne">
                                               <h4 class="panel-title">
                                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -434,7 +434,7 @@
                                                 </div>
                                               </div>
                                             </div>
-                                          </div>
+                                          </div>--}}
                                           <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingThree">
                                               <h4 class="panel-title">

@@ -21,10 +21,12 @@ use GuzzleHttp\Exception\BadResponseException;
 
 class CarroController extends Controller
 {
+    // precio por defecto
    Public $precioAc = 'precio2';
                    
    public function add(Request $request)
    {
+        //verifica la existencia de una session con usuario para consultar tipo de precio
         if (\Session::has('usuario-tipo')) {
             $tipo = \Session::get('usuario-tipo');
 
@@ -44,23 +46,28 @@ class CarroController extends Controller
         }
         $precioAc = 'precio2';
 
+        //consulta del iva
         $ivaconsulta = DB::table('parametros')->where('idparametro','=',1)->first();
         $ivaVal = $ivaconsulta->iva;
         $montoSinIva = round(3 - (3 * $ivaVal),2);
 
         \Session::put(['envio' => 3]);
 
+        // consulta del item a agregar
         $producto = DB::table('producto')->where('idproducto','=',"$request->code")->first();
         $precio = $producto->$precioAc;
         $nombre = $producto->descripcion;
         $gr_iva = $producto->Graba_Iva;
 
+        // crea un itemcarro
         $item = ['item' => $request->code,
                 'cantidad' => $request->cantidad,
                 'precio' => $precio,
                 'nombre' => $nombre,
                 'gr_iva' => $gr_iva,];
    
+        // verifica si ya hay un carro con item para agregar el actual
+        // caso contrario crea el objeto y luego agrega el item
         if(\Session::has('carro')){
 
             $products = session()->pull('carro', []);
@@ -78,10 +85,11 @@ class CarroController extends Controller
             \Session::put('carro',[]);
             \Session::push('carro',$item);
         }
+        // retorna la el estado del proceso
         return response()->json('agregado');
    }
 
-    //Vaciar Carro
+    //Vaciar Carro y borra el estado
    public function empty_car()
    {      
         \Session::forget('carro');
@@ -104,6 +112,7 @@ class CarroController extends Controller
         return response()->json($products);
     }
 
+    // calculo del valor de envio dependiendio dekl valor seteado en base
     public function valor_envio(Request $r)
     {
         $montoor = $r['valor'];
@@ -131,6 +140,7 @@ class CarroController extends Controller
                     'gr_iva' => 'N'];
 
         session()->put('carro', $products);
+        // se agrega al carro
         \Session::push('carro',$itemEnvio);
         return response()->json('cambio_valor');
     }
@@ -141,7 +151,7 @@ class CarroController extends Controller
         $products = session()->pull('carro', []);
         $code = $request->code;
         $cantida = $request->cantidad;
-        
+        //valida la cantidad
         if($cantida < 1){
             $cantida = 1;
         }
@@ -156,8 +166,10 @@ class CarroController extends Controller
         return response()->json($products);
    }
 
+   // Retorna la vista del Checkout de la compra
    public function checkout()
    {
+        // optiene los registros necesarios para la vista.
         $provincias =DB::select(DB::raw('SELECT * FROM provincia where codigo in (select provincia from canton)'));
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
@@ -173,11 +185,12 @@ class CarroController extends Controller
             $imgweb[$item->nombre_seccion] = $item->nombre;
         }
         
-        
+        //verifica que si hay session de usuario
         if (\Session::get('usuario-nombre') == null) {
             return view('login',['cates'=>$categorias,'familias'=>$familias,'texto'=>$textos,'imagen'=>$imgweb,'parametros'=>$parametro,'provincias'=>$provincias]);
         } else {
 
+            //setea los productos
             $products = session()->pull('carro', []);
             
             foreach ($products as $clave => $valor){
@@ -186,9 +199,8 @@ class CarroController extends Controller
                 }
             }
 
+            //configura el envio
             $envioactual = \Session::get('envio');
-
-           
             $montoEnvios = $envioactual;
 
             $itemEnvio =[ 'item' => 'ENV01',
@@ -197,6 +209,7 @@ class CarroController extends Controller
                     'nombre' => 'Envio',
                     'gr_iva' => 'N'];
 
+            //configura la session
             session()->put('carro', $products);
             \Session::push('carro',$itemEnvio);
 
@@ -210,13 +223,16 @@ class CarroController extends Controller
    //Proceso de Pago y Guardado del pedido.
    public function pedido(Request $request)
    {
+        //seteo del prescio y consulta iva
         $precioAc = 'precio2';
         $ivaconsulta = DB::table('parametros')->where('idparametro','=',1)->first();
         $ivaVal = $ivaconsulta->iva;
+        //verifica que exista carro en la session
         if (!is_null(\Session::get('carro'))) {
             $subtotal = 0.0;
             $total = 0.0;
             $iva = 0.0;
+            // calculo del subtotal e iva de los productos
             foreach(\Session::get('carro') as $itemC){
                 $itemSub = round(floatval($itemC['precio'])*floatval($itemC['cantidad']),2); 
                 $subtotal += $itemSub;
@@ -226,10 +242,14 @@ class CarroController extends Controller
             }
             $total = $iva+$subtotal;
 
+            // se evalua si el total del pedido es mayor o igual al minimo establecido para pedidos
+            // en la base de datos.
             if ($total >=$ivaconsulta->min_pedido) {
+                //obtiene valores desde la session
                 $id = \Session::get('usuario-id');
                 $Usuario2 = DB::table('usuario')->where('idusuario','=',"$id")->first();
                 try {
+                    //crea venta y la guarda
                     $hoy = date("d/m/Y");
                     $iva_g = 'N';
                     $venta = new Ventas();
@@ -251,11 +271,11 @@ class CarroController extends Controller
                     $venta->ruc = $Usuario2->numero_identificacion;
                     $venta->tipoPago = "EFE/BAN/CE";
                     $venta->estadoPago = "Por Acordar";
-                    
                     $venta->save();
 
                     foreach (\Session::get('carro') as $key => $value) {
                         
+                        // graba la compra
                         $compra = new Compras();
                         $compra->cantidad = $value['cantidad'];
                         $compra->precio = round(floatval($value['precio']),2);
@@ -280,11 +300,12 @@ class CarroController extends Controller
 
                     try {
 
+                        //obtiene los items para mandar el email con los detalles
                         $array = \Session::get('carro');
                         \Mail::to($Usuario2->correo)
                         ->cc(['contabilidad@guidolectronic.com'])
                         ->send(new PedidoRealizado($venta,$array));
-                        
+                        // limpia el carro de la session
                         \Session::forget('carro');
                         return response()->json('pedido_guardado');
 

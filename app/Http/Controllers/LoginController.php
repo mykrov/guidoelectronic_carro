@@ -17,57 +17,63 @@ use App\Mail\RecuperarPass;
 
 class LoginController extends Controller
 {
+    // retorna la vista de login de la web
     public function index()
     {
-        $provincias =DB::select(DB::raw('SELECT * FROM provincia where codigo in (select provincia from canton)'));
-        
-        $categorias = DB::table('categoria')->where('estado','=','A')->get();
+        //obtiene las variables de la vista
+        $provincias = DB::select(DB::raw('SELECT * FROM provincia where codigo in (select provincia from canton)'));
+
+        $categorias = DB::table('categoria')->where('estado', '=', 'A')->get();
         $familias = DB::table('familia')->get();
         $textos = DB::table('texto')->get();
-        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
+        $parametro = DB::table('parametros')->where('idparametro', '=', 1)->first();
         $imagenes = DB::table('seccion_imagen')
-        ->join('imagen','id_imagen','=','idimagen')->get();
-        
+            ->join('imagen', 'id_imagen', '=', 'idimagen')->get();
+
         $imgweb = array();
 
-        foreach($imagenes as $item){
+        foreach ($imagenes as $item) {
             $imgweb[$item->nombre_seccion] = $item->nombre;
         }
-
-        return view('login',['cates'=>$categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro,'provincias'=>$provincias]);
+        //retorna la vista
+        return view('login', ['cates' => $categorias, 'familias' => $familias, 'imagen' => $imgweb, 'texto' => $textos, 'parametros' => $parametro, 'provincias' => $provincias]);
     }
 
+    // procesa el login de un usuario
     public function login()
     {
+        // obtiene las variables de la petición
         $email = Input::get('email');
         $pass = Input::get('password');
-        $consulta = DB::table('usuario')->where([['correo','=',"$email"],['contrasenia','=',"$pass"],['activacion','=','habilitar']])->get();
+        // consulta el usuario
+        $consulta = DB::table('usuario')->where([['correo', '=', "$email"], ['contrasenia', '=', "$pass"], ['activacion', '=', 'habilitar']])->get();
         $contador = $consulta->count();
-     
-        if($contador > 0){
 
+        if ($contador > 0) {
+            // si existe, borra datos de la session y los establece con el usuario 
+            // que se loguea
             \Session::forget('usuario-nombre');
-            \Session::put('usuario-nombre',$consulta[0]->correo);
+            \Session::put('usuario-nombre', $consulta[0]->correo);
             \Session::forget('usuario-id');
-            \Session::put('usuario-id',$consulta[0]->idusuario);
+            \Session::put('usuario-id', $consulta[0]->idusuario);
             \Session::forget('usuario-tipo');
-        \Session::put('usuario-tipo','CTB' /*$consulta[0]->idtipo*/);
+            \Session::put('usuario-tipo', 'CTB' /*$consulta[0]->idtipo*/);
             \Session::forget('identificacion');
-            \Session::put('identificacion',$consulta[0]->numero_identificacion);
-                      
+            \Session::put('identificacion', $consulta[0]->numero_identificacion);
+            // retorna la respuesta    
             return response()->json([
-                    'logueado'
+                'logueado'
             ]);
         } else {
 
             return response()->json([
                 'no_logueado'
             ]);
-
         }
-               
     }
 
+    // borra los datos de la session para desloguear al usuario
+    // y retorna a la pagina principal
     public function logout()
     {
         \Session::forget('usuario-nombre');
@@ -77,45 +83,48 @@ class LoginController extends Controller
         return redirect('/');
     }
 
+    // registra un usuario en la plataforma
     public function register(Request $request)
     {
-        //return request()->json(dd($request));
-        
-        if (   $request->num_id != null  
-            && $request->email != null 
-            && $request->name != null 
-            && $request->lastname != null 
-            && $request->password != null 
-            && $request->dir1 != null
-            && $request->pais != null 
-            && $request->ciudad != null
-            && $request->canton != null 
-            && $request->tlf1 != null ) {
 
-            if(strlen($request->num_id) == 13){
+        //valida los campos
+        if (
+            $request->num_id != null
+            && $request->email != null
+            && $request->name != null
+            && $request->lastname != null
+            && $request->password != null
+            && $request->dir1 != null
+            && $request->pais != null
+            && $request->ciudad != null
+            && $request->canton != null
+            && $request->tlf1 != null
+        ) {
+
+            //verificar en caso de ser RUC
+            if (strlen($request->num_id) == 13) {
 
                 $numeR = $request->num_id;
-
+                // valida usando libreria
                 $validar = new \App\ValidarIdentificacion();
-                if ($validar->validarRucSociedadPrivada($numeR) || $validar->validarRucPersonaNatural($numeR) || $validar->validarRucSociedadPublica($numeR) ) {
-     
+                if ($validar->validarRucSociedadPrivada($numeR) || $validar->validarRucPersonaNatural($numeR) || $validar->validarRucSociedadPublica($numeR)) {
                 } else {
                     return response()->json("ruc_invalido");
                 }
-
             }
-            
-            $consulta = DB::table('usuario')->where([['numero_identificacion','=',"$request->num_id"]])->get();
+
+            // verificar que no exista un ruc igual
+            $consulta = DB::table('usuario')->where([['numero_identificacion', '=', "$request->num_id"]])->get();
 
             if ($consulta->count() > 0) {
 
                 return response()->json("ruc_registrado");
-    
-            }else{
-    
+            } else {
+
+                // crear usuario y lo guarda
                 $usuario = new Usuario();
                 $hoy = date("d-m-Y");
-        
+
                 $usuario->activacion = "inhabilitado";
                 $usuario->nombre = strtoupper($request->name);
                 $usuario->apellido = strtoupper($request->lastname);
@@ -142,129 +151,138 @@ class LoginController extends Controller
                 $usuario->sincronizado = 'N';
                 $usuario->save();
 
+                // envio de email al usuario
                 \Mail::to($usuario->correo)->send(new RegistroUsuario($usuario));
-                
-        
                 return response()->json("registrado");
             }
-        }else{
+        } else {
             return response()->json("campos_vacios");
         }
     }
 
-    public function activar($ruc){
-        $user1 = DB::table('usuario')->where('numero_identificacion','=',"$ruc")->first();
+    //activa un usuario por su identificación
+    public function activar($ruc)
+    {
+        $user1 = DB::table('usuario')->where('numero_identificacion', '=', "$ruc")->first();
         $user = Usuario::find($user1->idusuario);
         $user->activacion = 'habilitar';
         $user->save();
         return redirect('/login');
     }
 
-    public function consultarADM(Request $num){
+    // Test no implementado para consultar datos de un cliente por el numero de identificación
+    public function consultarADM(Request $num)
+    {
         if ($num->identi != null) {
-            $user1 = DB::table('usuario')->where('numero_identificacion','=',"$num->identi")->count();
-            if($user1 == 1){
-                $user2 = DB::table('usuario')->where('numero_identificacion','=',"$num->identi")->first();
+            $user1 = DB::table('usuario')->where('numero_identificacion', '=', "$num->identi")->count();
+            if ($user1 == 1) {
+                $user2 = DB::table('usuario')->where('numero_identificacion', '=', "$num->identi")->first();
 
-                if($user2->contrasenia == "" or $user2->contrasenia == null){
-                    return response()->json(["res"=>"encontrado","dato"=>$user2->nombre]);
-                }else {
+                if ($user2->contrasenia == "" or $user2->contrasenia == null) {
+                    return response()->json(["res" => "encontrado", "dato" => $user2->nombre]);
+                } else {
 
-                    return response()->json(["res"=>"encontrado-condatos","dato"=>$user2->correo]);           
+                    return response()->json(["res" => "encontrado-condatos", "dato" => $user2->correo]);
                 }
-
-            }else{
-                return response()->json(["res"=>"no-encontrado","dato"=>"0"]);
+            } else {
+                return response()->json(["res" => "no-encontrado", "dato" => "0"]);
             }
-        }else{
+        } else {
             return response()->json("parametro-vacio");
         }
     }
 
-    
 
-    public function setearDatos(Request $r){
+
+    // configura datos de un usario
+    public function setearDatos(Request $r)
+    {
+        //optiene los campos de request
         $ruc = $r->ruc;
         $email = $r->email;
         $pass = $r->contrasena;
 
-        $user1 = DB::table('usuario')->where('numero_identificacion','=',"$ruc")->count();
+        //verifica ruc
+        $user1 = DB::table('usuario')->where('numero_identificacion', '=', "$ruc")->count();
+        //verifica email
+        $chekEmail = DB::table('usuario')->where('correo', '=', "$email")->count();
 
-        $chekEmail = DB::table('usuario')->where('correo','=',"$email")->count();
-
-        if($chekEmail == 0){
+        //verifica y envia email
+        if ($chekEmail == 0) {
             if ($user1 == 1) {
-                $user2 = \App\Usuario::where('numero_identificacion',"$ruc")->first();
+                $user2 = \App\Usuario::where('numero_identificacion', "$ruc")->first();
                 $user2->contrasenia = $pass;
                 $user2->correo = $email;
                 $user2->activacion = "inhabilitado";
                 $user2->save();
                 \Mail::to($email)->send(new RegistroUsuario($user2));
-                return response()->json(["res"=>"actualizado","dato"=>"$email"]);
+                return response()->json(["res" => "actualizado", "dato" => "$email"]);
             } else {
-                return response()->json(["res"=>"no-actualizado","dato"=>"no"]);
+                return response()->json(["res" => "no-actualizado", "dato" => "no"]);
             }
-
-        }else{
-            return response()->json(["res"=>"email-utilizado","dato"=>"no"]);
+        } else {
+            return response()->json(["res" => "email-utilizado", "dato" => "no"]);
         }
     }
 
 
-    public function recuperaPass(Request $r){
-        $email = $r->email;
-        if($email != null){
-            $user1 = DB::table('usuario')->where('correo','=',"$email")->count();
-            if($user1 == 1){
-                $user2 = DB::table('usuario')->where('correo','=',"$email")->first();
-                $userInstance = \App\Usuario::where('correo',"$email")->first();
+    // envia email para recuperar contraseña de cuenta relacionada a email
+    public function recuperaPass(Request $r)
+    {
+        $email = $r->email;        
+        if ($email != null) {
+            //verifica que exista el usuario con ese email
+            $user1 = DB::table('usuario')->where('correo', '=', "$email")->count();
+            if ($user1 == 1) {
+                //busca data del usuario y envia correo con el id encriptado
+                $user2 = DB::table('usuario')->where('correo', '=', "$email")->first();
+                $userInstance = \App\Usuario::where('correo', "$email")->first();
                 $idEn = Crypt::encryptString($user2->idusuario);
                 $desencriptado = Crypt::decryptString($idEn);
-                $link = url('/')."/resetpass/".$idEn;
+                $link = url('/') . "/resetpass/" . $idEn;
                 \Mail::to($email)->send(new RecuperarPass($link, $userInstance));
 
-                return response()->json(['res'=>"process-open"]);
-
-
-            }else{
-                return response()->json(['res'=>"no-finded"]);
+                return response()->json(['res' => "process-open"]);
+            } else {
+                return response()->json(['res' => "no-finded"]);
             }
-            
-        }else{
+        } else {
             return response()->json("email-nulo");
         }
     }
 
-    public function resetIndex($id){
+    //retorna la vista de reseteo de contraseña
+    public function resetIndex($id)
+    {
+        // desencripta el id del usuario
         $desencryp = Crypt::decryptString($id);
-        $user = DB::table('usuario')->where('idusuario','=',"$desencryp")->first();
-        $categorias = DB::table('categoria')->where('estado','=','A')->get();
+        //busca el usuario
+        $user = DB::table('usuario')->where('idusuario', '=', "$desencryp")->first();
+        //obtiene las variables para la vista
+        $categorias = DB::table('categoria')->where('estado', '=', 'A')->get();
         $familias = DB::table('familia')->get();
         $ruc = $user->numero_identificacion;
         $textos = DB::table('texto')->get();
-        $parametro = DB::table('parametros')->where('idparametro','=',1)->first();
+        $parametro = DB::table('parametros')->where('idparametro', '=', 1)->first();
         $imagenes = DB::table('seccion_imagen')
-        ->join('imagen','id_imagen','=','idimagen')->get();
+            ->join('imagen', 'id_imagen', '=', 'idimagen')->get();
 
         $imgweb = array();
 
-        foreach($imagenes as $item){
+        foreach ($imagenes as $item) {
             $imgweb[$item->nombre_seccion] = $item->nombre;
         }
-
-        return view('resetPassword',['cates'=>$categorias,'familias'=>$familias,'usuario'=> $user,'ruc'=>$ruc,'texto'=>$textos,'imagen'=>$imgweb,'parametros'=>$parametro]);
-
+        // retorna la vista
+        return view('resetPassword', ['cates' => $categorias, 'familias' => $familias, 'usuario' => $user, 'ruc' => $ruc, 'texto' => $textos, 'imagen' => $imgweb, 'parametros' => $parametro]);
     }
 
-    public function resetProcess(Request $r){
-
-        $user = \App\Usuario::where('numero_identificacion',"$r->ruc")->first();
+    //resetea la contraseña
+    public function resetProcess(Request $r)
+    {
+        //busca  usuario setea contaseña y guarda
+        $user = \App\Usuario::where('numero_identificacion', "$r->ruc")->first();
         $user->contrasenia = $r->pass;
         $user->save();
-        return response()->json(["res"=>"actualizado"]);
-
+        return response()->json(["res" => "actualizado"]);
     }
-
-    
-
 }

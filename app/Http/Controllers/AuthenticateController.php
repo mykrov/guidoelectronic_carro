@@ -12,7 +12,7 @@ class AuthenticateController extends Controller
 {
 
      /**
-     * Create a new AuthController instance.
+     * crea instancia del controlador de Auth
      *
      * @return void
      */
@@ -21,6 +21,7 @@ class AuthenticateController extends Controller
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
+
     /**
      * Get a JWT via given credentials.
      *
@@ -28,11 +29,10 @@ class AuthenticateController extends Controller
      */
     public function login()
     {
-        // get email and password from request
+        // obtiene las credenciales del request
         $credentials = request(['email', 'password']);
         $conHash = Hash::make(request('password'));
-        // try to auth and get the token using api authentication
-        //$token= auth('api')
+        // Intenta obtener un token utilizando la api del framework Auth        
 
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
@@ -42,15 +42,10 @@ class AuthenticateController extends Controller
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-
-        // if (!$token = auth('api')->attempt($credentials)) {
-        //     // if the credentials are wrong we send an unauthorized error in json format
-        //     return response()->json(['error' => 'Unauthorized','credentials'=>$credentials,'hash'=>$conHash], 401);
-        // }
         return response()->json([
             'token' => $token,
-            'type' => 'bearer', // you can ommit this
-            'expires' => auth('api')->factory()->getTTL() * 60, // time to expiration
+            'type' => 'bearer', // esto se puede omitir
+            'expires' => auth('api')->factory()->getTTL() * 60, // tiempo de expiracion
         ]);
     }
 

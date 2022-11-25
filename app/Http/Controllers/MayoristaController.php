@@ -18,9 +18,10 @@ use Illuminate\Support\Facades\Mail;
 
 class MayoristaController extends Controller
 {
+    // retorna la vista de registro de mayoristas
     public function RegistroIndex()
     {
-
+        //obtiene las variables de la vista
         $provincias =DB::select(DB::raw('SELECT * FROM provincia where codigo in (select provincia from canton)'));
         $categorias = DB::table('categoria')->where('estado','=','A')->get();
         $familias = DB::table('familia')->get();
@@ -34,13 +35,15 @@ class MayoristaController extends Controller
         foreach($imagenes as $item){
             $imgweb[$item->nombre_seccion] = $item->nombre;
         }
-
+        //retorna la vista
         return view('mayoristareg',['cates'=>$categorias,'familias'=>$familias,'imagen'=>$imgweb,'texto'=>$textos,'parametros'=>$parametro,'provincias'=>$provincias]);
         
     }
 
+    // proceso de enviar correo de solicitud a la empresa de registro de mayorista 
     public function GuardarRegistro(Request $request)
     {
+        // valida los campos del request
         $validation = Validator::make($request->all(), [
             'file_id' => 'required|image|mimes:jpeg,jpg|max:2048',
             'papeleta_id' => 'required|image|mimes:jpeg,jpg|max:2048',
@@ -51,6 +54,7 @@ class MayoristaController extends Controller
         ]);
 
         if($validation->passes()){
+            //crea las variables
             $nombre = $request->name;
             $apellido = $request->lastname;
             $ruc = $request->num_id;
@@ -65,6 +69,7 @@ class MayoristaController extends Controller
             $imagePapeleta->move(storage_path('mayoristas'), $new_name2);
             $imageRecibo->move(storage_path('mayoristas'), $new_name3);
 
+            // arma datos para el email
             $datos = [
                 'email'=>$request->email,
                 'nombre'=> $request->name,
@@ -80,6 +85,7 @@ class MayoristaController extends Controller
             ];
     
             try {
+                //envio del email de peticion de registro
                 Mail::send('email.mayoristare', ['datos'=>$datos], function ($mail) use ($new_name,$new_name2,$new_name3) {
                     $mail->from('carroweb@guidoelectronic.com', 'Petición de Mayorista');
                     $mail->to('salvatorex89@gmail.com');

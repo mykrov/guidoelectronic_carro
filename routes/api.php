@@ -52,7 +52,7 @@ Route::post('ptpnotify','PagosController@Notificacion');
 
 //Consulta de Pagos con estado 
 Route::get('consultapagos','PagosController@ProcesoDiario');
-
+Route::post('stringtest','PagosController@StringTest');
 
 
 

@@ -56,6 +56,9 @@ Route::get('/pagoptp','PagosController@GeneraPago')->name('pagoptp');
 Route::get('/pagocon/{pago}','PagosController@ConsultaPagoInterno')->name('consultapago');
 Route::get('/consultapagos','PagosController@ProcesoDiario');
 
+//SiteMaps Google
+
+Route::get('/sitemap.xml','SiteMapController@index');
 
 //consulta de SQL
 Route::get('/sqlraw','ApiController@getPedidos');

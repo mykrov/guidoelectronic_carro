@@ -9,19 +9,17 @@ use App\Canton;
 
 class Cantones extends Controller
 {
+	// recibe lista de cantones para almacenarlos 
     public function PostCantones(Request $request){
    		$cantones = [];
 
    		foreach ($request->cantones as $key => $value) {
-
-	   		//return response()->json(count($request->provincias));
-	   		//return response()->json($value['codigo']);
-
-	        $verify = DB::table('canton')->where('codigo','=',$value['codigo'])->count();
-	      
+	   		//verifica el si existe un registro del mismo código 
+	        $verify = DB::table('canton')->where('codigo','=',$value['codigo'])->count();	      
 
 	        if ($verify == 0) {
 	            try {
+					//crea y graba canton
 	                $canton = new Canton();
 	                $canton->codigo = $value["codigo"];
 	                $canton->provincia = $value["provincia"];
@@ -37,10 +35,11 @@ class Cantones extends Controller
 	            array_push($cantones,['cantones'=>$value['codigo'],'status'=>'NoSaved']);
 	        }  
        }
+	   // retorna los resultados
        return response()->json($cantones);
    }
 
-   
+   // obtiene la lista de cantones dependiendo la provincia
    public function getCantones(Request $request){
 
    	$provincia = $request->provincia;

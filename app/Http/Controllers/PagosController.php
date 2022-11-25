@@ -312,6 +312,7 @@ class PagosController extends Controller
     }
 
 
+    // función para actualizar los estados de pago de las ventas
     public function ActualizarEstado(string $requestId,string $estado,string $date,string $message,string $signature = '',string $reason = '')
     {
         $trans = \App\TransaccionesPTP::where('requestId','=',$requestId)->first();
@@ -321,7 +322,7 @@ class PagosController extends Controller
             $trans->status = $estado;
             $trans->reason = $reason;
             $trans->save();
-
+            // los estado vienen de la peticion de PlaceToPay
             if ($estado == 'APPROVED') {
                 # codigo para actualizar pedido aprovado.
                 $ven = \App\Ventas::where('token','=',$requestId)->first();
@@ -361,14 +362,21 @@ class PagosController extends Controller
     }
 
 
+    // consulta el estado de pago contra Place to Pay
+    // las variables son las proporcionadas por PlaceToPay 
+    // para el establecimiento
     public function ConsultaPagoInterno($pago)
     {   
+        // consulta los datos de la empresa relacionados con place to pay y el 
+        // ambiente que se esta manejando
         $dataPTP = \App\DatosPTP::where('ambiente','=',env('APP_PAGO_ENV',2))->first();
         $secretKey = $dataPTP->secretKey;
         $login = $dataPTP->login;
         $numPedido = $pago;
         $seed = Carbon::now()->toIso8601String();
        
+        // genera los datos necesarios segun la documentacion de place to pay
+        // https://docs-gateway.placetopay.com/
         if (function_exists('random_bytes')) {
             $nonce = bin2hex(random_bytes(16));
         } elseif (function_exists('openssl_random_pseudo_bytes')) {
@@ -378,13 +386,15 @@ class PagosController extends Controller
         }
         
         $nonceBase64 = base64_encode($nonce);
+        // campo transaction Key
         $tranKey = base64_encode(sha1($nonce. $seed . $secretKey, true));
+        //campo auth 
         $auth = ['login'=>$login,'tranKey'=>$tranKey,'nonce'=>$nonceBase64,'seed'=>$seed];  
         $peticion = ['auth'=>$auth];
-
+        //crea peticion con Guzzle
         $guzzle = new \GuzzleHttp\Client(['base_uri' => $dataPTP->endpoint]);
         $url2= 'api/session/'.$numPedido;
-        
+        //agrega cabecera
         $headers2 = [
             'Content-type'=>'application/json',
             'Accept'=>'application/json'
@@ -393,10 +403,13 @@ class PagosController extends Controller
         $request = new \GuzzleHttp\Psr7\Request('POST', $url2, $headers2);
 
         try { 
+            // obtiene el response de la peticion
             $response4 = $guzzle->send($request, ['body'=>json_encode($peticion)]);
             if ($response4->getStatusCode() == 200) {
+                // busca el estado
                 $ft = json_decode($response4->getBody());
                 $statusIn = $ft->status;
+                // manda actualizar el estado
                 $this->ActualizarEstado($numPedido,$statusIn->status,$statusIn->date,$statusIn->message);
                 
             } else {
@@ -407,15 +420,32 @@ class PagosController extends Controller
         }
     }
 
+    // funcion para verificar ventas con estado pendiente para
+    // buscar informacion sobre el estado de su pago, se puede configurar 
+    // un trabajo CRON para que se realice a diario.
     public function ProcesoDiario(){
+        // busca las ventas pendientes
         $pagos = Ventas::where('estadoPago','=','PENDIENTE')->get();
         if($pagos->isNotEmpty()){
             \Log::info('Se encontraron pagos con estado PENDIENTE.');
+            // recorre las ventas para buscar los estados en place to pay
             foreach ($pagos as $key => $value) {
                 $this->ConsultaPagoInterno($value->token);
             }
         }else{
             \Log::info('Sin Pagos PENDIENTES por consultar. '.Carbon::now()->toIso8601String());
         }
+    }
+
+    // funcion no implementada de Test
+    public function StringTest(Request $r){
+        //return response()->json( $r['string']);
+        $result = preg_match( "/^[A-Za-zÑñáéíóúÁÉÍÓÚ]+$/i",$r['string']);
+        if ($result == true){
+            return response()->json("valido");
+        }else{
+            return response()->json("Invalido");
+        }
+        
     }
 }
